@@ -5,6 +5,25 @@
 	import Button from "$lib/components/ui/button/button.svelte";
 	let isOpen = $state(false);
 
+	const navItems = [
+		{
+			name: "Tentang Kami",
+			href: "/tentang-kami",
+		},
+		{
+			name: "Visi Misi",
+			href: "/#visi-misi",
+		},
+		{
+			name: "Services",
+			href: "/services",
+		},
+		{
+			name: "Projects",
+			href: "/projects",
+		},
+	];
+
 	let { children } = $props();
 </script>
 
@@ -24,30 +43,14 @@
 
 			<!-- Desktop Menu -->
 			<div class="hidden md:flex items-center xl:space-x-6 space-x-4">
-				<a
-					href="/tentang-kami"
-					class="text-foreground hover:text-primary dark:text-muted-foreground dark:hover:text-white"
-				>
-					Tentang Kami
-				</a>
-				<a
-					href="/visi-misi"
-					class="text-foreground hover:text-primary dark:text-muted-foreground dark:hover:text-white"
-				>
-					Visi Misi
-				</a>
-				<a
-					href="/services"
-					class="text-foreground hover:text-primary dark:text-muted-foreground dark:hover:text-white"
-				>
-					Services
-				</a>
-				<a
-					href="/projects"
-					class="text-foreground hover:text-primary dark:text-muted-foreground dark:hover:text-white"
-				>
-					Projects
-				</a>
+				{#each navItems as item}
+					<a
+						href={item.href}
+						class="text-foreground hover:text-primary dark:text-muted-foreground dark:hover:text-white"
+					>
+						{item.name}
+					</a>
+				{/each}
 
 				<Button class="font-bold">Hubungi Kami</Button>
 			</div>
@@ -69,38 +72,19 @@
 	<!-- Mobile Menu -->
 	{#if isOpen}
 		<div class="md:hidden px-2 pt-2 pb-3 space-y-1">
-			<a
-				href="/"
-				class="block px-3 py-2 rounded-md text-foreground hover:bg-gray-100 dark:text-muted-foreground dark:hover:bg-gray-800"
-			>
-				Home
-			</a>
-
-			<a
-				href="/tentang-kami"
-				class="block px-3 py-2 rounded-md text-foreground hover:bg-gray-100 dark:text-muted-foreground dark:hover:bg-gray-800"
-			>
-				Tentang Kami
-			</a>
-
-			<a
-				href="/visi-misi"
-				class="block px-3 py-2 rounded-md text-foreground hover:bg-gray-100 dark:text-muted-foreground dark:hover:bg-gray-800"
-			>
-				Visi Misi
-			</a>
-
-			<a
-				href="/projects"
-				class="block px-3 py-2 rounded-md text-foreground hover:bg-gray-100 dark:text-muted-foreground dark:hover:bg-gray-800"
-			>
-				Projects
-			</a>
+			{#each navItems as item}
+				<a
+					href={item.href}
+					class="block px-3 py-2 rounded-md text-foreground hover:bg-gray-100 dark:text-muted-foreground dark:hover:bg-gray-800"
+				>
+					{item.name}
+				</a>
+			{/each}
 		</div>
 	{/if}
 </nav>
 
 <!-- main content -->
-<main class="m-8">
+<main class="mx-8">
 	{@render children?.()}
 </main>
