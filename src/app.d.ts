@@ -7,7 +7,18 @@ declare global {
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
+
+	}
+
+	interface ProjectList {
+		title?: string,
+		images?: string[],
+		description?: string,
+		year?: number,
+		location?: string,
+		categories?: string[],
+		client?: string
 	}
 }
 
-export {};
+export { };

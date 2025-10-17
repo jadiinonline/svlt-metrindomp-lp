@@ -57,7 +57,13 @@
 						</a>
 					{/each}
 
-					<Button class="font-bold">Hubungi Kami</Button>
+					<Button
+						class="font-bold"
+						href="https://wa.me/62811923432"
+						target="_blank"
+					>
+						Hubungi Kami
+					</Button>
 				</div>
 
 				<!-- Mobile button -->

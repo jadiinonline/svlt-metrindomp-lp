@@ -10,6 +10,7 @@
 		MessageSquareText,
 		ShieldCheck,
 	} from "@lucide/svelte";
+	import Skeleton from "$lib/components/ui/skeleton/skeleton.svelte";
 
 	const companyYear = 1997;
 
@@ -40,28 +41,36 @@
 		},
 	];
 
-	const paginatedProjects = [
+	const paginatedProjects: ProjectList[] = [
 		{
-			title: "Revitalizing Construction",
-			images: [
-				"http://placehold.co/100x100",
-				"http://placehold.co/100x100",
-				"http://placehold.co/100x100",
-			],
-			description: "project ini jatuh pada ",
+			title: "Pekerjaan pengadaan dan pemasangan Instalasi Listrik pada proyek pembangunan tol Soroja Bandung",
+			images: ["http://placehold.co/200x400?text=image_soroja"],
+			description:
+				"Proyek ini meliputi pekerjaan pengadaan dan pemasangan instalasi listrik pada pembangunan Jalan Tol Soreang – Pasir Koja (Soroja), Bandung. Ruang lingkup pekerjaan mencakup penyediaan material, pemasangan sistem kelistrikan utama dan penerangan, serta penyaluran daya untuk fasilitas tol, gerbang, dan area pendukung operasional. Pelaksanaan dilakukan dengan standar keselamatan dan mutu tinggi, memastikan sistem listrik berfungsi secara andal, efisien, dan aman untuk mendukung operasional jalan tol secara berkelanjutan dan tepat waktu.",
 			location: "Jakarta, Indonesia",
 			categories: ["civil", "mechanical"],
+			client: "PT GUNUNG GAYA PERSADA",
+			year: 2017,
 		},
 		{
-			title: "Apartemen 48",
-			images: [
-				"http://placehold.co/100x100",
-				"http://placehold.co/100x100",
-				"http://placehold.co/100x100",
-			],
-			description: "project ini jatuh pada ",
-			location: "Cikarang, Indonesia",
-			categories: ["civil", "mechanical", "elektrikal"],
+			title: "Proyek Transmisi 500 kV New Aur Duri - Peranap Paket -1 Jambi PONDASI PAD & CHIMNEY KELAS 6 ( Borepile)",
+			images: ["http://placehold.co/1000x100?text=image_transmisi"],
+			year: 2018,
+			description:
+				"Proyek ini merupakan pekerjaan pondasi PAD dan chimney kelas 6 (borepile) untuk Transmisi 500 kV New Aur Duri – Peranap Paket 1 yang berlokasi di Provinsi Jambi. Pekerjaan meliputi pembangunan pondasi struktur transmisi tegangan ekstra tinggi dengan sistem borepile, yang berfungsi sebagai penopang utama menara transmisi. Pelaksanaan proyek dilakukan dengan standar mutu tinggi untuk menjamin kestabilan struktur, ketepatan dimensi, dan ketahanan jangka panjang, serta mengikuti jadwal kerja yang ketat agar seluruh target dapat diselesaikan tepat waktu.",
+			location: "Jambi, Indonesia",
+			categories: ["civil", "mechanical"],
+			client: "PT WASKITA KARYA PERSERO ",
+		},
+		{
+			title: "Penyambungan daya Listrik PLN di tower BTS BSD Serpong",
+			images: ["http://placehold.co/100x100?text=image_bts"],
+			year: 2017,
+			description:
+				"Proyek ini mencakup pekerjaan penyambungan daya listrik PLN pada menara BTS (Base Transceiver Station) yang berlokasi di BSD, Serpong. Lingkup pekerjaan meliputi koordinasi dengan pihak PLN, pemasangan instalasi kelistrikan dari sumber utama ke panel distribusi BTS, serta pengujian sistem untuk memastikan pasokan daya yang stabil, aman, dan sesuai standar teknis. Pekerjaan dilaksanakan dengan memperhatikan ketepatan waktu, keselamatan kerja, dan keandalan sistem guna mendukung operasional jaringan telekomunikasi secara optimal.",
+			location: "Tangerang Selatan, Indonesia",
+			categories: ["elektrikal"],
+			client: "PT INTI BANGUN SEJAHTERA, Tbk",
 		},
 	];
 
@@ -125,7 +134,12 @@
 				di bindangnya
 			</p>
 
-			<Button class="right-0 w-[200px] text-lg " size="lg">
+			<Button
+				class="right-0 w-[200px] text-lg "
+				size="lg"
+				href="https://wa.me/62811923432"
+				target="_blank"
+			>
 				Konsultasi Gratis <MessageSquareText />
 			</Button>
 		</div>
@@ -163,7 +177,7 @@
 					</div>
 				</div>
 
-				<p class="text-2xl p-2">
+				<p class="text-xl p-2">
 					<b>PT. Metrindo Majupersada</b> adalah perusahaan yang
 					bergerak di bidang konstruksi dan layanan engineering.
 					Berdiri pada tahun 1997, perusahaan kami didirikan dengan
@@ -177,7 +191,7 @@
 					Perusahaan ini telah berhasil mengerjakan proyek proyek
 					penting di seluruh Indonesia, termasuk Bandara Gorontalo,
 					Bandara Soekarno-Hatta, dan kantor DPRD Riau. Dengan moto
-					"Quality & Schedule", perusahaan ini terus berupaya
+					<b>"Quality & Schedule"</b>, perusahaan ini terus berupaya
 					memberikan hasil terbaik
 				</p>
 			</div>
@@ -249,8 +263,11 @@
 						/>
 					</div>
 				</div>
+
 				<div class=" p-8 flex flex-col items-center text-center">
-					<h3 class="text-3xl font-bold mb-4 text-primary">Visi</h3>
+					<h3 class="text-3xl font-extrabold mb-4 text-primary">
+						Visi
+					</h3>
 					<ul
 						class="list-disc list-inside text-left text-lg space-y-2"
 					>
@@ -284,7 +301,7 @@
 			<div class="grid grid-cols-1 md:grid-cols-1 gap-8">
 				<div class="flex flex-row items-center">
 					<div class=" p-8 flex flex-col items-center text-center">
-						<h3 class="text-3xl font-bold mb-4 text-primary">
+						<h3 class="text-3xl font-extrabold mb-4 text-primary">
 							Misi
 						</h3>
 						<ul
@@ -385,14 +402,26 @@
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 			{#each paginatedProjects as project}
 				<div class="bg-card p-6 rounded-lg shadow-md">
-					<img
-						src={project.images[1]}
-						alt={project.title}
-						class="mb-4 rounded-md w-full h-48 object-cover"
-					/>
+					{#if project.images && project.images.length > 0}
+						<img
+							src={project.images[0]}
+							alt={project.title}
+							class="mb-4 rounded-md w-full h-48 object-cover"
+						/>
+					{:else}
+						<Skeleton
+							class="mb-4 rounded-md w-full h-48 object-cover"
+						></Skeleton>
+					{/if}
 					<h3 class="text-xl font-semibold mb-2">{project.title}</h3>
 					<p class="text-muted-foreground mb-4">
-						{project.description}
+						{project.description &&
+						project.description.split(" ").length > 30
+							? project.description
+									.split(" ")
+									.slice(0, 30)
+									.join(" ") + "..."
+							: project.description}
 					</p>
 				</div>
 			{/each}
