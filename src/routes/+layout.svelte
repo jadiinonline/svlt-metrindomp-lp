@@ -4,6 +4,9 @@
 	import { Menu, X } from "@lucide/svelte";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import Footer from "./footer.svelte";
+	import { MetaTags } from "svelte-meta-tags";
+	import { page } from "$app/state";
+
 	let isOpen = $state(false);
 
 	const navItems = [
@@ -25,12 +28,83 @@
 		},
 	];
 
+	const jsonLDServices = [
+		{
+			name: "Mekanikal",
+			description:
+				"Layanan mekanikal profesional untuk proyek konstruksi dan subkon jasa konstruksi.",
+		},
+		{
+			name: "Elektrikal",
+			description:
+				"Jasa elektrikal untuk konstruksi dan subkon jasa konstruksi.",
+		},
+		{
+			name: "Plumbing",
+			description:
+				"Layanan plumbing untuk konstruksi dan subkon jasa konstruksi.",
+		},
+		{
+			name: "Telekomunikasi",
+			description:
+				"Solusi telekomunikasi untuk konstruksi dan subkon jasa konstruksi.",
+		},
+		{
+			name: "Sipil",
+			description:
+				"Jasa konstruksi sipil untuk proyek gedung, jalan, jembatan, dan infrastruktur.",
+		},
+	];
+
 	let { children } = $props();
 </script>
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
 </svelte:head>
+
+<!-- Structured Data JSON-LD -->
+{@html `<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Metrindo Maju Persada",
+  "url": "https://metrindomp.com",
+  "logo": "https://metrindomp.com/favicon.png",
+  "sameAs": [],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Layanan Konstruksi",
+    "itemListElement": [
+      ${jsonLDServices
+			.map(
+				(s) => `{
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "${s.name}",
+          "description": "${s.description}"
+        }
+      }`,
+			)
+			.join(",")}
+    ]
+  }
+}
+</script>`}
+
+<MetaTags
+	title="PT. Metrindo Maju Persada - Jasa konstruksi & subkon"
+	description="Jasa konstruksi mekanikal elektrikal plumbing sipil telekomunikasi"
+	openGraph={{
+		type: "website",
+		url: page.url.href,
+		title: "Metrindo Maju Persada",
+		description:
+			"Kami menyediakan layanan konstruksi, termasuk jasa konstruksi untuk proyek komersial, rumah, dan infrastruktur. Hubungi kami untuk solusi profesional",
+		siteName: "Metrindo Maju Persada",
+	}}
+/>
 
 <div class="min-h-screen max-w-screen overflow-x-hidden">
 	<!-- navbar -->
