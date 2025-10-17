@@ -1,6 +1,9 @@
 <script lang="ts">
 	import Button from "$lib/components/ui/button/button.svelte";
 	import Separator from "$lib/components/ui/separator/separator.svelte";
+	import * as Carousel from "$lib/components/ui/carousel/index.js";
+	import Autoplay from "embla-carousel-autoplay";
+
 	import {
 		CalendarCheck,
 		Laugh,
@@ -9,6 +12,58 @@
 	} from "@lucide/svelte";
 
 	const companyYear = 1997;
+
+	const clients = [
+		{
+			name: "PT. Wijaya Karya",
+			logo: "https://storage.googleapis.com/jadiinonline-public/metrindomp/clients/logo-wika.png",
+		},
+		{
+			name: "PT. Waskita Karya",
+			logo: "https://storage.googleapis.com/jadiinonline-public/metrindomp/clients/logo-waskita.png",
+		},
+		{
+			name: "PT. Jaya Konstruksi",
+			logo: "https://storage.googleapis.com/jadiinonline-public/metrindomp/clients/logo-jakon.jpeg",
+		},
+		{
+			name: "PT. Patra Badak Arun Solusi",
+			logo: "https://storage.googleapis.com/jadiinonline-public/metrindomp/clients/logo-pbas.png",
+		},
+		{
+			name: "PT. Hutama Karya",
+			logo: "https://storage.googleapis.com/jadiinonline-public/metrindomp/clients/logo-hutamakarya.png",
+		},
+		{
+			name: "PT. Inti Bangun Persada",
+			logo: "https://storage.googleapis.com/jadiinonline-public/metrindomp/clients/logo-intibangun.png",
+		},
+	];
+
+	const paginatedProjects = [
+		{
+			title: "Revitalizing Construction",
+			images: [
+				"http://placehold.co/100x100",
+				"http://placehold.co/100x100",
+				"http://placehold.co/100x100",
+			],
+			description: "project ini jatuh pada ",
+			location: "Jakarta, Indonesia",
+			categories: ["civil", "mechanical"],
+		},
+		{
+			title: "Apartemen 48",
+			images: [
+				"http://placehold.co/100x100",
+				"http://placehold.co/100x100",
+				"http://placehold.co/100x100",
+			],
+			description: "project ini jatuh pada ",
+			location: "Cikarang, Indonesia",
+			categories: ["civil", "mechanical", "elektrikal"],
+		},
+	];
 
 	const layanan = [
 		{
@@ -33,7 +88,7 @@
 				"Layanan sipil kami meliputi pembangunan infrastruktur, struktur bangunan, dan pekerjaan tanah dengan standar kualitas tertinggi.",
 		},
 		{
-			img: "https://placehold.co/100x100",
+			img: "https://placehold.co/100x100?text=telco+image",
 			alt: "Telecommunication",
 			title: "Telekomunikasi",
 			description:
@@ -44,21 +99,21 @@
 
 <div class="flex flex-col space-y-7">
 	<section
-		id="section1"
-		class="relative bg-[url('https://images.unsplash.com/photo-1712758602405-f8aa7de86cef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center w-[99.1vw] -mx-8 p-20"
+		id="hero"
+		class="relative bg-[url('https://images.unsplash.com/photo-1712758602405-f8aa7de86cef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center w-screen xl:w-[99.1vw] xl:-mx-8 p-2 xl:p-20"
 	>
 		<div
 			class="absolute inset-0 bg-gradient-to-r from-white to-transparent"
 		></div>
 
-		<div class="relative flex flex-col space-y-3 w-[60%]">
+		<div class="relative flex flex-col space-y-3 p-8 xl:w-[60%]">
 			<h2
-				class="italic font-bold text-3xl bg-black text-white w-[400px] text-center p-2"
+				class="italic font-bold text-3xl bg-black text-white w-[400px] text-center p-2 rounded-sm"
 			>
 				"Quality & Schedule"
 			</h2>
 
-			<h1 class="uppercase text-8xl font-bold text-shadow-md">
+			<h1 class="uppercase text-4xl lg:text-8xl font-bold text-shadow-md">
 				general contractor & <br />engineering services
 			</h1>
 
@@ -78,11 +133,11 @@
 
 	<Separator></Separator>
 
-	<section id="section2" class="m-2">
+	<section id="tentang-kami" class="m-2">
 		<div
-			class="flex flex-row space-x-8 items-center justify-between w-full"
+			class="grid md:grid-cols-2 space-x-8 items-center justify-between w-full"
 		>
-			<div class="w-[45%] flex-shrink-0">
+			<div class=" flex-shrink-0">
 				<img
 					src="https://plus.unsplash.com/premium_photo-1661921393343-343742700dd3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 					alt="section2"
@@ -90,7 +145,7 @@
 				/>
 			</div>
 
-			<div class="flex-1">
+			<div class="">
 				<div class="flex space-x-4 items-center justify-self-start">
 					<div class="text-primary font-extrabold text-8xl">
 						{companyYear}
@@ -109,20 +164,21 @@
 				</div>
 
 				<p class="text-2xl p-2">
-					<b>PT. Metrindo Majupersada</b> lah perusahaan yang bergerak
-					di bidang konstruksi dan layanan engineering. Berdiri pada
-					tahun 1997, perusahaan kami didirikan dengan tujuan untuk
-					mengembangkan bisnis yang telah ada sebelumnya. Pendirian
-					perusahaan disahkan melalui akta pendirian perubahaan no. 64
-					pada 17 November 2008. <br />Seiring berjalannya waktu, PT.
-					Metrindo Majupersada semakin dipercaya oleh berbagai
-					perusahaan besar di sektor mekanikal, elektrikal dan sipil.
-					Beberapa di antaranya PT. Waskita Karya, PT. Jaya
-					Konstruksi, PT. Wijaya Karya. Perusahaan ini telah berhasil
-					mengerjakan proyek proyek penting di seluruh Indonesia,
-					termasuk Bandara Gorontalo, Bandara Soekarno-Hatta, dan
-					kantor DPRD Riau. Dengan moto "Quality & Schedule",
-					perusahaan ini terus berupaya memberikan hasil terbaik
+					<b>PT. Metrindo Majupersada</b> adalah perusahaan yang
+					bergerak di bidang konstruksi dan layanan engineering.
+					Berdiri pada tahun 1997, perusahaan kami didirikan dengan
+					tujuan untuk mengembangkan bisnis yang telah ada sebelumnya.
+					Pendirian perusahaan disahkan melalui akta pendirian
+					perubahaan no. 64 pada 17 November 2008. <br />Seiring
+					berjalannya waktu, PT. Metrindo Majupersada semakin
+					dipercaya oleh berbagai perusahaan besar di sektor
+					mekanikal, elektrikal dan sipil. Beberapa di antaranya PT.
+					Waskita Karya, PT. Jaya Konstruksi, PT. Wijaya Karya.
+					Perusahaan ini telah berhasil mengerjakan proyek proyek
+					penting di seluruh Indonesia, termasuk Bandara Gorontalo,
+					Bandara Soekarno-Hatta, dan kantor DPRD Riau. Dengan moto
+					"Quality & Schedule", perusahaan ini terus berupaya
+					memberikan hasil terbaik
 				</p>
 			</div>
 		</div>
@@ -130,7 +186,7 @@
 
 	<Separator></Separator>
 
-	<section class="m-2 bg-accent w-[99.1vw] -mx-8 p-8">
+	<section class="bg-accent w-screen -mx-8 p-8">
 		<h2 class="text-center font-bold text-4xl">Our Reputation</h2>
 
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
@@ -221,7 +277,7 @@
 		</div>
 	</section>
 
-	<section id="layanan-kami" class="m-2 bg-accent w-[99.1vw] -mx-8 p-8">
+	<section id="layanan-kami" class="bg-accent w-screen -mx-8 p-8">
 		<h2 class="text-center font-bold text-4xl mb-8">Layanan Kami</h2>
 
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-foreground">
@@ -249,10 +305,62 @@
 			{/each}
 		</div>
 
-		<a class="text-primary underline" href="/services"
-			><p class="text-center">lihat semua</p></a
-		>
+		<p class="text-center text-primary underline">
+			<a href="/services">lihat semua</a>
+		</p>
 	</section>
 
-	<section class="m-2">project</section>
+	<section class="m-2">
+		<h2 class="text-center font-bold text-4xl mb-8">Projects</h2>
+
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+			{#each paginatedProjects as project}
+				<div class="bg-card p-6 rounded-lg shadow-md">
+					<img
+						src={project.images[1]}
+						alt={project.title}
+						class="mb-4 rounded-md w-full h-48 object-cover"
+					/>
+					<h3 class="text-xl font-semibold mb-2">{project.title}</h3>
+					<p class="text-muted-foreground mb-4">
+						{project.description}
+					</p>
+				</div>
+			{/each}
+		</div>
+	</section>
+
+	<section class="m-2">
+		<h2 class="text-center font-bold text-4xl mb-8">Clients</h2>
+		<Carousel.Root
+			opts={{
+				align: "center",
+				loop: true,
+				skipSnaps: true,
+			}}
+			class="w-full"
+			plugins={[
+				Autoplay({
+					delay: 2500,
+				}),
+			]}
+		>
+			<Carousel.Content>
+				{#each clients as client}
+					<Carousel.Item class="p-5 md:basis-1/3 lg:basis-1/4 ">
+						<div
+							class="flex items-center justify-center bg-white p-4 rounded-lg shadow-md gap-3"
+						>
+							<img
+								src={client.logo}
+								alt={client.name}
+								class="h-16 object-containproject"
+							/>
+							{client.name}
+						</div>
+					</Carousel.Item>
+				{/each}
+			</Carousel.Content>
+		</Carousel.Root>
+	</section>
 </div>
