@@ -67,28 +67,28 @@
 
 	const layanan = [
 		{
-			img: "https://placehold.co/100x100",
+			img: "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/icon-mechanical-engineering.png",
 			alt: "Mechanical",
 			title: "Mekanikal",
 			description:
 				"Layanan mekanikal kami mencakup instalasi, pemeliharaan, dan perbaikan sistem mekanikal untuk berbagai jenis bangunan dan industri.",
 		},
 		{
-			img: "https://placehold.co/100x100",
+			img: "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/icon-electrical-engineering.png",
 			alt: "Electrical",
 			title: "Elektrikal",
 			description:
 				"Kami menyediakan solusi elektrikal lengkap, mulai dari perencanaan, instalasi jaringan listrik, hingga sistem kontrol dan otomatisasi.",
 		},
 		{
-			img: "https://placehold.co/100x100",
+			img: "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/icon-civil-engineering.png",
 			alt: "Civil",
 			title: "Sipil",
 			description:
 				"Layanan sipil kami meliputi pembangunan infrastruktur, struktur bangunan, dan pekerjaan tanah dengan standar kualitas tertinggi.",
 		},
 		{
-			img: "https://placehold.co/100x100?text=telco+image",
+			img: "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/icon-telecommunication-engineering.png",
 			alt: "Telecommunication",
 			title: "Telekomunikasi",
 			description:
@@ -361,7 +361,7 @@
 					<img
 						src={item.img}
 						alt={item.alt}
-						class="mb-4 rounded-full"
+						class="mb-4 rounded-full w-[100px]"
 					/>
 					<h3 class="text-xl font-semibold mb-2">{item.title}</h3>
 					<p

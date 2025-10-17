@@ -6,7 +6,7 @@
 
 <section id="footer" class="bg-accent w-screen p-10 mt-10">
 	<div class="grid xl:grid-cols-2">
-		<div class="flex flex-col gap-4">
+		<div class="flex flex-col gap-6">
 			<h3>
 				Address: <span class="text-muted-foreground"
 					>Perkantoran Bintaro 8 Jl. Bintaro Permai Raya No.7 Jakarta
@@ -25,13 +25,13 @@
 		<div class="flex flex-col gap-2">
 			<div>
 				<h3 class="uppercase font-bold">newsletter :</h3>
-				<div class="flex">
+				<div class="flex gap-2">
 					<Input
 						type="email"
 						placeholder="Your Email Here"
 						disabled
 					/>
-					<Button disabled>Subscribe</Button>
+					<Button disabled variant="destructive">Subscribe</Button>
 				</div>
 			</div>
 			<div>
