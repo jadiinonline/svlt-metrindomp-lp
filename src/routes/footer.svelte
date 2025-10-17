@@ -5,7 +5,7 @@
 </script>
 
 <section id="footer" class="bg-accent w-screen p-10 mt-10">
-	<div class="grid xl:grid-cols-2">
+	<div class="grid xl:grid-cols-2 gap-8">
 		<div class="flex flex-col gap-6">
 			<h3>
 				Address: <span class="text-muted-foreground"

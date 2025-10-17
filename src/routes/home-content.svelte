@@ -109,24 +109,28 @@
 <div class="flex flex-col space-y-7">
 	<section
 		id="hero"
-		class="relative bg-[url('https://images.unsplash.com/photo-1712758602405-f8aa7de86cef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center w-screen xl:w-[99.1vw] xl:-mx-8 p-2 xl:p-20"
+		class="relative bg-[url('https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/hero-content-2.avif')] bg-cover bg-center w-screen xl:w-[99.1vw] xl:-mx-8 p-2 xl:p-20"
 	>
 		<div
 			class="absolute inset-0 bg-gradient-to-r from-white to-transparent"
 		></div>
 
-		<div class="relative flex flex-col space-y-3 p-8 xl:w-[60%]">
+		<div
+			class="relative flex flex-col space-y-3 p-2 md:p-8 w-[80%] xl:w-[60%]"
+		>
 			<h2
-				class="italic font-bold text-3xl bg-black text-white w-[400px] text-center p-2 rounded-sm"
+				class="italic font-bold text-xl md:text-3xl bg-black text-white md:w-[400px] text-center p-2 rounded-sm"
 			>
 				"Quality & Schedule"
 			</h2>
 
-			<h1 class="uppercase text-4xl lg:text-8xl font-bold text-shadow-md">
+			<h1
+				class="uppercase text-2xl md:text-4xl lg:text-8xl font-bold text-shadow-md"
+			>
 				general contractor & <br />engineering services
 			</h1>
 
-			<p class="text-2xl">
+			<p class="md:text-2xl">
 				PT. Metrindo Majupersada menyediakan layanan <b>konstruksi</b> untuk
 				proyek menengah hingga besar. Perusahaan ini dikenal dengan kemampuan
 				menjaga kualitas, kepuasan pelanggan, dan hubungan baik dengan para
@@ -147,37 +151,39 @@
 
 	<Separator></Separator>
 
-	<section id="tentang-kami" class="m-2">
+	<section id="tentang-kami" class="m-2 w-full">
 		<div
-			class="grid md:grid-cols-2 space-x-8 items-center justify-between w-full"
+			class="grid md:grid-cols-2 space-x-8 items-center justify-between w-full gap-2"
 		>
-			<div class=" flex-shrink-0">
+			<div class="flex-shrink-0">
 				<img
-					src="https://plus.unsplash.com/premium_photo-1661921393343-343742700dd3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+					src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/hero-content-1.avif"
 					alt="section2"
-					class="rounded-lg"
+					class="rounded-lg w-full"
 				/>
 			</div>
 
 			<div class="">
 				<div class="flex space-x-4 items-center justify-self-start">
-					<div class="text-primary font-extrabold text-8xl">
+					<div
+						class="text-primary font-extrabold text-6xl md:text-8xl"
+					>
 						{companyYear}
 					</div>
 
 					<Separator orientation="vertical" class="w-[200px]" />
 
 					<div class="flex flex-col space-y-2">
-						<div class="text-muted-foreground text-2xl">
+						<div class="text-muted-foreground text-xl md:text-2xl">
 							27 years of experience
 						</div>
-						<div class="text-4xl font-bold uppercase">
+						<div class="text-2xl md:text-4xl font-bold uppercase">
 							success in experience
 						</div>
 					</div>
 				</div>
 
-				<p class="text-xl p-2">
+				<p class="text-md md:text-xl p-2">
 					<b>PT. Metrindo Majupersada</b> adalah perusahaan yang
 					bergerak di bidang konstruksi dan layanan engineering.
 					Berdiri pada tahun 1997, perusahaan kami didirikan dengan
@@ -236,24 +242,24 @@
 	</section>
 
 	<section id="visi-misi" class="m-2">
-		<h2 class="text-center font-extrabold text-6xl mb-8">
+		<h2 class="text-center font-extrabold text-4xl md:text-6xl mb-8">
 			Quality & Schedule
 		</h2>
 
 		<div class="grid grid-cols-1 md:grid-cols-1 gap-8">
-			<div class="flex flex-row items-center">
+			<div class="grid grid-cols-1 lg:grid-cols-2 items-center">
 				<div class=" p-8 flex flex-col items-center text-center">
 					<div class="relative w-full h-full">
 						<img
 							src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/worker-beta.jpeg"
 							alt="visi"
-							class="absolute top-0 left-0 z-1 w-[30%] h-auto rounded-2xl border-white border-6"
+							class="absolute top-0 lg:left-0 z-1 w-[50%] xl:w-[30%] h-auto rounded-2xl border-white border-6"
 						/>
 						<div class="p-10">
 							<img
 								src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/worker-alpha.png"
 								alt="visi"
-								class="relative z-0 w-[70%] h-[70%] my-auto mx-auto rounded-2xl border-white border-6"
+								class="relative z-0 xl:w-[70%] xl:h-[70%] my-auto mx-auto rounded-2xl border-white border-6"
 							/>
 						</div>
 						<img
@@ -269,7 +275,7 @@
 						Visi
 					</h3>
 					<ul
-						class="list-disc list-inside text-left text-lg space-y-2"
+						class="list-disc list-inside text-left text-md md:text-lg space-y-2"
 					>
 						<li>
 							Menjadi perusahaan konstruksi mekanikal dan
@@ -298,66 +304,63 @@
 				</div>
 			</div>
 
-			<div class="grid grid-cols-1 md:grid-cols-1 gap-8">
-				<div class="flex flex-row items-center">
-					<div class=" p-8 flex flex-col items-center text-center">
-						<h3 class="text-3xl font-extrabold mb-4 text-primary">
-							Misi
-						</h3>
-						<ul
-							class="list-disc list-inside text-left text-lg space-y-2"
-						>
-							<li>
-								Memberikan hasil kerja berkualitas tinggi
-								melalui penerapan standar teknis dan prosedur
-								kerja terbaik.
-							</li>
-							<li>
-								Menyelesaikan setiap proyek tepat waktu dengan
-								perencanaan yang efisien dan koordinasi yang
-								efektif.
-							</li>
-							<li>
-								Meningkatkan kompetensi sumber daya manusia
-								melalui pelatihan berkelanjutan dan budaya kerja
-								profesional.
-							</li>
-							<li>
-								Menjaga keselamatan kerja serta memastikan
-								lingkungan kerja yang aman dan produktif.
-							</li>
-							<li>
-								Mengutamakan kepuasan dan kepercayaan pelanggan
-								melalui komunikasi yang transparan dan pelayanan
-								yang responsif.
-							</li>
-							<li>
-								Mengimplementasikan teknologi dan inovasi untuk
-								meningkatkan efisiensi serta kualitas hasil
-								pekerjaan.
-							</li>
-						</ul>
-					</div>
+			<div class="grid grid-cols-1 lg:grid-cols-2 items-center">
+				<div class=" p-8 flex flex-col items-center text-center">
+					<h3 class="text-3xl font-extrabold mb-4 text-primary">
+						Misi
+					</h3>
+					<ul
+						class="list-disc list-inside text-left text-md md:text-lg space-y-2"
+					>
+						<li>
+							Memberikan hasil kerja berkualitas tinggi melalui
+							penerapan standar teknis dan prosedur kerja terbaik.
+						</li>
+						<li>
+							Menyelesaikan setiap proyek tepat waktu dengan
+							perencanaan yang efisien dan koordinasi yang
+							efektif.
+						</li>
+						<li>
+							Meningkatkan kompetensi sumber daya manusia melalui
+							pelatihan berkelanjutan dan budaya kerja
+							profesional.
+						</li>
+						<li>
+							Menjaga keselamatan kerja serta memastikan
+							lingkungan kerja yang aman dan produktif.
+						</li>
+						<li>
+							Mengutamakan kepuasan dan kepercayaan pelanggan
+							melalui komunikasi yang transparan dan pelayanan
+							yang responsif.
+						</li>
+						<li>
+							Mengimplementasikan teknologi dan inovasi untuk
+							meningkatkan efisiensi serta kualitas hasil
+							pekerjaan.
+						</li>
+					</ul>
+				</div>
 
-					<div class="relative">
+				<div class="relative">
+					<img
+						src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/ducting-alpha.jpg"
+						alt="visi"
+						class="absolute top-0 right-0 z-1 w-[35%] h-auto rounded-2xl border-white border-6"
+					/>
+					<div class="p-10">
 						<img
-							src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/ducting-alpha.jpg"
+							src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/worker-mekanikal-alpha.png"
 							alt="visi"
-							class="absolute top-0 right-0 z-1 w-[35%] h-auto rounded-2xl border-white border-6"
-						/>
-						<div class="p-10">
-							<img
-								src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/worker-mekanikal-alpha.png"
-								alt="visi"
-								class="relative z-0 w-[70%] h-[70%] my-auto mx-auto rounded-2xl border-white border-6 scale-x-[-1]"
-							/>
-						</div>
-						<img
-							src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/pompa-alpha.webp"
-							alt="visi"
-							class="absolute bottom-0 left-0 z-1 w-[40%] h-auto rounded-2xl border-white border-6"
+							class="relative z-0 xl:w-[70%] xl:h-[70%] my-auto mx-auto rounded-2xl border-white border-6 scale-x-[-1]"
 						/>
 					</div>
+					<img
+						src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/pompa-alpha.webp"
+						alt="visi"
+						class="absolute bottom-0 left-0 z-1 w-[40%] h-auto rounded-2xl border-white border-6"
+					/>
 				</div>
 			</div>
 		</div>
@@ -445,7 +448,7 @@
 		>
 			<Carousel.Content>
 				{#each clients as client}
-					<Carousel.Item class="p-5 md:basis-1/3 lg:basis-1/4 ">
+					<Carousel.Item class="p-5  md:basis-1/3 lg:basis-1/4 ">
 						<div
 							class="flex items-center justify-center bg-white p-4 rounded-lg shadow-md gap-3"
 						>

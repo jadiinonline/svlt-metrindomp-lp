@@ -96,7 +96,7 @@
 	</nav>
 
 	<!-- main content -->
-	<main class="mx-8">
+	<main class="mx-8 pt-16 max-w-screen">
 		{@render children?.()}
 	</main>
 
