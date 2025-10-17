@@ -222,18 +222,62 @@
 	</section>
 
 	<section id="visi-misi" class="m-2">
-		<h2 class="text-center font-bold text-4xl mb-8">Visi & Misi Kami</h2>
+		<h2 class="text-center font-extrabold text-6xl mb-8">
+			Quality & Schedule
+		</h2>
 
 		<div class="grid grid-cols-1 md:grid-cols-1 gap-8">
 			<div class="flex flex-row items-center">
-				<div><img src="https://placehold.co/800x800" alt="visi" /></div>
+				<div class=" p-8 flex flex-col items-center text-center">
+					<div class="relative w-full h-full">
+						<img
+							src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/worker-beta.jpeg"
+							alt="visi"
+							class="absolute top-0 left-0 z-1 w-[30%] h-auto rounded-2xl border-white border-6"
+						/>
+						<div class="p-10">
+							<img
+								src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/worker-alpha.png"
+								alt="visi"
+								class="relative z-0 w-[70%] h-[70%] my-auto mx-auto rounded-2xl border-white border-6"
+							/>
+						</div>
+						<img
+							src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/worker-charlie.jpg"
+							alt="visi"
+							class="absolute bottom-0 right-0 z-1 w-[40%] h-auto rounded-2xl border-white border-6"
+						/>
+					</div>
+				</div>
 				<div class=" p-8 flex flex-col items-center text-center">
 					<h3 class="text-3xl font-bold mb-4 text-primary">Visi</h3>
-					<p class="text-lg leading-relaxed">
-						Menjadi perusahaan konstruksi terkemuka dan terpercaya
-						di Indonesia yang dikenal akan kualitas, inovasi, dan
-						komitmen terhadap kepuasan pelanggan.
-					</p>
+					<ul
+						class="list-disc list-inside text-left text-lg space-y-2"
+					>
+						<li>
+							Menjadi perusahaan konstruksi mekanikal dan
+							elektrikal yang unggul dalam kualitas dan ketepatan
+							waktu.
+						</li>
+						<li>
+							Memberikan hasil kerja terbaik melalui standar mutu
+							yang tinggi di setiap proyek.
+						</li>
+						<li>
+							Membangun hubungan jangka panjang dengan klien
+							berdasarkan kepercayaan dan integritas.
+						</li>
+						<li>
+							Menjadi mitra terpercaya dalam pembangunan
+							infrastruktur dengan komitmen terhadap efisiensi dan
+							profesionalisme.
+						</li>
+						<li>
+							Mewujudkan kepercayaan pelanggan melalui
+							penyelesaian proyek yang tepat waktu dan sesuai
+							spesifikasi.
+						</li>
+					</ul>
 				</div>
 			</div>
 
@@ -247,30 +291,55 @@
 							class="list-disc list-inside text-left text-lg space-y-2"
 						>
 							<li>
-								Menyediakan layanan konstruksi berkualitas
-								tinggi dengan standar internasional.
+								Memberikan hasil kerja berkualitas tinggi
+								melalui penerapan standar teknis dan prosedur
+								kerja terbaik.
 							</li>
 							<li>
-								Mengembangkan solusi inovatif dan berkelanjutan
-								untuk setiap proyek.
+								Menyelesaikan setiap proyek tepat waktu dengan
+								perencanaan yang efisien dan koordinasi yang
+								efektif.
 							</li>
 							<li>
-								Membangun hubungan jangka panjang dengan klien
-								berdasarkan kepercayaan dan integritas.
+								Meningkatkan kompetensi sumber daya manusia
+								melalui pelatihan berkelanjutan dan budaya kerja
+								profesional.
 							</li>
 							<li>
-								Meningkatkan kompetensi dan kesejahteraan
-								karyawan melalui pengembangan profesional.
+								Menjaga keselamatan kerja serta memastikan
+								lingkungan kerja yang aman dan produktif.
 							</li>
 							<li>
-								Berperan aktif dalam pembangunan infrastruktur
-								nasional dengan memperhatikan aspek lingkungan
-								dan sosial.
+								Mengutamakan kepuasan dan kepercayaan pelanggan
+								melalui komunikasi yang transparan dan pelayanan
+								yang responsif.
+							</li>
+							<li>
+								Mengimplementasikan teknologi dan inovasi untuk
+								meningkatkan efisiensi serta kualitas hasil
+								pekerjaan.
 							</li>
 						</ul>
 					</div>
-					<div>
-						<img src="https://placehold.co/800x800" alt="misi" />
+
+					<div class="relative">
+						<img
+							src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/ducting-alpha.jpg"
+							alt="visi"
+							class="absolute top-0 right-0 z-1 w-[35%] h-auto rounded-2xl border-white border-6"
+						/>
+						<div class="p-10">
+							<img
+								src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/worker-mekanikal-alpha.png"
+								alt="visi"
+								class="relative z-0 w-[70%] h-[70%] my-auto mx-auto rounded-2xl border-white border-6 scale-x-[-1]"
+							/>
+						</div>
+						<img
+							src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/pompa-alpha.webp"
+							alt="visi"
+							class="absolute bottom-0 left-0 z-1 w-[40%] h-auto rounded-2xl border-white border-6"
+						/>
 					</div>
 				</div>
 			</div>
