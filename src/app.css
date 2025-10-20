@@ -132,4 +132,12 @@
     letter-spacing: 0.05rem;
     word-spacing: 0.09em;
   }
+
+
+}
+
+.img {
+  user-select: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
 }

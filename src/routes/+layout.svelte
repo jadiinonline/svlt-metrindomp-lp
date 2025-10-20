@@ -58,6 +58,16 @@
 		},
 	];
 
+	// disable right click on image
+	if (typeof window !== "undefined") {
+		document.addEventListener("contextmenu", (e: MouseEvent) => {
+			const target = e.target as HTMLElement;
+			if (target && target.tagName === "IMG") {
+				e.preventDefault();
+			}
+		});
+	}
+
 	let { children } = $props();
 </script>
 
