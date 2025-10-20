@@ -21,6 +21,9 @@
 					>metrindomp@yahoo.co.id</span
 				>
 			</h3>
+			<div class="h-[70px]">
+				<img src="LOGO-HORIZONTAL.png" class="h-full" alt="logo" />
+			</div>
 		</div>
 		<div class="flex flex-col gap-2">
 			<div>

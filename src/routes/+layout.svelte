@@ -6,6 +6,8 @@
 	import Footer from "./footer.svelte";
 	import { MetaTags } from "svelte-meta-tags";
 	import { page } from "$app/state";
+	import { slide } from "svelte/transition";
+	import Separator from "$lib/components/ui/separator/separator.svelte";
 
 	let isOpen = $state(false);
 
@@ -160,11 +162,16 @@
 
 		<!-- Mobile Menu -->
 		{#if isOpen}
-			<div class="md:hidden px-2 pt-2 pb-3 space-y-1">
+			<Separator class="opacity-55 "></Separator>
+			<div
+				transition:slide={{ duration: 250 }}
+				class="md:hidden px-2 pt-2 pb-3 space-y-1"
+			>
 				{#each navItems as item}
 					<a
 						href={item.href}
 						class="block px-3 py-2 rounded-md text-foreground hover:bg-gray-100 dark:text-muted-foreground dark:hover:bg-gray-800"
+						onclick={() => (isOpen = !isOpen)}
 					>
 						{item.name}
 					</a>
