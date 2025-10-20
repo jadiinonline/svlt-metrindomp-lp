@@ -119,12 +119,11 @@
 			{
 				url: "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/LOGO-HORIZONTAL.png",
 				alt: "logo metrindo",
-				width: 1200,
+				width: 1700,
 				height: 630,
 			},
 		],
 	}}
-	facebook={{}}
 />
 
 <div class="min-h-screen max-w-screen overflow-x-hidden">
