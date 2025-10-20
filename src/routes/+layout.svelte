@@ -111,17 +111,20 @@
 	openGraph={{
 		type: "website",
 		url: page.url.href,
-		title: "Metrindo Maju Persada",
+		title: "PT. Metrindo Maju Persada",
 		description:
-			"Kami menyediakan layanan konstruksi, termasuk jasa konstruksi untuk proyek komersial, rumah, dan infrastruktur. Hubungi kami untuk solusi profesional",
+			"Sejak 1997, Metrindo Maju Persada telah menjadi mitra terpercaya dalam menghadirkan solusi konstruksi terpadu untuk proyek komersial,  infrastruktur dan residensial. Dengan komitmen terhadap kualitas, inovasi, dan ketepatan waktu, kami siap mewujudkan setiap visi anda.",
 		siteName: "Metrindo Maju Persada",
 		images: [
 			{
 				url: "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/LOGO-HORIZONTAL.png",
 				alt: "logo metrindo",
+				width: 1200,
+				height: 630,
 			},
 		],
 	}}
+	facebook={{}}
 />
 
 <div class="min-h-screen max-w-screen overflow-x-hidden">
