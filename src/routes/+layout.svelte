@@ -72,7 +72,7 @@
   "@type": "Organization",
   "name": "Metrindo Maju Persada",
   "url": "https://metrindomp.com",
-  "logo": "https://metrindomp.com/favicon.png",
+  "logo": "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/LOGO-HORIZONTAL.png",
   "sameAs": [],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
@@ -105,6 +105,12 @@
 		description:
 			"Kami menyediakan layanan konstruksi, termasuk jasa konstruksi untuk proyek komersial, rumah, dan infrastruktur. Hubungi kami untuk solusi profesional",
 		siteName: "Metrindo Maju Persada",
+		images: [
+			{
+				url: "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/LOGO-HORIZONTAL.png",
+				alt: "logo metrindo",
+			},
+		],
 	}}
 />
 
