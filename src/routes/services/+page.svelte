@@ -38,7 +38,7 @@
 			id: "proj-1",
 			title: "Downtown High-Rise",
 			serviceId: "construction",
-			image: "https://images.unsplash.com/photo-1581092446327-9b52bdc810ed?q=80&w=2574&auto=format&fit=crop",
+			image: "https://placehold.co/800x800",
 			description:
 				"A 40-story commercial office building constructed with cutting-edge materials and techniques.",
 		},
@@ -46,7 +46,7 @@
 			id: "proj-2",
 			title: "Suburban Villa Remodel",
 			serviceId: "renovation",
-			image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2670&auto=format&fit=crop",
+			image: "https://placehold.co/800x800",
 			description:
 				"Complete interior and exterior renovation of a luxury residential villa, including landscaping.",
 		},
@@ -54,7 +54,7 @@
 			id: "proj-3",
 			title: "Industrial Park Design",
 			serviceId: "design",
-			image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2832&auto=format&fit=crop",
+			image: "https://placehold.co/800x800",
 			description:
 				"Structural and civil engineering design for a 200-acre industrial park development.",
 		},
@@ -62,7 +62,7 @@
 			id: "proj-4",
 			title: "Bridge Construction Management",
 			serviceId: "management",
-			image: "https://images.unsplash.com/photo-1524503246255-361b3c641854?q=80&w=2670&auto=format&fit=crop",
+			image: "https://placehold.co/800x800",
 			description:
 				"Oversaw the entire lifecycle of a major city bridge project, ensuring on-time, on-budget delivery.",
 		},
@@ -70,7 +70,7 @@
 			id: "proj-5",
 			title: "Historic Building Restoration",
 			serviceId: "renovation",
-			image: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=2574&auto=format&fit=crop",
+			image: "https://placehold.co/800x800",
 			description:
 				"Painstaking restoration of a century-old landmark, preserving its historical integrity.",
 		},
@@ -78,7 +78,7 @@
 			id: "proj-6",
 			title: "Shopping Mall Construction",
 			serviceId: "construction",
-			image: "https://images.unsplash.com/photo-1599493343903-3a31d75f1dc4?q=80&w=2670&auto=format&fit=crop",
+			image: "https://placehold.co/800x800",
 			description:
 				"Lead contractor for a new 500,000 sq. ft. regional shopping center.",
 		},
