@@ -109,7 +109,8 @@
 <div class="flex flex-col space-y-7">
 	<section
 		id="hero"
-		class="relative bg-[url('https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/hero-content-2.avif')] bg-cover bg-center w-screen xl:w-[99.1vw] xl:-mx-8 p-2 xl:p-20"
+		class="relative bg-[url('https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/hero-content-2.avif')] bg-cover bg-center w-screen xl:w-[99.1vw] xl:-mx-8 p-2 xl:p-20
+		scroll-mt-[15vh]"
 	>
 		<div
 			class="absolute inset-0 bg-gradient-to-r from-white to-transparent"
@@ -125,7 +126,7 @@
 			</h2>
 
 			<h1
-				class="uppercase text-2xl md:text-4xl lg:text-8xl font-bold text-shadow-md"
+				class="uppercase text-2xl md:text-4xl lg:text-8xl font-extrabold md:font-bold text-shadow-md"
 			>
 				general contractor & <br />engineering services
 			</h1>
@@ -135,13 +136,13 @@
 				proyek menengah hingga besar. Perusahaan ini dikenal dengan kemampuan
 				menjaga kualitas, kepuasan pelanggan, dan hubungan baik dengan para
 				mitra kerja. Keberhasilan ini didukung oleh tenaga ahli yang kompeten
-				di bindangnya
+				di bidangnya
 			</p>
 
 			<Button
 				class="right-0 w-[200px] text-lg "
 				size="lg"
-				href="https://wa.me/62811923432"
+				href="https://wa.me/62811111111"
 				target="_blank"
 			>
 				Konsultasi Gratis <MessageSquareText />
@@ -151,7 +152,7 @@
 
 	<Separator></Separator>
 
-	<section id="tentang-kami" class="m-2 w-full">
+	<section id="tentang-kami" class="m-2 w-full scroll-mt-[15vh]">
 		<div
 			class="grid md:grid-cols-2 space-x-8 items-center justify-between w-full gap-2"
 		>
@@ -241,7 +242,7 @@
 		</div>
 	</section>
 
-	<section id="visi-misi" class="m-2">
+	<section id="visi-misi" class="m-2 scroll-mt-[15vh]">
 		<h2 class="text-center font-extrabold text-4xl md:text-6xl mb-8">
 			Quality & Schedule
 		</h2>
