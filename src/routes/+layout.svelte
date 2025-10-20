@@ -117,10 +117,10 @@
 		siteName: "Metrindo Maju Persada",
 		images: [
 			{
-				url: "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/LOGO-HORIZONTAL.png",
+				url: "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/LOGO.png",
 				alt: "logo metrindo",
-				width: 1700,
-				height: 630,
+				width: 600,
+				height: 600,
 			},
 		],
 	}}
