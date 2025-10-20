@@ -113,7 +113,7 @@
 		url: page.url.href,
 		title: "PT. Metrindo Maju Persada",
 		description:
-			"Sejak 1997, Metrindo Maju Persada telah menjadi mitra terpercaya dalam menghadirkan solusi konstruksi terpadu untuk proyek komersial,  infrastruktur dan residensial. Dengan komitmen terhadap kualitas, inovasi, dan ketepatan waktu, kami siap mewujudkan setiap visi anda.",
+			"Sejak 1997, PT. Metrindo Maju Persada telah menjadi mitra terpercaya dalam menghadirkan solusi konstruksi terpadu untuk proyek komersial,  infrastruktur dan residensial. Dengan komitmen terhadap kualitas, inovasi, dan ketepatan waktu, kami siap mewujudkan setiap visi anda.",
 		siteName: "Metrindo Maju Persada",
 		images: [
 			{
