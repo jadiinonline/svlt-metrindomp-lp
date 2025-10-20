@@ -1,6 +1,6 @@
 <script lang="ts">
 	import "../app.css";
-	import favicon from "$lib/assets/favicon.svg";
+	import favicon from "$lib/assets/favicon.png";
 	import { Menu, X } from "@lucide/svelte";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import Footer from "./footer.svelte";
@@ -20,11 +20,11 @@
 		},
 		{
 			name: "Services",
-			href: "/services",
+			href: "/#layanan-kami",
 		},
 		{
 			name: "Projects",
-			href: "/projects",
+			href: "/#projects-list",
 		},
 	];
 
@@ -117,7 +117,11 @@
 					href="/"
 					class="text-xl font-bold text-gray-900 dark:text-white"
 				>
-					MetrindoMP
+					<img
+						src="LOGO-HORIZONTAL.png"
+						alt="logo"
+						class="h-[60px]"
+					/>
 				</a>
 
 				<!-- Desktop Menu -->
