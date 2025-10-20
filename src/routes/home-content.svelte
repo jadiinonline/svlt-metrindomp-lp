@@ -111,7 +111,7 @@
 <div class="flex flex-col space-y-7">
 	<section
 		id="hero"
-		class="relative bg-[url('https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/hero-content-2.avif')] bg-cover bg-center w-screen xl:w-[99.1vw] xl:-mx-8 p-2 xl:p-20
+		class="relative bg-[url('https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/hero-content-2.avif')] bg-cover bg-center w-screen xl:-mx-8 p-2 xl:p-20
 		scroll-mt-[15vh]"
 	>
 		<div
@@ -156,7 +156,7 @@
 
 	<section id="tentang-kami" class="m-2 w-full scroll-mt-[15vh]">
 		<div
-			class="grid md:grid-cols-2 space-x-8 items-center justify-between w-full gap-2"
+			class="grid lg:grid-cols-2 space-x-8 items-center justify-between w-full gap-2"
 		>
 			<div class="flex-shrink-0">
 				<img
