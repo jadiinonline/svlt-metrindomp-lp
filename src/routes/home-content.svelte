@@ -13,6 +13,8 @@
 	import Skeleton from "$lib/components/ui/skeleton/skeleton.svelte";
 
 	const companyYear = 1997;
+	let currentYear = new Date().getFullYear();
+	let companyAge = currentYear - companyYear;
 
 	const clients = [
 		{
@@ -176,7 +178,7 @@
 
 					<div class="flex flex-col space-y-2">
 						<div class="text-muted-foreground text-xl md:text-2xl">
-							27 years of experience
+							<b>{companyAge} years of </b>
 						</div>
 						<div class="text-2xl md:text-4xl font-bold uppercase">
 							success in experience
