@@ -96,6 +96,28 @@
 			categories: ["elektrikal"],
 			client: "PT. INTI BANGUN SEJAHTERA",
 		},
+		{
+			title: "Pekerjaan Mekanikal , Elektrikal dan Plumbing Pembangunan Gerbang Tol Bogor 2 Pada jalan Tol Jagorawi Baranangsiang",
+			images: [
+				"https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/project_tol_bogor_2.jpg",
+			],
+			year: 2017,
+			description: "xxxxx",
+			location: "Bogor, Indonesia",
+			categories: ["elektrikal", "mekanikal", "plumbing"],
+			client: "PT. MITRA SETYA UTAMA",
+		},
+		{
+			title: "Pekerjaan Jasa dan Material Elektikal Pemindahan Genset Universitas Pertamina",
+			images: [
+				"https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/project_universitas_pertamina.jpeg",
+			],
+			year: 2016,
+			description: "xxxxx",
+			location: "Jakarta Selatan, Indonesia",
+			categories: ["elektrikal"],
+			client: "PT. PATRA BADAK ARUN SOLUSI",
+		},
 	];
 
 	const layanan = [
