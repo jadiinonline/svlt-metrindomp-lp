@@ -280,11 +280,11 @@
 							alt="visi"
 							class="absolute top-0 lg:left-0 z-1 w-[50%] xl:w-[30%] h-auto rounded-2xl border-white border-6"
 						/>
-						<div class="p-10">
+						<div class="p-4 md:p-10">
 							<img
 								src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/worker-alpha.png"
 								alt="visi"
-								class="relative z-0 xl:w-[70%] xl:h-[70%] my-auto mx-auto rounded-2xl border-white border-6"
+								class="relative z-0 w-[100%] xl:w-[70%] xl:h-[70%] my-auto mx-auto rounded-2xl border-white border-6"
 							/>
 						</div>
 						<img
@@ -453,14 +453,18 @@
 					{/if}
 					<div class="bg-primary text-white p-4 h-[120px]">
 						<div class="flex justify-between">
-							<h3 class="text-md font-extrabold mb-2">
+							<h3
+								class="text-md md:text-lg lg:text-xl font-extrabold mb-2"
+							>
 								{project.client}
 							</h3>
 
-							<h2 class="text-xs">{project.year}</h2>
+							<h2 class="text-xs md:text-md md:font-bold p-1">
+								{project.year}
+							</h2>
 						</div>
 
-						<p class="text-sm self-center text-accent">
+						<p class="text-sm md:text-md self-center text-accent">
 							{project.title &&
 							project.title.split(" ").length > 10
 								? project.title
