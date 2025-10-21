@@ -5,12 +5,15 @@
 	import Autoplay from "embla-carousel-autoplay";
 
 	import {
+		ArrowLeft,
+		ArrowRight,
 		CalendarCheck,
 		Laugh,
 		MessageSquareText,
 		ShieldCheck,
 	} from "@lucide/svelte";
 	import Skeleton from "$lib/components/ui/skeleton/skeleton.svelte";
+	import { Badge } from "$lib/components/ui/badge";
 
 	const companyYear = 1997;
 	let currentYear = new Date().getFullYear();
@@ -45,34 +48,53 @@
 
 	const paginatedProjects: ProjectList[] = [
 		{
-			title: "Pekerjaan pengadaan dan pemasangan Instalasi Listrik pada proyek pembangunan tol Soroja Bandung",
-			images: ["http://placehold.co/200x400?text=image_soroja"],
-			description:
-				"Proyek ini meliputi pekerjaan pengadaan dan pemasangan instalasi listrik pada pembangunan Jalan Tol Soreang – Pasir Koja (Soroja), Bandung. Ruang lingkup pekerjaan mencakup penyediaan material, pemasangan sistem kelistrikan utama dan penerangan, serta penyaluran daya untuk fasilitas tol, gerbang, dan area pendukung operasional. Pelaksanaan dilakukan dengan standar keselamatan dan mutu tinggi, memastikan sistem listrik berfungsi secara andal, efisien, dan aman untuk mendukung operasional jalan tol secara berkelanjutan dan tepat waktu.",
-			location: "Jakarta, Indonesia",
-			categories: ["civil", "mechanical"],
-			client: "PT GUNUNG GAYA PERSADA",
-			year: 2017,
-		},
-		{
 			title: "Proyek Transmisi 500 kV New Aur Duri - Peranap Paket -1 Jambi PONDASI PAD & CHIMNEY KELAS 6 ( Borepile)",
-			images: ["http://placehold.co/1000x100?text=image_transmisi"],
+			images: [
+				"https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/project_jambi_aur_duri.jpg",
+			],
 			year: 2018,
 			description:
 				"Proyek ini merupakan pekerjaan pondasi PAD dan chimney kelas 6 (borepile) untuk Transmisi 500 kV New Aur Duri – Peranap Paket 1 yang berlokasi di Provinsi Jambi. Pekerjaan meliputi pembangunan pondasi struktur transmisi tegangan ekstra tinggi dengan sistem borepile, yang berfungsi sebagai penopang utama menara transmisi. Pelaksanaan proyek dilakukan dengan standar mutu tinggi untuk menjamin kestabilan struktur, ketepatan dimensi, dan ketahanan jangka panjang, serta mengikuti jadwal kerja yang ketat agar seluruh target dapat diselesaikan tepat waktu.",
 			location: "Jambi, Indonesia",
 			categories: ["civil", "mechanical"],
-			client: "PT WASKITA KARYA PERSERO ",
+			client: "PT. WASKITA KARYA PERSERO ",
 		},
 		{
+			title: "Pekerjaan Pembangunan 9 unit rumah Type 36 (Blok C. 3 No. 4, 6, 8, 10 dan 12 ( 5 unit ) Blok C. 5 No. 10, 12, 14 dan 16 ( 4 unit) Proyek Taman Dhika Batu Tulis - Bogor",
+			images: [
+				"https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/project_tamandhika.jpg",
+			],
+			description:
+				"Proyek ini merupakan pekerjaan pembangunan kompleks rumah hunian tipe 36 yang berlokasi di Batu Tulis, Bogor. Pekerjaan meliputi pembangunan struktur utama serta instalasi pendukung untuk menciptakan lingkungan hunian yang nyaman, fungsional, dan sesuai dengan standar kualitas konstruksi modern.",
+			location: "Bogor, Indonesia",
+			categories: ["civil", "mechanical"],
+			client: "PT. ADHI PERSADA PROPERTI",
+			year: 2017,
+		},
+		{
+			title: "Pekerjaan pengadaan dan pemasangan Instalasi Listrik pada proyek pembangunan tol Soroja Bandung",
+			images: [
+				"https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/project_tol_soroja.jpg",
+			],
+			description:
+				"Proyek ini meliputi pekerjaan pengadaan dan pemasangan instalasi listrik pada pembangunan Jalan Tol Soreang – Pasir Koja (Soroja), Bandung. Ruang lingkup pekerjaan mencakup penyediaan material, pemasangan sistem kelistrikan utama dan penerangan, serta penyaluran daya untuk fasilitas tol, gerbang, dan area pendukung operasional. Pelaksanaan dilakukan dengan standar keselamatan dan mutu tinggi, memastikan sistem listrik berfungsi secara andal, efisien, dan aman untuk mendukung operasional jalan tol secara berkelanjutan dan tepat waktu.",
+			location: "Jakarta, Indonesia",
+			categories: ["civil", "mechanical"],
+			client: "PT. GUNUNG GAYA PERSADA",
+			year: 2017,
+		},
+
+		{
 			title: "Penyambungan daya Listrik PLN di tower BTS BSD Serpong",
-			images: ["http://placehold.co/100x100?text=image_bts"],
+			images: [
+				"https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/project_listrik_bts.jpg",
+			],
 			year: 2017,
 			description:
 				"Proyek ini mencakup pekerjaan penyambungan daya listrik PLN pada menara BTS (Base Transceiver Station) yang berlokasi di BSD, Serpong. Lingkup pekerjaan meliputi koordinasi dengan pihak PLN, pemasangan instalasi kelistrikan dari sumber utama ke panel distribusi BTS, serta pengujian sistem untuk memastikan pasokan daya yang stabil, aman, dan sesuai standar teknis. Pekerjaan dilaksanakan dengan memperhatikan ketepatan waktu, keselamatan kerja, dan keandalan sistem guna mendukung operasional jaringan telekomunikasi secara optimal.",
 			location: "Tangerang Selatan, Indonesia",
 			categories: ["elektrikal"],
-			client: "PT INTI BANGUN SEJAHTERA, Tbk",
+			client: "PT. INTI BANGUN SEJAHTERA",
 		},
 	];
 
@@ -144,7 +166,7 @@
 			<Button
 				class="right-0 w-[200px] text-lg "
 				size="lg"
-				href="https://wa.me/62811111111"
+				href="https://wa.me/62816878368?text=Halo,%20saya%20dapat%20informasi%20dari%20website%20metrindomp.com"
 				target="_blank"
 			>
 				Konsultasi Gratis <MessageSquareText />
@@ -398,39 +420,67 @@
 		</div>
 
 		<p class="text-center text-primary underline">
-			<a href="/services">lihat semua</a>
+			<a
+				href="/#services"
+				class="pointer-events-none text-muted-foreground cursor-default"
+				>lihat semua</a
+			>
 		</p>
 	</section>
 
 	<section class="m-2" id="projects-list">
 		<h2 class="text-center font-bold text-4xl mb-8">Projects</h2>
 
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 			{#each paginatedProjects as project}
-				<div class="bg-card p-6 rounded-lg shadow-md">
+				<div class="">
 					{#if project.images && project.images.length > 0}
-						<img
-							src={project.images[0]}
-							alt={project.title}
-							class="mb-4 rounded-md w-full h-48 object-cover"
-						/>
+						<!-- gambar2 project dengan overlay 10% putih-->
+						<div
+							class="relative w-full h-[250px] overflow-hidden shadow-md"
+						>
+							<img
+								src={project.images[0]}
+								alt={project.title}
+								class="w-full h-full object-cover brightness-[1.05] contrast-[1.1] saturate-[1.05] transition-all duration-300 hover:scale-[1.02] hover:brightness-[1.1]"
+							/>
+							<div class="absolute inset-0 bg-white/10"></div>
+						</div>
 					{:else}
 						<Skeleton
 							class="mb-4 rounded-md w-full h-48 object-cover"
 						></Skeleton>
 					{/if}
-					<h3 class="text-xl font-semibold mb-2">{project.title}</h3>
-					<p class="text-muted-foreground mb-4">
-						{project.description &&
-						project.description.split(" ").length > 30
-							? project.description
-									.split(" ")
-									.slice(0, 30)
-									.join(" ") + "..."
-							: project.description}
-					</p>
+					<div class="bg-primary text-white p-4 h-[120px]">
+						<div class="flex justify-between">
+							<h3 class="text-md font-extrabold mb-2">
+								{project.client}
+							</h3>
+
+							<h2 class="text-xs">{project.year}</h2>
+						</div>
+
+						<p class="text-sm self-center text-accent">
+							{project.title &&
+							project.title.split(" ").length > 10
+								? project.title
+										.split(" ")
+										.slice(0, 10)
+										.join(" ") + "..."
+								: project.title}
+						</p>
+					</div>
 				</div>
 			{/each}
+		</div>
+		<div class="flex justify-between gap-4 mt-4">
+			<Button variant="ghost">
+				<ArrowLeft class="text-primary" size="lg" />
+			</Button>
+
+			<Button variant="ghost">
+				<ArrowRight class="text-primary" size="200" />
+			</Button>
 		</div>
 	</section>
 
@@ -458,7 +508,7 @@
 							<img
 								src={client.logo}
 								alt={client.name}
-								class="h-16 object-containproject"
+								class="h-16 object-contain"
 							/>
 							{client.name}
 						</div>
