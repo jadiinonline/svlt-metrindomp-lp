@@ -437,7 +437,7 @@
 					{#if project.images && project.images.length > 0}
 						<!-- gambar2 project dengan overlay 10% putih-->
 						<div
-							class="relative w-full h-[250px] overflow-hidden shadow-md"
+							class="relative w-full h-[250px] xl:h-[400px] overflow-hidden shadow-md"
 						>
 							<img
 								src={project.images[0]}
@@ -464,14 +464,10 @@
 							</h2>
 						</div>
 
-						<p class="text-sm md:text-md self-center text-accent">
-							{project.title &&
-							project.title.split(" ").length > 10
-								? project.title
-										.split(" ")
-										.slice(0, 10)
-										.join(" ") + "..."
-								: project.title}
+						<p
+							class="text-sm md:text-md self-center text-accent line-clamp-2 xl:line-clamp-3"
+						>
+							{project.title}
 						</p>
 					</div>
 				</div>
