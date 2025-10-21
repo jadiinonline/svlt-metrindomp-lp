@@ -82,7 +82,7 @@
   "@type": "Organization",
   "name": "Metrindo Maju Persada",
   "url": "https://metrindomp.com",
-  "logo": "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/LOGO-HORIZONTAL.png",
+  "logo": "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/logo_600X600.png",
   "sameAs": [],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
@@ -117,7 +117,7 @@
 		siteName: "Metrindo Maju Persada",
 		images: [
 			{
-				url: "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/LOGO.png",
+				url: "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/logo_600X600.png",
 				alt: "logo metrindo",
 				width: 600,
 				height: 600,
