@@ -106,7 +106,7 @@
 </script>`}
 
 <MetaTags
-	title="PT. Metrindo Maju Persada - Jasa konstruksi & subkon"
+	title="PT. Metrindo Maju Persada | General Contractor"
 	description="Jasa konstruksi mekanikal elektrikal plumbing sipil telekomunikasi"
 	openGraph={{
 		type: "website",
