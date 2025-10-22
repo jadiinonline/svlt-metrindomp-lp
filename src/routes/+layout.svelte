@@ -138,7 +138,7 @@
 					class="text-xl font-bold text-gray-900 dark:text-white"
 				>
 					<img
-						src="LOGO-HORIZONTAL.png"
+						src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/LOGO-HORIZONTAL.png"
 						alt="logo"
 						class="h-[60px]"
 					/>

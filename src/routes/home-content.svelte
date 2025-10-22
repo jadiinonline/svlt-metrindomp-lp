@@ -166,13 +166,13 @@
 			class="relative flex flex-col space-y-3 p-2 md:p-8 w-[80%] xl:w-[60%]"
 		>
 			<h2
-				class="italic font-bold text-xl md:text-3xl bg-black text-white md:w-[400px] text-center p-2 rounded-sm"
+				class="italic font-bold text-lg md:text-3xl bg-black text-white w-[250px] md:w-[400px] text-center p-2 rounded-sm"
 			>
 				"Quality & Schedule"
 			</h2>
 
 			<h1
-				class="uppercase text-2xl md:text-4xl lg:text-8xl font-extrabold md:font-bold text-shadow-md"
+				class="uppercase text-4xl md:text-4xl lg:text-8xl font-extrabold lg:font-bold text-shadow-md"
 			>
 				general contractor & <br />engineering services
 			</h1>

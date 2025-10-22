@@ -22,7 +22,11 @@
 				>
 			</h3>
 			<div class="h-[70px]">
-				<img src="LOGO-HORIZONTAL.png" class="h-full" alt="logo" />
+				<img
+					src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/LOGO-HORIZONTAL.png"
+					class="h-full"
+					alt="logo"
+				/>
 			</div>
 		</div>
 		<div class="flex flex-col gap-2">
