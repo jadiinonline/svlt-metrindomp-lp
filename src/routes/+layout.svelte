@@ -1,6 +1,6 @@
 <script lang="ts">
 	import "../app.css";
-	import favicon from "$lib/assets/favicon.png";
+	import favicon from "$lib/assets/favicon.ico";
 	import { Menu, X } from "@lucide/svelte";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import Footer from "./footer.svelte";
