@@ -13,7 +13,6 @@
 		ShieldCheck,
 	} from "@lucide/svelte";
 	import Skeleton from "$lib/components/ui/skeleton/skeleton.svelte";
-	import { Badge } from "$lib/components/ui/badge";
 
 	const companyYear = 1997;
 	let currentYear = new Date().getFullYear();
@@ -429,6 +428,7 @@
 						src={item.img}
 						alt={item.alt}
 						class="mb-4 rounded-full w-[100px]"
+						fetchpriority="low"
 					/>
 					<h3 class="text-xl font-semibold mb-2">{item.title}</h3>
 					<p
@@ -465,6 +465,7 @@
 								src={project.images[0]}
 								alt={project.title}
 								class="w-full h-full object-cover brightness-[1.05] contrast-[1.1] saturate-[1.05] transition-all duration-300 hover:scale-[1.02] hover:brightness-[1.1]"
+								fetchpriority="low"
 							/>
 							<div class="absolute inset-0 bg-white/10"></div>
 						</div>
@@ -531,6 +532,7 @@
 								src={client.logo}
 								alt={client.name}
 								class="h-16 object-contain"
+								fetchpriority="low"
 							/>
 							{client.name}
 						</div>

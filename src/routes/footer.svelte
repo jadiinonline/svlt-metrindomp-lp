@@ -23,7 +23,7 @@
 			</h3>
 			<div class="h-[70px]">
 				<img
-					src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/LOGO-HORIZONTAL.png"
+					src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/logo-horizontal.png"
 					class="h-full"
 					alt="logo"
 				/>
