@@ -1,5 +1,16 @@
 favicon harus dengan dimensi pixel 64x64
 
+
+## prisma
+# checking is db sync with schema in prisma
+npx prisma migrate diff \
+  --from-url "$(grep DATABASE_URL .env | cut -d '=' -f2- | tr -d '"' )" \
+  --to-schema-datamodel prisma/schema.prisma 
+
+# push synch schema to db server (with warning if there is table needed to be deleted by there is data in it)
+npx prisma db push
+
+
 # sv
 
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
