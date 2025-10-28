@@ -1,6 +1,6 @@
 <script lang="ts">
 	import "../app.css";
-	import favicon from "$lib/assets/favicon.png";
+	import favicon from "$lib/assets/favicon.ico";
 	import { Menu, X } from "@lucide/svelte";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import Footer from "./footer.svelte";
@@ -82,7 +82,7 @@
   "@type": "Organization",
   "name": "Metrindo Maju Persada",
   "url": "https://metrindomp.com",
-  "logo": "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/LOGO-HORIZONTAL.png",
+  "logo": "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/logo_600X600.png",
   "sameAs": [],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
@@ -106,7 +106,7 @@
 </script>`}
 
 <MetaTags
-	title="PT. Metrindo Maju Persada - Jasa konstruksi & subkon"
+	title="PT. Metrindo Maju Persada | General Contractor"
 	description="Jasa konstruksi mekanikal elektrikal plumbing sipil telekomunikasi"
 	openGraph={{
 		type: "website",
@@ -117,7 +117,7 @@
 		siteName: "Metrindo Maju Persada",
 		images: [
 			{
-				url: "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/LOGO.png",
+				url: "https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/logo_600X600.png",
 				alt: "logo metrindo",
 				width: 600,
 				height: 600,
@@ -138,7 +138,7 @@
 					class="text-xl font-bold text-gray-900 dark:text-white"
 				>
 					<img
-						src="LOGO-HORIZONTAL.png"
+						src="https://storage.googleapis.com/jadiinonline-public/metrindomp/assets/logo-horizontal.png"
 						alt="logo"
 						class="h-[60px]"
 					/>
@@ -157,7 +157,7 @@
 
 					<Button
 						class="font-bold"
-						href="https://wa.me/62811111111"
+						href="https://wa.me/62816878368?text=Halo,%20saya%20dapat%20informasi%20dari%20website%20metrindomp.com"
 						target="_blank"
 					>
 						Hubungi Kami
