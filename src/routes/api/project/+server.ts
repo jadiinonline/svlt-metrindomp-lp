@@ -1,57 +1,99 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { PrismaClient } from '@prisma/client';
+import prisma from '$lib/prisma'; // <-- use the shared Prisma client
+import { serializeBigInt } from '$lib/utils/utils';
 
-const prisma = new PrismaClient();
+// Define allowed columns for sorting to prevent SQL injection
+const ALLOWED_SORT_FIELDS = ['name', 'created_at', 'year', 'po_price', 'status'];
 
-// GET /api/project - List all projects with pagination.
 export const GET: RequestHandler = async ({ url }) => {
-	const page = parseInt(url.searchParams.get('page') || '1');
-	const limit = parseInt(url.searchParams.get('limit') || '10');
+	// --- Pagination ---
+	let page = parseInt(url.searchParams.get('page') || '1');
+	let limit = parseInt(url.searchParams.get('limit') || '100');
+
+	page = Math.max(page, 1);
+	limit = Math.min(Math.max(limit, 1), 100);
+
 	const offset = (page - 1) * limit;
 
-	try {
-		const projects = await prisma.project.findMany({
-			skip: offset, // Use offset instead of skip
-			take: limit, // Use limit instead of take
-			orderBy: {
-				createdAt: 'desc',
-			},
-		});
-		const totalProjects = await prisma.project.count();
+	// --- Sorting ---
+	let sortField = url.searchParams.get('sort') || 'created_at';
+	let sortOrder = (url.searchParams.get('order') || 'desc').toLowerCase();
 
-		return json({
-			projects,
-			currentPage: page,
-			totalPages: Math.ceil(totalProjects / limit),
-			totalProjects,
+	if (!ALLOWED_SORT_FIELDS.includes(sortField)) sortField = 'created_at';
+	if (sortOrder !== 'asc' && sortOrder !== 'desc') sortOrder = 'desc';
+
+	try {
+		const projects = await prisma.projects.findMany({
+			skip: offset,
+			take: limit,
+			orderBy: { [sortField]: sortOrder },
+			include: {
+				client: true
+			}
 		});
+
+		const total = await prisma.projects.count();
+		const totalPages = Math.ceil(total / limit);
+
+		// ✅ Convert all ids + bigint fields → string so json() can send them
+		return json(
+			serializeBigInt({
+				projects,
+				total,
+				page,
+				limit,
+				totalPages,
+				sort: { field: sortField, order: sortOrder }
+			})
+		);
+
 	} catch (error) {
 		console.error('Error fetching projects:', error);
 		return json({ error: 'Failed to fetch projects' }, { status: 500 });
 	}
 };
 
+
 // POST /api/project - Create a new project
 export const POST: RequestHandler = async ({ request }) => {
 	try {
 		const data = await request.json();
-		const newProject = await prisma.project.create({
+
+		// Validate required fields
+		if (!data.name) return json({ error: 'name is required' }, { status: 400 });
+		if (!data.clients_id) return json({ error: 'clients_id is required' }, { status: 400 });
+
+		const poPriceBigInt =
+			data.po_price !== undefined && data.po_price !== null
+				? BigInt(data.po_price)
+				: null;
+
+		const newProject = await prisma.projects.create({
 			data: {
 				name: data.name,
-				description: data.description,
-				// Add other fields as necessary
-			},
+				clients_id: BigInt(data.clients_id),
+				po_price: poPriceBigInt,
+				slug: data.slug ?? null,
+				description: data.description ?? null,
+				location: data.location ?? null,
+				year: data.year ?? null,
+				status: data.status || 'draft',
+				start_date: data.start_date ? new Date(data.start_date) : null,
+				end_date: data.end_date ? new Date(data.end_date) : null
+			}
 		});
-		return json(newProject, { status: 201 });
+
+		// ✅ Convert BigInt → String for JSON response
+		return json(serializeBigInt(newProject), { status: 201 });
+
 	} catch (error) {
 		console.error('Error creating project:', error);
 		return json({ error: 'Failed to create project' }, { status: 500 });
 	}
 };
 
-// PUT /api/project/[id] - Update an existing project (This would typically be in a dynamic route [id])
-// For simplicity, we'll include a basic update example here, but a dedicated [id] route is better.
+// PUT /api/project?id=123 - Update an existing project
 export const PUT: RequestHandler = async ({ request, url }) => {
 	const id = url.searchParams.get('id');
 	if (!id) {
@@ -60,14 +102,21 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 
 	try {
 		const data = await request.json();
-		const updatedProject = await prisma.project.update({
+		const updatedProject = await prisma.projects.update({
 			where: {
-				id: parseInt(id),
+				id: BigInt(id), // convert to BigInt
 			},
 			data: {
 				name: data.name,
+				slug: data.slug,
 				description: data.description,
-				// Add other fields as necessary
+				location: data.location,
+				year: data.year,
+				po_price: data.po_price,
+				status: data.status,
+				start_date: data.start_date ? new Date(data.start_date) : undefined,
+				end_date: data.end_date ? new Date(data.end_date) : undefined,
+				clients_id: data.clients_id ? BigInt(data.clients_id) : undefined,
 			},
 		});
 		return json(updatedProject, { status: 200 });
@@ -76,3 +125,5 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 		return json({ error: `Failed to update project with ID ${id}` }, { status: 500 });
 	}
 };
+
+
