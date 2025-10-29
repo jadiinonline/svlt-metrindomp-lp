@@ -1,12 +1,13 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import prisma from '$lib/prisma';
-import { serializeBigInt, snakeToCamel, toTitleCase } from '$lib/utils/utils';
+import { serializeBigInt, snakeToCamel, camelToSnakeSafe } from '$lib/utils/utils';
+
 
 // Allowed sorting fields
 const ALLOWED_SORT_FIELDS = ['name', 'created_at', 'updated_at'];
 
-// GET /api/clients
+// GET /api/service-categories
 export const GET: RequestHandler = async ({ url }) => {
 	let page = parseInt(url.searchParams.get('page') || '1');
 	let limit = parseInt(url.searchParams.get('limit') || '10');
@@ -23,17 +24,19 @@ export const GET: RequestHandler = async ({ url }) => {
 	const offset = (page - 1) * limit;
 
 	try {
-		const clientsData = await prisma.clients.findMany({
+		const categoriesData = await prisma.service_categories.findMany({
 			skip: offset,
 			take: limit,
 			orderBy: { [sortField]: sortOrder },
-			include: { projects: true }
+			// include: {
+			// 	project_categories: true
+			// }
 		});
 
-		const total = await prisma.clients.count();
+		const total = await prisma.service_categories.count();
 
 		const responseData = snakeToCamel(serializeBigInt({
-			clients: clientsData,
+			serviceCategories: categoriesData,
 			total,
 			page,
 			limit,
@@ -41,84 +44,90 @@ export const GET: RequestHandler = async ({ url }) => {
 			sort: { field: sortField, order: sortOrder }
 		}));
 
-		return json(
-			responseData
-		);
+		return json(responseData);
+
 	} catch (error) {
-		console.error('Error fetching clients:', error);
+		console.error('Error fetching service categories:', error);
 		return json({
-			error: 'Failed to fetch clients',
+			error: 'Failed to fetch service categories',
 			details: error
 		}, { status: 500 });
 	}
 };
 
-// POST /api/clients
+// POST /api/service-categories
 export const POST: RequestHandler = async ({ request }) => {
 	try {
-		const data = await request.json();
+
+		// Convert request from camelCase → snake_case
+		const dataRaw = await request.json();
+		const data = camelToSnakeSafe(dataRaw);
+
 		if (!data.name) return json({ error: 'name is required' }, { status: 400 });
 
-		const namePreprocessed = toTitleCase((data.name || '').trim());
+		const namePreprocessed = (data.name || '').trim().toLowerCase();
 
-		const newClient = await prisma.clients.create({
+		const newCategory = await prisma.service_categories.create({
 			data: {
 				name: namePreprocessed,
-				logo: data.logo ?? null
+				description: data.description ?? null
 			}
 		});
 
-		return json(serializeBigInt(newClient), { status: 201 });
+		const responseData = snakeToCamel(serializeBigInt(newCategory));
+
+		return json(responseData, { status: 201 });
 	} catch (error) {
-		console.error('Error creating client:', error);
+		console.error('Error creating service category:', error);
 		return json({
-			error: 'Failed to create client',
+			error: 'Failed to create service category',
 			details: error
 		}, { status: 500 });
 	}
 };
 
-// PUT /api/clients?id=123
+// PUT /api/service-categories?id=123
 export const PUT: RequestHandler = async ({ request, url }) => {
 	const idParam = url.searchParams.get('id');
-	if (!idParam) return json({ error: 'Client ID is required' }, { status: 400 });
+	if (!idParam) return json({ error: 'Category ID is required' }, { status: 400 });
 
 	try {
 		const data = await request.json();
 
-		const updatedClient = await prisma.clients.update({
+		const updatedCategory = await prisma.service_categories.update({
 			where: { id: BigInt(idParam) },
 			data: {
 				name: data.name,
-				logo: data.logo ?? null
+				description: data.description ?? null,
+				updated_at: new Date()
 			},
-			include: { projects: true }
+			include: { project_categories: true }
 		});
 
-		const responseData = snakeToCamel(serializeBigInt(updatedClient));
+		const responseData = snakeToCamel(serializeBigInt(updatedCategory))
 
-		return json(responseData, { status: 200 });
+		return json(responseData);
 	} catch (error) {
-		console.error(`Error updating client ${idParam}:`, error);
+		console.error(`Error updating category ${idParam}:`, error);
 		return json({
-			error: `Failed to update client ${idParam}`,
+			error: `Failed to update category ${idParam}`,
 			details: error
 		}, { status: 500 });
 	}
 };
 
-// DELETE /api/clients?id=123
+// DELETE /api/service-categories?id=123
 export const DELETE: RequestHandler = async ({ url }) => {
 	const idParam = url.searchParams.get('id');
-	if (!idParam) return json({ error: 'Client ID is required' }, { status: 400 });
+	if (!idParam) return json({ error: 'Category ID is required' }, { status: 400 });
 
 	try {
-		await prisma.clients.delete({ where: { id: BigInt(idParam) } });
-		return json({ message: 'Client deleted successfully' });
+		await prisma.service_categories.delete({ where: { id: BigInt(idParam) } });
+		return json({ message: 'Category deleted successfully' });
 	} catch (error) {
-		console.error(`Error deleting client ${idParam}:`, error);
+		console.error(`Error deleting category ${idParam}:`, error);
 		return json({
-			error: `Failed to delete client ${idParam}`,
+			error: `Failed to delete category ${idParam}`,
 			details: error
 		}, { status: 500 });
 	}

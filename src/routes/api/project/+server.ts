@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import prisma from '$lib/prisma'; // <-- use the shared Prisma client
-import { serializeBigInt } from '$lib/utils/utils';
+import { serializeBigInt, snakeToCamel, camelToSnakeSafe } from '$lib/utils/utils';
 
 // Define allowed columns for sorting to prevent SQL injection
 const ALLOWED_SORT_FIELDS = ['name', 'created_at', 'year', 'po_price', 'status'];
@@ -36,21 +36,26 @@ export const GET: RequestHandler = async ({ url }) => {
 		const total = await prisma.projects.count();
 		const totalPages = Math.ceil(total / limit);
 
+		const responseData = snakeToCamel(serializeBigInt({
+			projects,
+			total,
+			page,
+			limit,
+			totalPages,
+			sort: { field: sortField, order: sortOrder }
+		}));
+
 		// ✅ Convert all ids + bigint fields → string so json() can send them
 		return json(
-			serializeBigInt({
-				projects,
-				total,
-				page,
-				limit,
-				totalPages,
-				sort: { field: sortField, order: sortOrder }
-			})
+			responseData
 		);
 
 	} catch (error) {
 		console.error('Error fetching projects:', error);
-		return json({ error: 'Failed to fetch projects' }, { status: 500 });
+		return json({
+			error: 'Failed to fetch projects',
+			details: error
+		}, { status: 500 });
 	}
 };
 
@@ -84,12 +89,17 @@ export const POST: RequestHandler = async ({ request }) => {
 			}
 		});
 
+		const responseData = snakeToCamel(serializeBigInt(newProject))
+
 		// ✅ Convert BigInt → String for JSON response
-		return json(serializeBigInt(newProject), { status: 201 });
+		return json(responseData, { status: 201 });
 
 	} catch (error) {
 		console.error('Error creating project:', error);
-		return json({ error: 'Failed to create project' }, { status: 500 });
+		return json({
+			error: 'Failed to create project',
+			details: error
+		}, { status: 500 });
 	}
 };
 
@@ -119,10 +129,16 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 				clients_id: data.clients_id ? BigInt(data.clients_id) : undefined,
 			},
 		});
-		return json(updatedProject, { status: 200 });
+
+		const responseData = snakeToCamel(updatedProject)
+
+		return json(responseData, { status: 200 });
 	} catch (error) {
 		console.error(`Error updating project with ID ${id}:`, error);
-		return json({ error: `Failed to update project with ID ${id}` }, { status: 500 });
+		return json({
+			error: `Failed to update project with ID ${id}`,
+			details: error
+		}, { status: 500 });
 	}
 };
 
