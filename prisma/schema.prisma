@@ -75,6 +75,8 @@ model project_images {
   // Foreign Key
   projects_id BigInt
   project     projects  @relation(fields: [projects_id], references: [id])
+
+  @@unique([projects_id, image_link]) // <- unique constraint across these two columns
 }
 
 model project_categories {
@@ -89,4 +91,6 @@ model project_categories {
 
   project           projects         @relation(fields: [projects_id], references: [id])
   service_category  service_categories @relation(fields: [service_categories_id], references: [id])
+
+  @@unique([projects_id, service_categories_id]) // <- unique constraint across these two columns
 }

@@ -46,11 +46,11 @@ export const GET: RequestHandler = async ({ url }) => {
 
 		return json(responseData);
 
-	} catch (error) {
+	} catch (error: any) {
 		console.error('Error fetching service categories:', error);
 		return json({
 			error: 'Failed to fetch service categories',
-			details: error
+			details: error, message: error.message
 		}, { status: 500 });
 	}
 };
@@ -77,11 +77,11 @@ export const POST: RequestHandler = async ({ request }) => {
 		const responseData = snakeToCamel(serializeBigInt(newCategory));
 
 		return json(responseData, { status: 201 });
-	} catch (error) {
+	} catch (error: any) {
 		console.error('Error creating service category:', error);
 		return json({
 			error: 'Failed to create service category',
-			details: error
+			details: error, message: error.message
 		}, { status: 500 });
 	}
 };
@@ -92,7 +92,8 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 	if (!idParam) return json({ error: 'Category ID is required' }, { status: 400 });
 
 	try {
-		const data = await request.json();
+		const dataRaw = await request.json();
+		const data = camelToSnakeSafe(dataRaw);
 
 		const updatedCategory = await prisma.service_categories.update({
 			where: { id: BigInt(idParam) },
@@ -107,11 +108,11 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 		const responseData = snakeToCamel(serializeBigInt(updatedCategory))
 
 		return json(responseData);
-	} catch (error) {
+	} catch (error: any) {
 		console.error(`Error updating category ${idParam}:`, error);
 		return json({
 			error: `Failed to update category ${idParam}`,
-			details: error
+			details: error, message: error.message
 		}, { status: 500 });
 	}
 };
@@ -124,11 +125,11 @@ export const DELETE: RequestHandler = async ({ url }) => {
 	try {
 		await prisma.service_categories.delete({ where: { id: BigInt(idParam) } });
 		return json({ message: 'Category deleted successfully' });
-	} catch (error) {
+	} catch (error: any) {
 		console.error(`Error deleting category ${idParam}:`, error);
 		return json({
 			error: `Failed to delete category ${idParam}`,
-			details: error
+			details: error, message: error.message
 		}, { status: 500 });
 	}
 };

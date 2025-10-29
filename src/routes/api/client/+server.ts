@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import prisma from '$lib/prisma';
-import { serializeBigInt, snakeToCamel, toTitleCase } from '$lib/utils/utils';
+import { serializeBigInt, snakeToCamel, toTitleCase, camelToSnakeSafe } from '$lib/utils/utils';
 
 // Allowed sorting fields
 const ALLOWED_SORT_FIELDS = ['name', 'created_at', 'updated_at'];
@@ -44,11 +44,11 @@ export const GET: RequestHandler = async ({ url }) => {
 		return json(
 			responseData
 		);
-	} catch (error) {
+	} catch (error: any) {
 		console.error('Error fetching clients:', error);
 		return json({
 			error: 'Failed to fetch clients',
-			details: error
+			details: error, message: error.message
 		}, { status: 500 });
 	}
 };
@@ -56,7 +56,10 @@ export const GET: RequestHandler = async ({ url }) => {
 // POST /api/clients
 export const POST: RequestHandler = async ({ request }) => {
 	try {
-		const data = await request.json();
+		const dataRaw = await request.json();
+		const data = camelToSnakeSafe(dataRaw);
+
+
 		if (!data.name) return json({ error: 'name is required' }, { status: 400 });
 
 		const namePreprocessed = toTitleCase((data.name || '').trim());
@@ -69,11 +72,11 @@ export const POST: RequestHandler = async ({ request }) => {
 		});
 
 		return json(serializeBigInt(newClient), { status: 201 });
-	} catch (error) {
+	} catch (error: any) {
 		console.error('Error creating client:', error);
 		return json({
 			error: 'Failed to create client',
-			details: error
+			details: error, message: error.message
 		}, { status: 500 });
 	}
 };
@@ -84,7 +87,8 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 	if (!idParam) return json({ error: 'Client ID is required' }, { status: 400 });
 
 	try {
-		const data = await request.json();
+		const dataRaw = await request.json();
+		const data = camelToSnakeSafe(dataRaw);
 
 		const updatedClient = await prisma.clients.update({
 			where: { id: BigInt(idParam) },
@@ -98,11 +102,11 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 		const responseData = snakeToCamel(serializeBigInt(updatedClient));
 
 		return json(responseData, { status: 200 });
-	} catch (error) {
+	} catch (error: any) {
 		console.error(`Error updating client ${idParam}:`, error);
 		return json({
 			error: `Failed to update client ${idParam}`,
-			details: error
+			details: error, message: error.message
 		}, { status: 500 });
 	}
 };
@@ -115,11 +119,11 @@ export const DELETE: RequestHandler = async ({ url }) => {
 	try {
 		await prisma.clients.delete({ where: { id: BigInt(idParam) } });
 		return json({ message: 'Client deleted successfully' });
-	} catch (error) {
+	} catch (error: any) {
 		console.error(`Error deleting client ${idParam}:`, error);
 		return json({
 			error: `Failed to delete client ${idParam}`,
-			details: error
+			details: error, message: error.message
 		}, { status: 500 });
 	}
 };

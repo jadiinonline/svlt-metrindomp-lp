@@ -24,13 +24,42 @@ export const GET: RequestHandler = async ({ url }) => {
 	if (sortOrder !== 'asc' && sortOrder !== 'desc') sortOrder = 'desc';
 
 	try {
-		const projects = await prisma.projects.findMany({
+		const projectsData = await prisma.projects.findMany({
 			skip: offset,
 			take: limit,
 			orderBy: { [sortField]: sortOrder },
 			include: {
-				client: true
+				client: true,
+				project_categories: {       // include categories with their service_category
+					select: {
+						service_category: {
+							select: {
+								id: true,
+								name: true,
+							}
+						}
+					}
+				},
+				project_images: {
+					select: {
+						id: true,
+						image_link: true,
+						is_cover: true,
+						caption: true
+					}
+				}
+
 			}
+		});
+
+		// Restructure projects to include serviceCategories directly
+		const projects = projectsData.map(p => {
+			const { project_categories, project_images, ...rest } = p;
+			return {
+				...rest,
+				serviceCategories: project_categories.map(pc => pc.service_category),
+				projectImages: project_images // already in correct shape
+			};
 		});
 
 		const total = await prisma.projects.count();
@@ -50,11 +79,11 @@ export const GET: RequestHandler = async ({ url }) => {
 			responseData
 		);
 
-	} catch (error) {
+	} catch (error: any) {
 		console.error('Error fetching projects:', error);
 		return json({
 			error: 'Failed to fetch projects',
-			details: error
+			details: error, message: error.message
 		}, { status: 500 });
 	}
 };
@@ -94,11 +123,11 @@ export const POST: RequestHandler = async ({ request }) => {
 		// ✅ Convert BigInt → String for JSON response
 		return json(responseData, { status: 201 });
 
-	} catch (error) {
+	} catch (error: any) {
 		console.error('Error creating project:', error);
 		return json({
 			error: 'Failed to create project',
-			details: error
+			details: error, message: error.message
 		}, { status: 500 });
 	}
 };
@@ -111,7 +140,9 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 	}
 
 	try {
-		const data = await request.json();
+		const dataRaw = await request.json();
+		const data = camelToSnakeSafe(dataRaw);
+
 		const updatedProject = await prisma.projects.update({
 			where: {
 				id: BigInt(id), // convert to BigInt
@@ -133,11 +164,11 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 		const responseData = snakeToCamel(updatedProject)
 
 		return json(responseData, { status: 200 });
-	} catch (error) {
+	} catch (error: any) {
 		console.error(`Error updating project with ID ${id}:`, error);
 		return json({
 			error: `Failed to update project with ID ${id}`,
-			details: error
+			details: error, message: error.message
 		}, { status: 500 });
 	}
 };
