@@ -148,20 +148,20 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 				id: BigInt(id), // convert to BigInt
 			},
 			data: {
-				name: data.name,
-				slug: data.slug,
-				description: data.description,
-				location: data.location,
-				year: data.year,
-				po_price: data.po_price,
-				status: data.status,
+				name: data.name || undefined,
+				slug: data.slug || undefined,
+				description: data.description || undefined,
+				location: data.location || undefined,
+				year: data.year || undefined,
+				po_price: data.po_price || undefined,
+				status: data.status || undefined,
 				start_date: data.start_date ? new Date(data.start_date) : undefined,
 				end_date: data.end_date ? new Date(data.end_date) : undefined,
 				clients_id: data.clients_id ? BigInt(data.clients_id) : undefined,
 			},
 		});
 
-		const responseData = snakeToCamel(updatedProject)
+		const responseData = snakeToCamel(serializeBigInt(updatedProject))
 
 		return json(responseData, { status: 200 });
 	} catch (error: any) {

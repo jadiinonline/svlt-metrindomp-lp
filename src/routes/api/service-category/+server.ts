@@ -95,11 +95,14 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 		const dataRaw = await request.json();
 		const data = camelToSnakeSafe(dataRaw);
 
+		// console.log('Updating service-category', idParam, 'with data:', data);
+
 		const updatedCategory = await prisma.service_categories.update({
 			where: { id: BigInt(idParam) },
 			data: {
-				name: data.name,
-				description: data.description ?? null,
+				name: data.name || undefined,
+				description: data.description ?? undefined,
+				image_link: data.image_link ?? undefined,
 				updated_at: new Date()
 			},
 			include: { project_categories: true }

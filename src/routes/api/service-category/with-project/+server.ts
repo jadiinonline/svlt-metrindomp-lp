@@ -1,0 +1,110 @@
+import { json } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
+import prisma from '$lib/prisma';
+import { serializeBigInt, snakeToCamel } from '$lib/utils/utils';
+
+const ALLOWED_SORT_FIELDS = ['name', 'created_at', 'updated_at'];
+
+export const GET: RequestHandler = async ({ url }) => {
+	let page = parseInt(url.searchParams.get('page') || '1');
+	let limit = parseInt(url.searchParams.get('limit') || '10');
+	let sortField = url.searchParams.get('sort') || 'created_at';
+	let sortOrder = (url.searchParams.get('order') as 'asc' | 'desc') || 'desc';
+
+	// sanitize
+	page = Math.max(page, 1);
+	limit = Math.min(Math.max(limit, 1), 100);
+	if (!ALLOWED_SORT_FIELDS.includes(sortField)) sortField = 'created_at';
+	if (!['asc', 'desc'].includes(sortOrder)) sortOrder = 'desc';
+
+	const offset = (page - 1) * limit;
+
+	try {
+		const servicesData = await prisma.service_categories.findMany({
+			skip: offset,
+			take: limit,
+			orderBy: { [sortField]: sortOrder },
+			include: {
+				project_categories: {
+					select: {
+						project: {
+							select: {
+								id: true,
+								uuid: true,
+								name: true,
+								slug: true,
+								location: true,
+								description: true,
+								start_date: true,
+								end_date: true,
+								year: true,
+								po_price: true,
+								status: true,
+								created_at: true,
+								updated_at: true,
+								clients_id: true,
+								client: {
+									select: {
+										id: true,
+										uuid: true,
+										name: true,
+										logo: true,
+										created_at: true,
+										updated_at: true
+									}
+								},
+								project_images: {
+									select: {
+										id: true,
+										image_link: true,
+										is_cover: true,
+										caption: true
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		});
+
+		const total = await prisma.service_categories.count();
+
+		const services = servicesData.map(s => {
+			const projects = s.project_categories?.map(pc => pc.project) || [];
+			const uniqueProjects = Array.from(new Map(projects.map(p => [p.id, p])).values());
+
+			return {
+				id: s.id,
+				uuid: s.uuid,
+				name: s.name,
+				description: s.description,
+				imageLink: s.image_link,
+				createdAt: s.created_at,
+				updatedAt: s.updated_at,
+				projects: uniqueProjects
+			};
+		});
+
+		const responseData = snakeToCamel(
+			serializeBigInt({
+				serviceCategories: services,
+				total,
+				page,
+				limit,
+				totalPages: Math.ceil(total / limit),
+				sort: { field: sortField, order: sortOrder }
+			})
+		);
+
+		return json(responseData);
+
+	} catch (error: any) {
+		console.error('Error fetching service categories with projects:', error);
+		return json({
+			error: 'Failed to fetch service categories with projects',
+			details: error,
+			message: error?.message
+		}, { status: 500 });
+	}
+};
