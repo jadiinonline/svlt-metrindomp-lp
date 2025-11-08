@@ -1,8 +1,11 @@
 <script lang="ts">
+	import { toTitleCase } from "$lib/utils/utils";
+
+	// component and icons
 	import { Button } from "$lib/components/ui/button";
 	import * as Dialog from "$lib/components/ui/dialog/index.js";
+	import { ScrollArea } from "$lib/components/ui/scroll-area/index.js";
 	import Separator from "$lib/components/ui/separator/separator.svelte";
-	import { toTitleCase } from "$lib/utils/utils";
 	import {
 		Building,
 		Wrench,
@@ -64,7 +67,7 @@
 					<ArrowLeft /></Button
 				>
 				<h1
-					class="uppercase font-bold text-center text-4xl xl:text-6xl text-primary"
+					class="uppercase font-bold text-center text-3xl xl:text-6xl text-primary"
 				>
 					{service.name}
 				</h1>
@@ -88,7 +91,9 @@
 			<h3 class="text-center text-2xl font-bold text-muted-foreground">
 				List Proyek {toTitleCase(service.name)}
 			</h3>
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+			<div
+				class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr"
+			>
 				{#each service.projects as ea}
 					<Dialog.Root>
 						<Dialog.Trigger>
@@ -100,7 +105,9 @@
 								>
 									{ea.client.name}
 								</h4>
-								<h4 class="font-semibold text-lg mb-2">
+								<h4
+									class="font-semibold text-lg mb-2 line-clamp-2"
+								>
 									{ea.name}
 									<span class="text-muted-foreground text-sm"
 										>({ea.location})</span
@@ -121,7 +128,7 @@
 								</div>
 							</div>
 						</Dialog.Trigger>
-						<Dialog.Content>
+						<Dialog.Content class="min-w-[90vw] max-h-[95vh] ">
 							<Dialog.Header>
 								<Dialog.Title>
 									{ea.name}
@@ -130,22 +137,32 @@
 									</span>
 								</Dialog.Title>
 								<Dialog.Description>
-									{ea.description} | {Number(
-										ea.poPrice,
-									).toLocaleString("id-ID")}
+									<h4>
+										{ea.location} | Rp. {Number(
+											ea.poPrice,
+										).toLocaleString("id-ID")}
+									</h4>
 
-									<div
-										class="grid grid-cols-2 lg:grid-cols-3 gap-4"
-									>
-										{#each ea.projectImages as img}
-											<img
-												src={img.imageLink}
-												alt="list of projects documentation"
-												class="w-full my-2"
-											/>
-										{/each}
-									</div>
-								</Dialog.Description>
+									<p class="my-4 text-sm">{ea.description}</p>
+									<h5 class="font-bold mb-2">
+										Gallery Proyek
+										<ScrollArea
+											class="h-[400px] w-full mt-2 p-2 border rounded-md"
+										>
+											<div
+												class="grid grid-cols-1 lg:grid-cols-3 gap-4"
+											>
+												{#each ea.projectImages as img}
+													<img
+														src={img.imageLink}
+														alt="list of projects documentation"
+														class="w-[600px] my-2"
+													/>
+												{/each}
+											</div>
+										</ScrollArea>
+									</h5></Dialog.Description
+								>
 							</Dialog.Header>
 						</Dialog.Content>
 					</Dialog.Root>
