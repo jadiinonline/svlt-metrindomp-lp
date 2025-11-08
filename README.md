@@ -1,7 +1,8 @@
 favicon harus dengan dimensi pixel 64x64
 
 
-## prisma
+### prisma
+### jangan pernah gunakan npx prisma migrate reset di prod (data akan hilang)
 # checking is db sync with schema in prisma
 npx prisma migrate diff \
   --from-url "$(grep DATABASE_URL .env | cut -d '=' -f2- | tr -d '"' )" \
@@ -10,42 +11,28 @@ npx prisma migrate diff \
 # push synch schema to db server (with warning if there is table needed to be deleted by there is data in it)
 npx prisma db push
 
+# baselining production schema  
+https://www.prisma.io/docs/orm/prisma-migrate/workflows/baselining
 
-# sv
+# any changes of db in prisma schema use to list new migrations
+npx prisma migrate dev --name xxxx_add_products_table
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+# deploy changes in tables
+npx prisma migrate deploy
 
-## Creating a project
+### hashing 
+untuk hashing password bisa via terminal gunakan
 
-If you're seeing this, you've probably already done this step. Congrats!
+npm run hash string_xxxx
 
-```sh
-# create a new project in the current directory
-npx sv create
+### DB and stuff
 
-# create a new project in my-app
-npx sv create my-app
-```
+# make sure the DB user is able to create db  
+alter developeruser with CREATEDB
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+# add platform user
+INSERT INTO "platform_users" (username, password)
+VALUES (
+  'metrindomp',
+  '$2b$12$VCz2j51VJoTnX1xRLnvFOe081yfKoY/7GjUKgARZCCfVMsm/sfsuS'
+);

@@ -70,6 +70,13 @@ export const GET: RequestHandler = async ({ url }) => {
 
 		const total = await prisma.service_categories.count();
 
+		const totalPages = Math.ceil(total / limit);
+
+		// Circular previous/next pages
+		const pagePrevious = page === 1 ? totalPages : page - 1;
+		const pageNext = page === totalPages ? 1 : page + 1;
+
+
 		const services = servicesData.map(s => {
 			const projects = s.project_categories?.map(pc => pc.project) || [];
 			const uniqueProjects = Array.from(new Map(projects.map(p => [p.id, p])).values());
@@ -92,7 +99,9 @@ export const GET: RequestHandler = async ({ url }) => {
 				total,
 				page,
 				limit,
-				totalPages: Math.ceil(total / limit),
+				totalPages: totalPages,
+				pagePrevious,
+				pageNext,
 				sort: { field: sortField, order: sortOrder }
 			})
 		);

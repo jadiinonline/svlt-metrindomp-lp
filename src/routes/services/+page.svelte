@@ -1,86 +1,156 @@
 <script lang="ts">
 	import { Button } from "$lib/components/ui/button";
 	import * as Dialog from "$lib/components/ui/dialog/index.js";
-
-	import { Building, Wrench, DraftingCompass, Users } from "@lucide/svelte";
+	import Separator from "$lib/components/ui/separator/separator.svelte";
+	import { toTitleCase } from "$lib/utils/utils";
+	import {
+		Building,
+		Wrench,
+		DraftingCompass,
+		Users,
+		ArrowLeft,
+		ArrowRight,
+	} from "@lucide/svelte";
 
 	let { data } = $props();
 
 	// console.log(companies);
 	let services = $state(data.services.serviceCategories ?? []);
+
+	let nextpage = $state(data.services.pageNext ?? 1);
+	let previouspage = $state(data.services.pagePrevious ?? 1);
+
+	// console.log({ nextpage, previouspage });
+
+	async function refetchServices(page: number) {
+		try {
+			const res = await fetch(
+				`/api/service-category/with-project?limit=1&page=${page}`,
+				{
+					headers: {
+						// authorization: `Bearer ${token}`,
+						accept: "application/json",
+					},
+				},
+			);
+
+			if (!res.ok) throw new Error("Failed to fetch services");
+
+			const responseData = await res.json();
+
+			console.log({ responseData });
+			// Update the Svelte store
+			services = responseData.serviceCategories ?? [];
+			nextpage = responseData.pageNext ?? 1;
+			previouspage = responseData.pagePrevious ?? 1;
+		} catch (error) {
+			console.error("Error fetching services:", error);
+		}
+	}
 </script>
 
-<div class="pt-10">
-	{#each services as service}
-		<div class="flex justify-between mb-10">
-			<Button>prev</Button>
-			<Button>next</Button>
-		</div>
-		<h1 class="uppercase font-bold text-center text-6xl text-primary">
-			{service.name}
-		</h1>
-		<div class="grid grid-cols-2 gap-4 my-10">
-			<img src={service.imageLink} alt="service" class="w-full" />
+{#if services.length === 0}
+	<p class="text-center text-muted-foreground py-20">
+		Tidak ada layanan yang tersedia saat ini. Database masih kosong
+	</p>
+{:else}
+	<div class="pt-10">
+		{#each services as service}
+			<div class="flex justify-between mb-10">
+				<Button
+					variant="outline"
+					onclick={() => refetchServices(previouspage)}
+				>
+					<ArrowLeft /></Button
+				>
+				<h1
+					class="uppercase font-bold text-center text-4xl xl:text-6xl text-primary"
+				>
+					{service.name}
+				</h1>
+				<Button
+					variant="outline"
+					onclick={() => refetchServices(nextpage)}
+				>
+					<ArrowRight /></Button
+				>
+			</div>
 
-			<h2
-				class="self-center text-2xl text-muted-foreground p-4 rounded-2xl outline-4"
-			>
-				{service.description}
-			</h2>
-		</div>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-10">
+				<img src={service.imageLink} alt="service" class="w-full" />
 
-		<h3 class="text-center text-2xl">Service Related Projects</h3>
-		<div class="grid grid-cols-3 gap-4">
-			{#each service.projects as ea}
-				<Dialog.Root>
-					<Dialog.Trigger>
-						<div
-							class="p-4 border rounded-lg hover:border-primary hover:border-4"
-						>
-							<h4 class="text-right text-muted-foreground">
-								{ea.client.name}
-							</h4>
-							<h4 class="font-semibold text-lg mb-2">
-								{ea.name}
-							</h4>
+				<h2 class="self-center text-2xl text-muted-foreground p-4">
+					{service.description}
+				</h2>
+			</div>
 
+			<Separator class="my-10" />
+			<h3 class="text-center text-2xl font-bold text-muted-foreground">
+				List Proyek {toTitleCase(service.name)}
+			</h3>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+				{#each service.projects as ea}
+					<Dialog.Root>
+						<Dialog.Trigger>
 							<div
-								class="w-full h-[200px] overflow-hidden rounded-md"
+								class="p-4 border rounded-lg hover:border-primary hover:border-4"
 							>
-								<img
-									src={ea.projectImages?.[0]?.imageLink ??
-										"https://placehold.co/600x400/png?text=No+Image+found"}
-									alt="projects thumbnail"
-									class="w-full h-full object-cover object-center"
-								/>
-							</div>
-						</div>
-					</Dialog.Trigger>
-					<Dialog.Content>
-						<Dialog.Header>
-							<Dialog.Title>
-								{ea.name}
-								<span class="text-muted-foreground"
-									>({ea.year ?? "abad 21"})
-								</span></Dialog.Title
-							>
-							<Dialog.Description>
-								{ea.description}
+								<h4
+									class="text-right text-muted-foreground font-bold"
+								>
+									{ea.client.name}
+								</h4>
+								<h4 class="font-semibold text-lg mb-2">
+									{ea.name}
+									<span class="text-muted-foreground text-sm"
+										>({ea.location})</span
+									>
+								</h4>
 
-								<div class="grid grid-cols-3 gap-4">
-									{#each ea.projectImages as img}
-										<img
-											src={img.imageLink}
-											alt="list of projects documentation"
-											class="w-full my-2"
-										/>
-									{/each}
+								<div
+									class="w-full h-[200px] overflow-hidden rounded-md"
+								>
+									<img
+										src={ea.projectImages?.find(
+											(img: any) => img.isCover === true,
+										)?.imageLink ??
+											"https://placehold.co/600x400/png?text=No+Cover+Image+found"}
+										alt="projects thumbnail"
+										class="w-full h-full object-cover object-center"
+									/>
 								</div>
-							</Dialog.Description>
-						</Dialog.Header>
-					</Dialog.Content>
-				</Dialog.Root>
-			{/each}
-		</div>
-	{/each}
-</div>
+							</div>
+						</Dialog.Trigger>
+						<Dialog.Content>
+							<Dialog.Header>
+								<Dialog.Title>
+									{ea.name}
+									<span class="text-muted-foreground"
+										>({ea.year ?? "abad 21"})
+									</span>
+								</Dialog.Title>
+								<Dialog.Description>
+									{ea.description} | {Number(
+										ea.poPrice,
+									).toLocaleString("id-ID")}
+
+									<div
+										class="grid grid-cols-2 lg:grid-cols-3 gap-4"
+									>
+										{#each ea.projectImages as img}
+											<img
+												src={img.imageLink}
+												alt="list of projects documentation"
+												class="w-full my-2"
+											/>
+										{/each}
+									</div>
+								</Dialog.Description>
+							</Dialog.Header>
+						</Dialog.Content>
+					</Dialog.Root>
+				{/each}
+			</div>
+		{/each}
+	</div>
+{/if}

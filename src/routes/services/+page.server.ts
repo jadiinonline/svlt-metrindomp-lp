@@ -56,6 +56,7 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 		console.error(`Error loading data in file ${import.meta.url} :`, error)
 	}
 
+
 	return { services };
 
 }
