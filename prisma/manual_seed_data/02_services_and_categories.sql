@@ -1,39 +1,29 @@
 
 -- data kategori layanan
-INSERT INTO "service_categories" (uuid, name, image_link, description)
+INSERT INTO "service_categories" (uuid, name, media_id, description)
 VALUES 
-('cd857da2-c3f3-49fa-95b0-5d83e3e363d7', 'Mekanikal', 'https://placehold.co/600x400?text=Mekanikal', 'Spesialis sistem mekanikal untuk proyek skala besar: bandara, apartemen mewah, kereta cepat, dan rumah sakit. Kami memastikan sistem HVAC, pompa, dan instalasi mekanik bekerja maksimal, aman, dan efisien, sesuai standar internasional.'),
-('e3f2a4f1-68c9-4d71-b6f0-9b2b43a0b9e1', 'Elektrikal', 'https://placehold.co/600x400?text=Elektrikal', 'Menangani sistem kelistrikan kompleks untuk bandara, mall, rumah sakit, dan rumah hunian premium. Layanan kami menjamin keamanan, kestabilan, dan performa listrik optimal, untuk memenuhi kebutuhan proyek berskala besar.'),
-('f2d8c9b3-7e1a-4d5c-9a0b-2c3f8d1e7b4a', 'Telekomunikasi', 'https://placehold.co/600x400?text=Telekomunikasi', 'Ahli jaringan dan komunikasi untuk proyek skala besar. Dari bandara hingga kereta cepat dan apartemen modern, kami menghadirkan solusi komunikasi handal, cepat, dan modern, memastikan semua sistem terhubung tanpa hambatan.'),
-('a7b5d9c2-1e3f-4b7a-9c8d-5e6f7a1b2c3d', 'Sipil', 'https://placehold.co/600x400?text=Sipil', 'Konstruksi sipil dengan kualitas tertinggi untuk bandara, mall, rumah sakit, dan hunian premium. Pondasi, struktur, dan fasilitas dibangun dengan ketelitian tinggi, menjamin bangunan kuat, aman, dan tahan lama.')
+('cd857da2-c3f3-49fa-95b0-5d83e3e363d7', 'Mekanikal', 1, 'Spesialis sistem mekanikal untuk proyek skala besar: bandara, apartemen mewah, kereta cepat, dan rumah sakit. Kami memastikan sistem HVAC, pompa, dan instalasi mekanik bekerja maksimal, aman, dan efisien, sesuai standar internasional.'),
+('e3f2a4f1-68c9-4d71-b6f0-9b2b43a0b9e1', 'Elektrikal', 2, 'Menangani sistem kelistrikan kompleks untuk bandara, mall, rumah sakit, dan rumah hunian premium. Layanan kami menjamin keamanan, kestabilan, dan performa listrik optimal, untuk memenuhi kebutuhan proyek berskala besar.'),
+('f2d8c9b3-7e1a-4d5c-9a0b-2c3f8d1e7b4a', 'Telekomunikasi', 3, 'Ahli jaringan dan komunikasi untuk proyek skala besar. Dari bandara hingga kereta cepat dan apartemen modern, kami menghadirkan solusi komunikasi handal, cepat, dan modern, memastikan semua sistem terhubung tanpa hambatan.'),
+('a7b5d9c2-1e3f-4b7a-9c8d-5e6f7a1b2c3d', 'Sipil', 4, 'Konstruksi sipil dengan kualitas tertinggi untuk bandara, mall, rumah sakit, dan hunian premium. Pondasi, struktur, dan fasilitas dibangun dengan ketelitian tinggi, menjamin bangunan kuat, aman, dan tahan lama.')
 ON CONFLICT (uuid) 
 DO UPDATE SET
   name = EXCLUDED.name,
-  image_link = EXCLUDED.image_link,
+  media_id = EXCLUDED.media_id,
   description = EXCLUDED.description;
 
 
--- data seed initial client
-INSERT INTO "clients" (uuid, classification,name, logo)
-VALUES 
-('xxx-c3f3-49fa-95b0-5d83e3e363d7', 'PT', 'Wijaya Karya', 'https://placehold.co/600x400?text=wika'),
-('xxx-68c9-4d71-b6f0-9b2b43a0b9e1', 'PT','Adhi Karya', 'https://placehold.co/600x400?text=adhikarya'),
-('xxx-7e1a-4d5c-9a0b-2c3f8d1e7b4a', 'PT','Patra Badak Arun Solusi', 'https://placehold.co/600x400?text=pbas'),
-('xxx-1e3f-4b7a-9c8d-5e6f7a1b2c3d', 'PT','PLN', 'https://placehold.co/600x400?text=PLN')
-ON CONFLICT (name) 
-DO UPDATE SET
-  name = EXCLUDED.name
 
 -- data seed initial projects
-INSERT INTO "clients" (uuid, classification,name, logo)
+INSERT INTO "clients" (uuid, classification,name, media_id)
 VALUES 
-('xxx-c3f3-49fa-95b0-5d83e3e363d7', 'PT', 'Wijaya Karya', 'https://placehold.co/600x400?text=wika'),
-('xxx-68c9-4d71-b6f0-9b2b43a0b9e1', 'PT','Adhi Karya', 'https://placehold.co/600x400?text=adhikarya'),
-('xxx-7e1a-4d5c-9a0b-2c3f8d1e7b4a', 'PT','Patra Badak Arun Solusi', 'https://placehold.co/600x400?text=pbas'),
-('xxx-1e3f-4b7a-9c8d-5e6f7a1b2c3d', 'PT','PLN', 'https://placehold.co/600x400?text=PLN'),
-('xxx-1e1f-4b7a-9c8d-5e6f7a1b2c3d', 'PT','INTI BANGUN SEJAHTERA', 'https://placehold.co/600x400?text=inti'),
-('xxx-1e2f-4b7a-9c8d-5e6f7a1b2c3d', 'PT','MITRA SETYA UTAMA', 'https://placehold.co/600x400?text=PLN'),
-('xxx-1e4f-4b7a-9c8d-5e6f7a1b2c3d', 'PT','GUNUNG GAYA PERSADA', 'https://placehold.co/600x400?text=PLN')
+('xxx-c3f3-49fa-95b0-5d83e3e363d7', 'PT', 'Wijaya Karya', 5),
+('xxx-68c9-4d71-b6f0-9b2b43a0b9e1', 'PT','Adhi Karya', 6),
+('xxx-7e1a-4d5c-9a0b-2c3f8d1e7b4a', 'PT','Patra Badak Arun Solusi', 7),
+('xxx-1e3f-4b7a-9c8d-5e6f7a1b2c3d', 'PT','PLN', 8),
+('xxx-1e1f-4b7a-9c8d-5e6f7a1b2c3d', 'PT','INTI BANGUN SEJAHTERA', 9),
+('xxx-1e2f-4b7a-9c8d-5e6f7a1b2c3d', 'PT','MITRA SETYA UTAMA', 10),
+('xxx-1e4f-4b7a-9c8d-5e6f7a1b2c3d', 'PT','GUNUNG GAYA PERSADA', 11)
 ON CONFLICT (name) 
 DO UPDATE SET
   name = EXCLUDED.name

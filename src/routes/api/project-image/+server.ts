@@ -26,7 +26,8 @@ export const GET: RequestHandler = async ({ url }) => {
 			take: limit,
 			orderBy: { [sortField]: sortOrder },
 			include: {
-				project: true
+				project: true,
+				media: true
 			}
 		});
 
@@ -58,12 +59,12 @@ export const POST: RequestHandler = async ({ request }) => {
 		const data = camelToSnakeSafe(dataRaw);
 
 		if (!data.projects_id) return json({ error: 'projects_id is required' }, { status: 400 });
-		if (!data.image_link) return json({ error: 'image_link is required' }, { status: 400 });
+		if (!data.media_id) return json({ error: 'media_id is required' }, { status: 400 });
 
 		const newImage = await prisma.project_images.create({
 			data: {
 				projects_id: BigInt(data.projects_id),
-				image_link: data.image_link,
+				media: data.image_link,
 				is_cover: data.is_cover ?? false,
 				caption: data.caption ?? null
 			},
@@ -94,7 +95,7 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 			where: { id: BigInt(idParam) },
 			data: {
 				projects_id: data.projects_id ? BigInt(data.projects_id) : undefined,
-				image_link: data.image_link ?? undefined,
+				media_id: data.media_id ?? undefined,
 				is_cover: data.is_cover ?? undefined,
 				caption: data.caption ?? undefined,
 				updated_at: new Date()

@@ -27,7 +27,7 @@ export const GET: RequestHandler = async ({ url }) => {
 			orderBy: { [sortField]: sortOrder },
 			include: {
 				project: true,
-				service_category: true
+				service_category: true,
 			}
 		});
 

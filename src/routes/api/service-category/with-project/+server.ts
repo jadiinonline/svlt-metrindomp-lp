@@ -48,7 +48,8 @@ export const GET: RequestHandler = async ({ url }) => {
 										id: true,
 										uuid: true,
 										name: true,
-										logo: true,
+										media_id: true,
+										media: true,
 										created_at: true,
 										updated_at: true
 									}
@@ -56,7 +57,8 @@ export const GET: RequestHandler = async ({ url }) => {
 								project_images: {
 									select: {
 										id: true,
-										image_link: true,
+										media_id: true,
+										media: true,
 										is_cover: true,
 										caption: true
 									}
@@ -86,7 +88,7 @@ export const GET: RequestHandler = async ({ url }) => {
 				uuid: s.uuid,
 				name: s.name,
 				description: s.description,
-				imageLink: s.image_link,
+				imageLink: s.media_id,
 				createdAt: s.created_at,
 				updatedAt: s.updated_at,
 				projects: uniqueProjects

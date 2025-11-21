@@ -27,7 +27,10 @@ export const GET: RequestHandler = async ({ url }) => {
 			skip: offset,
 			take: limit,
 			orderBy: { [sortField]: sortOrder },
-			include: { projects: true }
+			include: {
+				media: true,
+				projects: true,
+			}
 		});
 
 		const total = await prisma.clients.count();
@@ -67,7 +70,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		const newClient = await prisma.clients.create({
 			data: {
 				name: namePreprocessed,
-				logo: data.logo ?? null
+				media_id: data.media_id ?? null
 			}
 		});
 
@@ -94,7 +97,7 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 			where: { id: BigInt(idParam) },
 			data: {
 				name: data.name,
-				logo: data.logo ?? null
+				media_id: data.media_id ?? null
 			},
 			include: { projects: true }
 		});
