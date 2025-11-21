@@ -20,6 +20,8 @@
 	// console.log(companies);
 	let services = $state(data.services.serviceCategories ?? []);
 
+	// console.log({ services });
+
 	let nextpage = $state(data.services.pageNext ?? 1);
 	let previouspage = $state(data.services.pagePrevious ?? 1);
 
@@ -80,7 +82,7 @@
 			</div>
 
 			<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-10">
-				<img src={service.imageLink} alt="service" class="w-full" />
+				<img src={service.media.url} alt="service" class="w-full" />
 
 				<h2 class="self-center text-2xl text-muted-foreground p-4">
 					{service.description}
@@ -118,9 +120,10 @@
 									class="w-full h-[200px] overflow-hidden rounded-md"
 								>
 									<img
-										src={ea.projectImages?.find(
-											(img: any) => img.isCover === true,
-										)?.imageLink ??
+										src={ea.projectMedias?.find(
+											(media: any) =>
+												media.isCover === true,
+										)?.media.url ??
 											"https://placehold.co/600x400/png?text=No+Cover+Image+found"}
 										alt="projects thumbnail"
 										class="w-full h-full object-cover object-center"
@@ -146,23 +149,32 @@
 									<p class="my-4 text-sm">{ea.description}</p>
 									<h5 class="font-bold mb-2">
 										Gallery Proyek
-										<ScrollArea
-											class="h-[400px] w-full mt-2 p-2 border rounded-md"
+									</h5>
+									<ScrollArea
+										class="h-[400px] w-full mt-2 p-2 border rounded-md"
+									>
+										<div
+											class="grid grid-cols-1 lg:grid-cols-3 gap-4"
 										>
-											<div
-												class="grid grid-cols-1 lg:grid-cols-3 gap-4"
-											>
-												{#each ea.projectImages as img}
+											{#if ea.projectMedias.length > 0}
+												{#each ea.projectMedias as x}
 													<img
-														src={img.imageLink}
-														alt="list of projects documentation"
+														src={x.media.url}
+														alt="alt of broken projects documentation"
 														class="w-[600px] my-2"
 													/>
 												{/each}
-											</div>
-										</ScrollArea>
-									</h5></Dialog.Description
-								>
+											{:else}
+												<p
+													class="text-center text-muted-foreground w-full"
+												>
+													Tidak ada dokumentasi proyek
+													tersedia.
+												</p>
+											{/if}
+										</div>
+									</ScrollArea>
+								</Dialog.Description>
 							</Dialog.Header>
 						</Dialog.Content>
 					</Dialog.Root>

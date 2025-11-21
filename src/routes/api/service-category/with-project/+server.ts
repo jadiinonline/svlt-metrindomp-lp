@@ -25,6 +25,7 @@ export const GET: RequestHandler = async ({ url }) => {
 			take: limit,
 			orderBy: { [sortField]: sortOrder },
 			include: {
+				media: true,
 				project_categories: {
 					select: {
 						project: {
@@ -54,7 +55,7 @@ export const GET: RequestHandler = async ({ url }) => {
 										updated_at: true
 									}
 								},
-								project_images: {
+								project_medias: {
 									select: {
 										id: true,
 										media_id: true,
@@ -80,19 +81,21 @@ export const GET: RequestHandler = async ({ url }) => {
 
 
 		const services = servicesData.map(s => {
-			const projects = s.project_categories?.map(pc => pc.project) || [];
-			const uniqueProjects = Array.from(new Map(projects.map(p => [p.id, p])).values());
+			const projects = s.project_categories
+				?.map(pc => pc.project)
+				.filter((p): p is NonNullable<typeof p> => !!p) || [];
+
+			const uniqueProjects = Array.from(
+				new Map(projects.map(p => [p.id.toString(), p])).values()
+			);
+
+			const { project_categories, ...rest } = s; // remove nested relation to avoid duplication
 
 			return {
-				id: s.id,
-				uuid: s.uuid,
-				name: s.name,
-				description: s.description,
-				imageLink: s.media_id,
-				createdAt: s.created_at,
-				updatedAt: s.updated_at,
+				...rest,
 				projects: uniqueProjects
 			};
+
 		});
 
 		const responseData = snakeToCamel(

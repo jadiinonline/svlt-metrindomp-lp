@@ -63,15 +63,16 @@ model projects {
   client     clients @relation(fields: [clients_id], references: [id])
 
   // Relations
-  project_images     project_images[]
+  project_medias     project_medias[]
   project_categories project_categories[]
+  project_tasks      project_tasks[] // NEW
 
   @@index([clients_id])
   @@index([status])
   @@index([year])
 }
 
-model project_images {
+model project_medias {
   id         BigInt    @id @default(autoincrement())
   uuid       String    @unique @default(uuid())
   is_cover   Boolean   @default(false)
@@ -79,7 +80,7 @@ model project_images {
   created_at DateTime  @default(now()) @db.Timestamptz
   updated_at DateTime? @db.Timestamptz
 
-  // projects reference
+  // Project reference
   projects_id BigInt
   project     projects @relation(fields: [projects_id], references: [id])
 
@@ -111,6 +112,52 @@ model project_categories {
   @@index([service_categories_id])
 }
 
+// -----------------------------------------------------
+// NEW MODELS FOR PROJECT ACTIVITIES / TASKS
+// -----------------------------------------------------
+
+model project_tasks {
+  id          BigInt  @id @default(autoincrement())
+  uuid        String  @unique @default(uuid())
+  name        String  @db.VarChar(200) // e.g., "Pemasangan Gardu Induk"
+  description String?
+  order       Int?    @default(0) // optional for sorting tasks
+
+  created_at DateTime  @default(now()) @db.Timestamptz
+  updated_at DateTime? @db.Timestamptz
+
+  // Foreign Key
+  projects_id BigInt
+  project     projects @relation(fields: [projects_id], references: [id])
+
+  // Relations
+  project_task_images project_task_images[]
+
+  @@index([projects_id])
+}
+
+model project_task_images {
+  id         BigInt    @id @default(autoincrement())
+  uuid       String    @unique @default(uuid())
+  caption    String?
+  is_cover   Boolean   @default(false)
+  created_at DateTime  @default(now()) @db.Timestamptz
+  updated_at DateTime? @db.Timestamptz
+
+  // Foreign Keys
+  task_id BigInt
+  task    project_tasks @relation(fields: [task_id], references: [id])
+
+  media_id BigInt
+  media    media  @relation(fields: [media_id], references: [id])
+
+  @@unique([task_id, media_id])
+  @@index([task_id])
+  @@index([media_id])
+}
+
+// -----------------------------------------------------
+
 model platform_users {
   id   BigInt @id @default(autoincrement())
   uuid String @unique @default(uuid())
@@ -132,7 +179,7 @@ model media {
   uuid       String    @unique @default(uuid())
   url        String
   mime_type  String
-  size_bytes Int // in bytes
+  size_bytes Int
   width      Int?
   height     Int?
   duration   Float?
@@ -141,9 +188,10 @@ model media {
   updated_at DateTime? @updatedAt @db.Timestamptz
 
   // Relations
-  clients            clients[]
-  service_categories service_categories[]
-  project_images     project_images[]
+  clients             clients[]
+  service_categories  service_categories[]
+  project_medias      project_medias[]
+  project_task_images project_task_images[] // NEW
 
   uploader_id BigInt
   uploader    platform_users @relation(fields: [uploader_id], references: [id])

@@ -102,7 +102,7 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 			data: {
 				name: data.name || undefined,
 				description: data.description ?? undefined,
-				image_link: data.image_link ?? undefined,
+				media_id: data.media_id ?? undefined,
 				updated_at: new Date()
 			},
 			include: { project_categories: true }

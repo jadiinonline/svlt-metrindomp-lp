@@ -64,19 +64,21 @@ VALUES
 (gen_random_uuid(), 9, (FLOOR(RANDOM() * 4) + 1)::int),
 (gen_random_uuid(), 10, (FLOOR(RANDOM() * 4) + 1)::int)
 
--- Projects categories
-INSERT INTO project_images (uuid, projects_id, image_link)
+-- Projects project medias
+INSERT INTO project_medias (uuid, projects_id, media_id, is_cover)
 VALUES
-(gen_random_uuid(), 1, 'https://placehold.co/600x400?text=Project+1+Image+1' ),
-(gen_random_uuid(), 1, 'https://placehold.co/600x400?text=Project+1+Image+2' ),
-(gen_random_uuid(), 1, 'https://placehold.co/600x400?text=Project+1+Image+3' ),
-(gen_random_uuid(), 1, 'https://placehold.co/600x400?text=Project+1+Image+4' ),
-(gen_random_uuid(), 2, 'https://placehold.co/600x400?text=Project+2+Image+1' ),
-(gen_random_uuid(), 2, 'https://placehold.co/600x400?text=Project+2+Image+2' ),
-(gen_random_uuid(), 3, 'https://placehold.co/600x400?text=Project+3+Image+1' ),
-(gen_random_uuid(), 3, 'https://placehold.co/600x400?text=Project+3+Image+2' ),
-(gen_random_uuid(), 3, 'https://placehold.co/600x400?text=Project+3+Image+3' ),
-(gen_random_uuid(), 10, 'https://placehold.co/600x400?text=Project+4+Image+1' ),
-(gen_random_uuid(), 10, 'https://placehold.co/600x400?text=Project+4+Image+2' ),
-(gen_random_uuid(), 10, 'https://placehold.co/600x400?text=Project+4+Image+3' ),
-(gen_random_uuid(), 10, 'https://placehold.co/600x400?text=Project+4+Image+4' )
+  (gen_random_uuid(), 1, 1, true),
+  (gen_random_uuid(), 1, 2, false),
+  (gen_random_uuid(), 1, 3, false),
+  (gen_random_uuid(), 1, 4, false),
+  (gen_random_uuid(), 2, 5, false),
+  (gen_random_uuid(), 2, 6, false),
+  (gen_random_uuid(), 3, 7, false),
+  (gen_random_uuid(), 3, 8, false),
+  (gen_random_uuid(), 10, 10, false),
+  (gen_random_uuid(), 10, 11, false),
+  (gen_random_uuid(), 10, 12, false),
+  (gen_random_uuid(), 10, 13, false)
+ON CONFLICT (projects_id, media_id)
+DO UPDATE SET
+  is_cover = EXCLUDED.is_cover;
