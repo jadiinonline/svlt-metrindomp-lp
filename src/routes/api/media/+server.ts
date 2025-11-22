@@ -2,12 +2,28 @@
 import type { RequestHandler } from './$types';
 import { json } from '@sveltejs/kit';
 import prisma from '$lib/prisma';
-import { compressImageBuffer, uploadBufferToGCS, generateMediaPath } from '$lib/utils/storage';
-import { serializeBigInt, snakeToCamel, normalizeString } from '$lib/utils/utils';
+
+import {
+	autoCompressAndUpload,
+	generateMediaPath,
+	getRelativePathFromUrl,
+	moveFile,
+	deleteFile
+} from '$lib/utils/storage';
+
+import {
+	serializeBigInt,
+	snakeToCamel,
+	normalizeString
+} from '$lib/utils/utils';
+
 import sharp from 'sharp';
 
 const MAX_UPLOAD_BYTES = 20 * 1024 * 1024; // 20MB
 
+// ---------------------------------------------------
+// POST /api/media  → upload images
+// ---------------------------------------------------
 export const POST: RequestHandler = async ({ request }) => {
 	try {
 		const formData = await request.formData();
@@ -15,12 +31,13 @@ export const POST: RequestHandler = async ({ request }) => {
 		let folder = (formData.get('folder')?.toString() || 'undefined-folder').trim();
 		folder = normalizeString(folder);
 
-		const altText = formData.get('alt_text')?.toString() || null;
+		const altText = formData.get('alt_text')?.toString() || 'undefined alt text';
+
 		const uploaderId = formData.get('uploader_id')
 			? BigInt(formData.get('uploader_id')!.toString())
 			: 1;
 
-		// Collect files from formData
+		// Collect uploaded files
 		const files: File[] = [];
 		for (const value of formData.values()) {
 			if (value instanceof File) files.push(value);
@@ -30,48 +47,38 @@ export const POST: RequestHandler = async ({ request }) => {
 			return json({ error: 'No files uploaded' }, { status: 400 });
 		}
 
-		const createdItems: any[] = [];
+		const createdMedia: any[] = [];
 
 		for (const f of files) {
 			if (f.size > MAX_UPLOAD_BYTES) {
 				return json({ error: `File ${f.name} exceeds 20MB limit` }, { status: 400 });
 			}
 
-			const arrayBuffer = await f.arrayBuffer();
-			const buffer = Buffer.from(arrayBuffer);
+			const buffer = Buffer.from(await f.arrayBuffer());
 
-			// Compress and get actual mime
-			const { buffer: optimizedBuffer, mime } = await compressImageBuffer(buffer, 500);
+			// Auto-detect, compress to webp, upload
+			const upload = await autoCompressAndUpload(buffer, folder, f.name);
 
-			// Get image dimensions
-			const metadata = await sharp(optimizedBuffer).metadata();
-			const width = metadata.width ?? null;
-			const height = metadata.height ?? null;
+			// Determine dimensions from the compressed output
+			const metadata = await sharp(buffer).metadata();
 
-			// Generate path based on actual mime
-			const destPath = generateMediaPath(folder, f.name);
-
-			// Upload to GCS
-			const publicUrl = await uploadBufferToGCS(optimizedBuffer, destPath, mime);
-
-			// Save in DB
 			const created = await prisma.media.create({
 				data: {
-					url: publicUrl,
-					mime_type: mime,
-					size_bytes: optimizedBuffer.length,
-					width,
-					height,
+					url: upload.url,
+					mime_type: 'image/webp',
+					size_bytes: buffer.length,
+					width: metadata.width ?? null,
+					height: metadata.height ?? null,
 					alt_text: altText,
 					uploader_id: uploaderId
 				}
 			});
 
-			createdItems.push(created);
+			createdMedia.push(created);
 		}
 
 		return json(
-			snakeToCamel(serializeBigInt({ media: createdItems })),
+			snakeToCamel(serializeBigInt({ media: createdMedia })),
 			{ status: 201 }
 		);
 
@@ -81,7 +88,9 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 };
 
-// GET /api/media - list media
+// ---------------------------------------------------
+// GET /api/media  → list media
+// ---------------------------------------------------
 export const GET: RequestHandler = async ({ url }) => {
 	const folder = url.searchParams.get('folder') || undefined;
 	const page = Math.max(1, parseInt(url.searchParams.get('page') || '1'));
@@ -90,47 +99,112 @@ export const GET: RequestHandler = async ({ url }) => {
 
 	const where = folder ? { url: { contains: `/${folder}/` } } : {};
 
-	const [items, total] = await Promise.all([
-		prisma.media.findMany({ where, skip: offset, take: limit, orderBy: { created_at: 'desc' } }),
+
+	const [mediasRaw, total] = await Promise.all([
+		prisma.media.findMany({
+			where,
+			skip: offset,
+			take: limit,
+			orderBy: { created_at: 'desc' }
+		}),
 		prisma.media.count({ where })
 	]);
 
-	return json(snakeToCamel(serializeBigInt({ items, total, page, limit })));
+	// Add fileName to each media
+	const medias = mediasRaw.map(m => ({
+		...m,
+		fileName: m.url.split('/').pop() // extract string after last '/'
+	}));
+
+
+	return json(snakeToCamel(serializeBigInt({
+		medias,
+		total,
+		page,
+		limit
+	})));
 };
 
-// PATCH /api/media - update alt_text (rename/move can be added)
+// ---------------------------------------------------
+// PATCH /api/media → update alt text OR move file
+// ---------------------------------------------------
 export const PATCH: RequestHandler = async ({ request }) => {
 	try {
 		const body = await request.json();
 		if (!body.id) return json({ error: 'id required' }, { status: 400 });
 
+		const id = BigInt(body.id);
+		const existing = await prisma.media.findUnique({ where: { id } });
+
+		if (!existing) return json({ error: 'media_id not found' }, { status: 404 });
+
 		const update: any = {};
-		if (body.altText !== undefined) update.alt_text = body.altText;
+
+		// Update alt text
+		if (body.altText !== undefined) {
+			update.alt_text = body.altText;
+		}
+
+		// Move to a new folder
+		if (body.newFolder) {
+			const newFolder = normalizeString(body.newFolder);
+
+			// Extract relative path from full URL
+			const relativePath = existing.url.split(`/${process.env.GCS_BUCKET}/`)[1];
+
+			const filename = relativePath.split('/').pop();
+			const newRelative = `${newFolder}/${filename}`;
+
+			// Move via reusable util
+			const newPublicUrl = await moveFile(relativePath, newRelative);
+
+			update.url = newPublicUrl;
+		}
 
 		const updated = await prisma.media.update({
-			where: { id: BigInt(body.id) },
+			where: { id },
 			data: update
 		});
 
 		return json(snakeToCamel(serializeBigInt(updated)));
+
 	} catch (err: any) {
 		console.error(err);
 		return json({ error: err.message }, { status: 500 });
 	}
 };
 
-// DELETE /api/media - delete media
+// ---------------------------------------------------
+// DELETE /api/media → delete DB + GCS file
+// ---------------------------------------------------
 export const DELETE: RequestHandler = async ({ request }) => {
 	try {
 		const body = await request.json();
-		if (!body.id) return json({ error: 'id required' }, { status: 400 });
 
-		const media = await prisma.media.findUnique({ where: { id: BigInt(body.id) } });
-		if (!media) return json({ error: 'Not found' }, { status: 404 });
+		if (!body.id && !body.url) {
+			return json({ error: 'id or url required' }, { status: 400 });
+		}
 
-		await prisma.media.delete({ where: { id: BigInt(body.id) } });
+		let mediaUrl: string;
 
-		// Optionally delete from GCS here
+		if (body.id) {
+			const id = BigInt(body.id);
+			const media = await prisma.media.findUnique({ where: { id } });
+			if (!media) return json({ error: 'Media not found' }, { status: 404 });
+
+			mediaUrl = media.url;
+
+			// Delete from DB
+			await prisma.media.delete({ where: { id } });
+		} else {
+			mediaUrl = body.url;
+			// Optionally delete DB record if exists
+			await prisma.media.deleteMany({ where: { url: mediaUrl } });
+		}
+
+		// Delete file from storage
+		const relativePath = getRelativePathFromUrl(mediaUrl);
+		await deleteFile(relativePath);
 
 		return json({ ok: true });
 	} catch (err: any) {

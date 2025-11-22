@@ -177,7 +177,7 @@ model platform_users {
 model media {
   id         BigInt    @id @default(autoincrement())
   uuid       String    @unique @default(uuid())
-  url        String
+  url        String    @unique
   mime_type  String
   size_bytes Int
   width      Int?

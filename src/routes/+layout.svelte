@@ -3,6 +3,8 @@
 	import favicon from "$lib/assets/favicon.ico";
 	import { Menu, X } from "@lucide/svelte";
 	import Button from "$lib/components/ui/button/button.svelte";
+	import { Toaster } from "$lib/components/ui/sonner/index.js";
+
 	import Footer from "./footer.svelte";
 	import { MetaTags } from "svelte-meta-tags";
 	import { page } from "$app/state";
@@ -104,6 +106,9 @@
   }
 }
 </script>`}
+
+<!-- global shadcnUI component -->
+<Toaster />
 
 <MetaTags
 	title="PT. Metrindo Maju Persada | General Contractor"

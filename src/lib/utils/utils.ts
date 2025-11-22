@@ -55,9 +55,17 @@ export function snakeToCamel<T>(obj: T): T {
 
 export function normalizeString(string: string): string {
 	return string
-		.trim()                     // remove leading/trailing spaces
-		.toLowerCase()              // lowercase
-		.replace(/\s+/g, '-')       // spaces → dashes
-		.replace(/[^a-z0-9\-]/g, '') // remove non-alphanumeric & non-dash
-		.replace(/\-+/g, '-');      // collapse multiple dashes
+		.trim()
+		.toLowerCase()
+		// collapse multiple slashes
+		.replace(/\/+/g, '/')
+		// normalize each segment individually
+		.split('/')
+		.map((part) =>
+			part
+				.replace(/\s+/g, '-')        // spaces → dashes
+				.replace(/[^a-z0-9\-]/g, '') // remove non-alphanumeric & non-dash
+				.replace(/\-+/g, '-')        // collapse multiple dashes
+		)
+		.join('/');
 }

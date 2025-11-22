@@ -8,14 +8,22 @@ import { promisify } from 'util';
 
 const pipeline = promisify(stream.pipeline);
 
-const GCS_BUCKET = process.env.GCS_BUCKET!;
+// ------------------------------
+// ENV VALIDATION
+// ------------------------------
+const GCS_BUCKET = process.env.GCS_BUCKET;
 if (!GCS_BUCKET) throw new Error('Missing GCS_BUCKET env');
 
-const serviceAccountBase64 = process.env.GCS_SERVICE_ACCOUNT_BASE64!;
+const serviceAccountBase64 = process.env.GCS_SERVICE_ACCOUNT_BASE64;
 if (!serviceAccountBase64) throw new Error('Missing GCS_SERVICE_ACCOUNT_BASE64 env');
 
-const serviceAccount = JSON.parse(Buffer.from(serviceAccountBase64, 'base64').toString('utf-8'));
+const serviceAccount = JSON.parse(
+	Buffer.from(serviceAccountBase64, 'base64').toString('utf-8')
+);
 
+// ------------------------------
+// STORAGE INIT
+// ------------------------------
 const storage = new Storage({
 	projectId: serviceAccount.project_id,
 	credentials: {
@@ -26,68 +34,163 @@ const storage = new Storage({
 
 const bucket = storage.bucket(GCS_BUCKET);
 
-/**
- * Compress any image buffer to WebP under target size
- */
+// Root folder for all your app files
+const MEDIA_ROOT = "metrindomp/api/media";
+
+export function buildMediaPath(relative: string) {
+	return `${MEDIA_ROOT}/${relative.replace(/^\//, "")}`;
+}
+
+// ------------------------------
+// IMAGE DETECTION
+// ------------------------------
+export function detectImageMime(buffer: Buffer): string {
+	const sig = buffer.subarray(0, 4).toString("hex");
+
+	if (sig.startsWith("89504e47")) return "image/png";      // PNG
+	if (sig.startsWith("ffd8ff")) return "image/jpeg";     // JPG/JPEG
+	if (sig.startsWith("52494646")) return "image/webp";     // WEBP (RIFF)
+
+	return "application/octet-stream";
+}
+
+// ------------------------------
+// IMAGE COMPRESSION (always WebP)
+// ------------------------------
 export async function compressImageBuffer(inputBuffer: Buffer, maxSizeKb = 500) {
 	const targetBytes = maxSizeKb * 1024;
 	let quality = 90;
-	let buf = inputBuffer;
 
 	for (let i = 0; i < 8; i++) {
-		buf = await sharp(inputBuffer)
+		const buffer = await sharp(inputBuffer)
 			.rotate()
 			.resize({ width: 2000, withoutEnlargement: true })
 			.webp({ quality })
 			.toBuffer();
 
-		if (buf.length <= targetBytes) return { buffer: buf, mime: 'image/webp' };
+		if (buffer.length <= targetBytes) {
+			return { buffer, mime: "image/webp" };
+		}
 
 		quality = Math.max(30, Math.floor(quality * 0.75));
 	}
 
-	// fallback heavy resize
-	const bufSmall = await sharp(inputBuffer)
+	// fallback, heavy compression
+	const buffer = await sharp(inputBuffer)
 		.rotate()
 		.resize({ width: 1200, withoutEnlargement: true })
 		.webp({ quality: 60 })
 		.toBuffer();
 
-	return { buffer: bufSmall, mime: 'image/webp' };
+	return { buffer, mime: "image/webp" };
 }
 
-/**
- * Upload buffer to Google Cloud Storage
- */
-export async function uploadBufferToGCS(buffer: Buffer, destPathInput: string, mime: string) {
-	const destPath = `metrindomp/api/media/${destPathInput}`;
-
+// ------------------------------
+// UPLOAD BUFFER TO STORAGE
+// ------------------------------
+export async function uploadBufferToGCS(buffer: Buffer, relativePath: string, mime: string) {
+	const destPath = buildMediaPath(relativePath);
 	const file = bucket.file(destPath);
 
-	const streamObj = file.createWriteStream({
+	const writeStream = file.createWriteStream({
 		metadata: {
 			contentType: mime,
-			cacheControl: 'public, max-age=31536000',
+			cacheControl: "public, max-age=31536000"
 		},
 		resumable: false,
-		public: true,
+		public: true
 	});
 
-	await pipeline(stream.Readable.from(buffer), streamObj);
-
-	// Make public URL
-	const publicUrl = `https://storage.googleapis.com/${GCS_BUCKET}/${encodeURI(destPath)}`;
+	await pipeline(stream.Readable.from(buffer), writeStream);
 	await file.makePublic();
 
+	return `https://storage.googleapis.com/${GCS_BUCKET}/${encodeURI(destPath)}`;
+}
+
+// ------------------------------
+// AUTO: detect → compress → upload
+// ------------------------------
+export async function autoCompressAndUpload(
+	buffer: Buffer,
+	folder = "misc",
+	originalName = ""
+) {
+	const { buffer: compressed, mime } = await compressImageBuffer(buffer);
+	const path = generateMediaPath(folder);
+
+	const url = await uploadBufferToGCS(compressed, path, mime);
+
+	return { url, path };
+}
+
+// ------------------------------
+// GENERATE FILE PATH
+// ------------------------------
+export function generateMediaPath(folder = "misc") {
+	const safeFolder = folder.replace(/^\//, "").replace(/\/$/, "");
+	const unique = `${Date.now()}-${randomBytes(6).toString("hex")}`;
+
+	return `${safeFolder}/${unique}.webp`;
+}
+
+// ------------------------------
+// MOVE FILE
+// ------------------------------
+export async function moveFile(oldRelative: string, newRelative: string) {
+	const oldPath = buildMediaPath(oldRelative);
+	const newPath = buildMediaPath(newRelative);
+
+	await bucket.file(oldPath).move(newPath);
+
+	return `https://storage.googleapis.com/${GCS_BUCKET}/${encodeURI(newPath)}`;
+}
+
+
+// Get relative path from public URL
+export function getRelativePathFromUrl(url: string) {
+	const prefix = `https://storage.googleapis.com/${GCS_BUCKET}/${MEDIA_ROOT}/`;
+	if (!url.startsWith(prefix)) throw new Error("URL not from our bucket");
+	return url.slice(prefix.length); // everything after MEDIA_ROOT/
+}
+
+
+// ------------------------------
+// DELETE FILE
+// ------------------------------
+export async function deleteFile(relative: string) {
+	const filePath = buildMediaPath(relative);
+	await bucket.file(filePath).delete({ ignoreNotFound: true });
+
+	return true;
+}
+
+// ------------------------------
+// RENAME FILE
+// ------------------------------
+export async function renameFile(relative: string, newName: string) {
+	const ext = path.extname(relative) || ".webp";
+	const folder = path.dirname(relative);
+	const newRelative = `${folder}/${newName}${ext}`;
+
+	// Move file internally
+	await moveFile(relative, newRelative);
+
+	// Build public URL
+	const publicUrl = `https://storage.googleapis.com/${GCS_BUCKET}/${buildMediaPath(newRelative)}`;
 	return publicUrl;
 }
 
-/**
- * Generate a random media path with WebP extension
- */
-export function generateMediaPath(folder = 'misc', originalName = '') {
-	const ext = '.webp';
-	const random = randomBytes(6).toString('hex');
-	const filename = `${Date.now()}-${random}${ext}`; //the date x random combination make it unique
-	return `${folder.replace(/^\//, '').replace(/\/$/, '')}/${filename}`;
+// ------------------------------
+// LIST FILES IN A FOLDER
+// ------------------------------
+export async function listFiles(folder: string) {
+	const prefix = buildMediaPath(folder.replace(/\/$/, "") + "/");
+
+	const [files] = await bucket.getFiles({ prefix });
+
+	return files.map(f => ({
+		name: f.name.replace(MEDIA_ROOT + "/", ""),
+		size: f.metadata.size,
+		url: `https://storage.googleapis.com/${GCS_BUCKET}/${encodeURI(f.name)}`
+	}));
 }
