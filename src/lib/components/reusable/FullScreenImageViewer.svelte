@@ -45,7 +45,7 @@
 	function onWheel(e: WheelEvent) {
 		e.preventDefault();
 
-		const zoomIntensity = 0.15;
+		const zoomIntensity = 0.03;
 		const delta = e.deltaY < 0 ? zoomIntensity : -zoomIntensity;
 
 		const newScale = Math.min(5, Math.max(0.1, scale + delta));
@@ -105,7 +105,7 @@
 			{src}
 			{alt}
 			draggable="false"
-			class="select-none max-w-none transition-transform duration-[10]"
+			class="select-none max-w-none transition-transform duration-[5ms] w-[80vw]"
 			style="
 				transform:
 					translate({translateX}px, {translateY}px)
