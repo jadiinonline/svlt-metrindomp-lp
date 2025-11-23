@@ -1,9 +1,9 @@
 <script lang="ts">
+	import FullScreenImageViewer from "./FullScreenImageViewer.svelte";
 	import { toast } from "svelte-sonner"; // Optional: For better success/error reporting
 	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
 	import { buttonVariants } from "$lib/components/ui/button/index.js";
 	import { Trash2 } from "@lucide/svelte";
-
 	export let medias: {
 		id: string;
 		uuid: string;
@@ -12,6 +12,7 @@
 		fileName: string;
 	}[] = [];
 
+	let fullscreenSrc: string | null = null;
 	// Callback prop to notify parent about deletion
 	export let onDelete: (url: string) => void;
 
@@ -47,14 +48,19 @@
 >
 	{#each medias as item (item.url)}
 		<div
-			class="bg-muted rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow relative"
+			class="bg-muted rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow relative cursor-pointer"
 		>
-			<img
-				src={item.url}
-				alt={item.altText ?? "media image"}
-				class="w-full h-48 object-cover"
-				loading="lazy"
-			/>
+			<button
+				class="block p-0 m-0 bg-transparent border-0 w-full h-48 cursor-zoom-in"
+				on:click={() => (fullscreenSrc = item.url)}
+			>
+				<img
+					src={item.url}
+					alt={item.altText ?? "media image"}
+					class="w-full h-48 object-scale-down"
+					loading="lazy"
+				/>
+			</button>
 			<div class="p-2 text-xs">{item.fileName}</div>
 
 			<AlertDialog.Root>
@@ -92,3 +98,10 @@
 		</div>
 	{/each}
 </div>
+
+{#if fullscreenSrc}
+	<FullScreenImageViewer
+		src={fullscreenSrc}
+		onClose={() => (fullscreenSrc = null)}
+	/>
+{/if}
