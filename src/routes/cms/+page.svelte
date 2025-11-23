@@ -2,6 +2,8 @@
 	import FolderGrid from "$lib/components/reusable/FolderGrid.svelte";
 	import ImageGrid from "$lib/components/reusable/ImageGrid.svelte";
 	import Breadcrumb from "$lib/components/reusable/MediasBreadcrumb.svelte";
+	import Button from "$lib/components/ui/button/button.svelte";
+	import { Upload } from "@lucide/svelte";
 	import { onMount } from "svelte";
 
 	let folders: string[] = [];
@@ -33,7 +35,18 @@
 </script>
 
 <div class="shadow-md p-4 m-4 rounded-2xl border-primary border-2">
-	<h1 class="uppercase text-2xl text-center font-bold mt-6">Medias</h1>
+	<div class="relative mt-6">
+		<h1 class="uppercase text-2xl text-center font-bold">Medias</h1>
+
+		<!-- Right-aligned button -->
+		<div class="absolute right-0 top-0">
+			<Button>
+				<Upload />
+				Upload
+			</Button>
+		</div>
+	</div>
+
 	<div class="flex flex-col space-y-4 min-h-[90vh]">
 		<!-- Breadcrumb -->
 		<Breadcrumb path={activeFolder} onNavigate={handleBreadcrumbNavigate} />
