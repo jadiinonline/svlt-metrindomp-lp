@@ -4,7 +4,7 @@
 	import { Facebook, Linkedin, Twitter } from "@lucide/svelte";
 </script>
 
-<section id="footer" class="bg-accent w-screen p-10 mt-10">
+<section id="footer" class="bg-accent w-screen p-10">
 	<div class="grid xl:grid-cols-2 gap-8">
 		<div class="flex flex-col gap-6">
 			<h3>

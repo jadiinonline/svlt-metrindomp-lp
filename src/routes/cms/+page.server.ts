@@ -15,18 +15,7 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 					accept: "application/json",
 				}
 			}),
-			// fetch(`${env.BE_HOST_SERVER}/wl/backends/chart/pie`, {
-			// 	headers: {
-			// 		authorization: `Bearer ${token}`,
-			// 		accept: "application/json",
-			// 	}
-			// }),
-			// fetch(`${env.BE_HOST_SERVER}/auth/my/permissions`, {
-			// 	headers: {
-			// 		'authorization': `Bearer ${token}`,
-			// 		accept: "application/json",
-			// 	}
-			// })
+
 		]);
 
 		if (!mediaRes.ok) {
@@ -36,26 +25,10 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 
 		}
 
-		// if (!wlbackendsRes.ok) {
-		// 	console.error('a user failed / unauthorized to fetch the API');
-		// } else {
-		// 	wlbackendsversion = await wlbackendsRes.json();
-		// }
-
-
-		// if (!pieChartRes.ok) {
-		// 	console.error('a user failed / unauthorized to fetch permissions');
-		// } else {
-		// 	const pieChart = await pieChartRes.json();
-		// 	wlbackendspiechart = pieChart.rows
-		// }
-
-
 
 	} catch (error) {
 		console.error(`Error loading data in file ${import.meta.url} :`, error)
 	}
-
 
 	return { medias };
 
