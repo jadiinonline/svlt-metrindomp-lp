@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { toast } from "svelte-sonner"; // Optional: For better success/error reporting
+	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
+	import { buttonVariants } from "$lib/components/ui/button/index.js";
+	import { Trash2 } from "@lucide/svelte";
 
 	export let medias: {
 		id: string;
@@ -13,7 +16,7 @@
 	export let onDelete: (url: string) => void;
 
 	async function handleDelete(mediaUrl: string, fileName: string) {
-		if (!confirm("Are you sure you want to delete this image?")) return;
+		// if (!confirm("Are you sure you want to delete this image?")) return;
 
 		try {
 			const res = await fetch(`/api/media`, {
@@ -34,17 +37,17 @@
 			}
 		} catch (err) {
 			console.error(err);
-			alert("Error deleting image");
+			toast.error(`Failed to delete image ${fileName}  `);
 		}
 	}
 </script>
 
 <div
-	class="border rounded-2xl border-primary min-h-[90vh] p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+	class="border rounded-2xl p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
 >
 	{#each medias as item (item.url)}
 		<div
-			class="bg-gray-50 rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow relative"
+			class="bg-muted rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow relative"
 		>
 			<img
 				src={item.url}
@@ -54,13 +57,38 @@
 			/>
 			<div class="p-2 text-xs">{item.fileName}</div>
 
-			<!-- Delete button -->
-			<button
-				class="absolute top-2 right-2 bg-red-500 text-white rounded px-2 py-1 text-xs hover:bg-red-600"
-				on:click={() => handleDelete(item.url, item.fileName)}
-			>
-				Delete
-			</button>
+			<AlertDialog.Root>
+				<AlertDialog.Trigger
+					class={buttonVariants({
+						variant: "destructive",
+						class: "absolute top-2 right-2",
+					})}
+				>
+					<Trash2 />
+				</AlertDialog.Trigger>
+				<AlertDialog.Content>
+					<AlertDialog.Header>
+						<AlertDialog.Title
+							>Delete image {item.fileName} ?</AlertDialog.Title
+						>
+						<AlertDialog.Description>
+							This action cannot be undone. This will permanently
+							delete your image from our servers.
+						</AlertDialog.Description>
+					</AlertDialog.Header>
+					<AlertDialog.Footer>
+						<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+						<AlertDialog.Action
+							class={buttonVariants({
+								variant: "destructive",
+							})}
+							onclick={() =>
+								handleDelete(item.url, item.fileName)}
+							>Continue</AlertDialog.Action
+						>
+					</AlertDialog.Footer>
+				</AlertDialog.Content>
+			</AlertDialog.Root>
 		</div>
 	{/each}
 </div>

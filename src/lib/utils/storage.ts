@@ -191,9 +191,15 @@ export async function listFiles(folder: string) {
 
 	const [files] = await bucket.getFiles({ prefix });
 
-	return files.map(f => ({
-		name: f.name.replace(MEDIA_ROOT + "/", ""),
-		size: f.metadata.size,
-		url: `https://storage.googleapis.com/${GCS_BUCKET}/${encodeURI(f.name)}`
-	}));
+	return files.map((f) => {
+		const relative = f.name.replace(MEDIA_ROOT + "/", "");
+		const fileName = relative.split("/").pop() ?? "";
+
+		return {
+			relative, // e.g. "proyek-1/foto1.jpg"
+			fileName, // e.g. "foto1.jpg"
+			size: f.metadata.size,
+			url: `https://storage.googleapis.com/${GCS_BUCKET}/${encodeURI(f.name)}`
+		};
+	});
 }

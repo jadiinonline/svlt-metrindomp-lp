@@ -16,7 +16,7 @@ export const GET = async ({ url }) => {
 	const mediaFiles: typeof files = [];
 
 	files.forEach((f) => {
-		const parts = f.name.split('/').slice(folderDepth);
+		const parts = f.relative.split('/').slice(folderDepth);
 		if (parts.length > 1) {
 			// Nested folder
 			foldersSet.add(parts[0]);
