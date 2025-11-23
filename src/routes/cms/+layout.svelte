@@ -96,9 +96,11 @@
 
 	<!-- Mobile overlay -->
 	{#if mobileSidebarOpen}
-		<div
+		<button
 			class="fixed inset-0 bg-black/50 md:hidden mt-16"
 			onclick={() => (mobileSidebarOpen = false)}
-		/>
+			><span class="opacity-0">button need text, ignore this</span
+			></button
+		>
 	{/if}
 </div>
