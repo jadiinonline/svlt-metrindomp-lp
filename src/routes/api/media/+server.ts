@@ -59,16 +59,14 @@ export const POST: RequestHandler = async ({ request }) => {
 			// Auto-detect, compress to webp, upload
 			const upload = await autoCompressAndUpload(buffer, folder, f.name);
 
-			// Determine dimensions from the compressed output
-			const metadata = await sharp(buffer).metadata();
 
 			const created = await prisma.media.create({
 				data: {
 					url: upload.url,
 					mime_type: 'image/webp',
-					size_bytes: buffer.length,
-					width: metadata.width ?? null,
-					height: metadata.height ?? null,
+					size_bytes: Number(upload.compressedMetadata.size),
+					width: upload.compressedMetadata.width ?? null,
+					height: upload.compressedMetadata.height ?? null,
 					alt_text: altText,
 					uploader_id: uploaderId
 				}

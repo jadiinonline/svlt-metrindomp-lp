@@ -118,9 +118,12 @@ export async function autoCompressAndUpload(
 	const { buffer: compressed, mime } = await compressImageBuffer(buffer);
 	const path = generateMediaPath(folder);
 
+	const compressedMetadata = await sharp(compressed).metadata();
+
+
 	const url = await uploadBufferToGCS(compressed, path, mime);
 
-	return { url, path };
+	return { url, path, compressedMetadata };
 }
 
 // ------------------------------
