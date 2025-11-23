@@ -57,11 +57,11 @@
 				<img
 					src={item.url}
 					alt={item.altText ?? "media image"}
-					class="w-full h-48 object-scale-down"
+					class="w-full h-48 object-scale-down hover:scale-150 transition-transform duration-150"
 					loading="lazy"
 				/>
 			</button>
-			<div class="p-2 text-xs">{item.fileName}</div>
+			<div class="p-2 text-xs text-center">{item.fileName}</div>
 
 			<AlertDialog.Root>
 				<AlertDialog.Trigger

@@ -42,6 +42,17 @@
 		}
 	}
 
+	function onWheel(e: WheelEvent) {
+		e.preventDefault();
+
+		const zoomIntensity = 0.15;
+		const delta = e.deltaY < 0 ? zoomIntensity : -zoomIntensity;
+
+		const newScale = Math.min(5, Math.max(0.1, scale + delta));
+
+		scale = newScale;
+	}
+
 	function stopDrag() {
 		isDragging = false;
 	}
@@ -56,7 +67,7 @@
 <div class="fixed inset-0 bg-black/90 z-100 flex flex-col">
 	<!-- Close Button -->
 	<button
-		class="absolute top-4 right-4 bg-white/20 hover:bg-white/40 text-white p-2 font-bold rounded text-sm z-20 border-2"
+		class="absolute top-4 right-4 bg-white/20 hover:bg-white/40 text-white p-2 font-bold rounded-full h-10 w-10 text-sm z-20 border-2"
 		onclick={onClose}
 	>
 		✕
@@ -88,6 +99,7 @@
 		ontouchstart={startDrag}
 		ontouchmove={moveDrag}
 		ontouchend={stopDrag}
+		onwheel={onWheel}
 	>
 		<img
 			{src}
