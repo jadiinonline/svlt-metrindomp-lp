@@ -6,6 +6,7 @@
 	import * as Dialog from "$lib/components/ui/dialog/index.js";
 	import { Input } from "$lib/components/ui/input/index.js";
 	import { Label } from "$lib/components/ui/label/index.js";
+	import ScrollArea from "$lib/components/ui/scroll-area/scroll-area.svelte";
 
 	import { Upload } from "@lucide/svelte";
 	import { onMount } from "svelte";
@@ -15,6 +16,8 @@
 	let activeFolder = $state("");
 	let medias: any[] = $state([]);
 	let isLoading = $state(false);
+
+	const { onSelected } = $props();
 
 	// upload form
 	let imageFiles = $state<FileList | null>(null);
@@ -110,6 +113,7 @@
 								placeholder="Folder name"
 								bind:value={activeFolder}
 								class="border p-2 w-full"
+								disabled
 							/>
 						</div>
 						<div class="grid grid-cols-3 items-center gap-4">
@@ -184,18 +188,22 @@
 
 		<!-- Images -->
 		{#if medias.length > 0}
-			<ImageGrid
-				{medias}
-				onDelete={(url) => {
-					// Option 1: Filter locally
-					medias = medias.filter((m) => m.url !== url);
+			<ScrollArea class="h-[60vh] w-full rounded-md border p-4">
+				<ImageGrid
+					{medias}
+					onDelete={(url) => {
+						// Option 1: Filter locally
+						medias = medias.filter((m) => m.url !== url);
 
-					// Option 2: Re-fetch the current folder/page
-					fetchNavigation(activeFolder); // or any page-based fetch function
-				}}
-				enableDelete
-				enableSelect={false}
-			/>
+						// Option 2: Re-fetch the current folder/page
+						fetchNavigation(activeFolder); // or any page-based fetch function
+					}}
+					enableDelete={false}
+					enableSelect
+					onSelect={(url) => onSelected?.(url)}
+					singleSelect
+				/>
+			</ScrollArea>
 		{/if}
 	</div>
 </div>

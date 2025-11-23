@@ -28,9 +28,9 @@ export const GET: RequestHandler = async ({ url }) => {
 			skip: offset,
 			take: limit,
 			orderBy: { [sortField]: sortOrder },
-			// include: {
-			// 	project_categories: true
-			// }
+			include: {
+				media: true
+			}
 		});
 
 		const total = await prisma.service_categories.count();
@@ -95,27 +95,41 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 		const dataRaw = await request.json();
 		const data = camelToSnakeSafe(dataRaw);
 
-		// console.log('Updating service-category', idParam, 'with data:', data);
+		let mediaId: bigint | undefined;
+
+		// If media_id is provided, use it
+		if (data.media_id) {
+			mediaId = BigInt(data.media_id);
+		}
+		// Otherwise, if media_url is provided, look it up
+		else if (data.media_url) {
+			const media = await prisma.media.findUnique({
+				where: { url: data.media_url }
+			});
+			if (!media) {
+				return json({ error: `Media with URL ${data.media_url} not found` }, { status: 404 });
+			}
+			mediaId = media.id;
+		}
 
 		const updatedCategory = await prisma.service_categories.update({
 			where: { id: BigInt(idParam) },
 			data: {
-				name: data.name || undefined,
+				name: data.name ?? undefined,
 				description: data.description ?? undefined,
-				media_id: data.media_id ?? undefined,
+				media_id: mediaId ?? undefined,
 				updated_at: new Date()
 			},
 			include: { project_categories: true }
 		});
 
-		const responseData = snakeToCamel(serializeBigInt(updatedCategory))
-
-		return json(responseData);
+		return json(snakeToCamel(serializeBigInt(updatedCategory)));
 	} catch (error: any) {
 		console.error(`Error updating category ${idParam}:`, error);
 		return json({
 			error: `Failed to update category ${idParam}`,
-			details: error, message: error.message
+			details: error,
+			message: error.message
 		}, { status: 500 });
 	}
 };

@@ -13,6 +13,7 @@ export const NAV_ITEMS = [
 		label: "Projects",
 		children: [
 			{ label: "Project Management", href: "/cms/projects" },
+			{ label: "Clients Management", href: "/cms/clients" },
 		]
 	},
 
