@@ -7,10 +7,11 @@
 	import Textarea from "$lib/components/ui/textarea/textarea.svelte";
 	import * as Drawer from "$lib/components/ui/drawer/index.js";
 	import { toast } from "svelte-sonner";
+	import * as HoverCard from "$lib/components/ui/hover-card/index.js";
 
 	// icons
 	import { Pencil } from "@lucide/svelte";
-	import MediaPicker from "./MediaPicker.svelte";
+	import MediaLibrary from "$lib/components/reusable/MediaLibrary.svelte";
 	import ScrollArea from "$lib/components/ui/scroll-area/scroll-area.svelte";
 
 	let { data } = $props();
@@ -19,7 +20,6 @@
 
 	let newUrl = $state("");
 	let drawerOpen = $state(false);
-	let dialogOpen = $state(false);
 	let isProcessing = $state(false);
 
 	function captureNewImageUrl(url: string) {
@@ -88,7 +88,8 @@
 			}
 			toast.success("successfully update service");
 			const data = await res.json();
-			dialogOpen = false;
+			// dialogOpen = false;
+			drawerOpen = false;
 			newUrl = "";
 			// return data;
 			fetchServiceCategory();
@@ -99,6 +100,7 @@
 			// throw error;
 		} finally {
 			isProcessing = false;
+			// drawerOpen = false;
 		}
 	}
 
@@ -108,7 +110,7 @@
 <h1 class="font-bold text-center text-2xl m-6">Services Management</h1>
 
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-	{#each serviceCategoriesResponse.serviceCategories as x}
+	{#each serviceCategoriesResponse.serviceCategories as x (x.id)}
 		<div class="shadow-sm border rounded-2xl p-2">
 			<div class="grid grid-cols-3 items-center">
 				<div></div>
@@ -131,6 +133,7 @@
 								save when you're done.
 							</Dialog.Description>
 						</Dialog.Header>
+						<!-- dialog body -->
 						<div class="grid gap-4 py-4">
 							<div class="grid grid-cols-4 items-center gap-4">
 								<Label for="name" class="text-end">Name</Label>
@@ -158,24 +161,27 @@
 										class={buttonVariants({
 											variant: "outline",
 											class: "justify-self-start",
-										})}>change image</Drawer.Trigger
+										})}
 									>
+										change image
+									</Drawer.Trigger>
 									<Drawer.Content>
 										<Drawer.Header>
 											<Drawer.Title
 												>Choose the image</Drawer.Title
 											>
 											<Drawer.Description>
-												<MediaPicker
+												<MediaLibrary
 													onSelected={(url: string) =>
 														captureNewImageUrl(url)}
+													enableSelect={true}
 												/>
 											</Drawer.Description>
 										</Drawer.Header>
-										<Drawer.Footer>
+										<!-- <Drawer.Footer>
 											<Button>Submit</Button>
 											<Drawer.Close>Cancel</Drawer.Close>
-										</Drawer.Footer>
+										</Drawer.Footer> -->
 									</Drawer.Content>
 								</Drawer.Root>
 							</div>
@@ -186,16 +192,26 @@
 										<h4 class="text-center">
 											previous image
 										</h4>
-										<img
-											src={x.media.url}
-											alt={x.media.altText}
-											class="mx-auto h-[200px]"
-										/>
+										{#if newUrl == ""}
+											<img
+												src={x.media.url}
+												alt={x.media.altText}
+												class="mx-auto h-[200px]"
+											/>
+										{:else}
+											<!-- transparant  -->
+											<img
+												src={x.media.url}
+												alt={x.media.altText}
+												class="mx-auto h-[200px] opacity-50"
+											/>
+										{/if}
 									</div>
+
 									<div>
 										{#if newUrl != ""}
 											<h4 class="text-center">
-												selected image
+												Selected image
 											</h4>
 											<img
 												src={newUrl}
@@ -207,15 +223,25 @@
 								</div>
 							</ScrollArea>
 						</div>
+
 						<Dialog.Footer>
 							<Button
 								disabled={isProcessing}
-								onclick={() =>
-									updateServiceCategory(x.id, {
-										name: x.name,
-										description: x.description,
-										mediaUrl: newUrl,
-									})}
+								onclick={() => {
+									try {
+										updateServiceCategory(x.id, {
+											name: x.name,
+											description: x.description,
+											mediaUrl: newUrl,
+										});
+
+										close();
+									} catch (e) {
+										console.error(e);
+									} finally {
+										isProcessing = false;
+									}
+								}}
 							>
 								{#if isProcessing}
 									<span
@@ -231,7 +257,16 @@
 				</Dialog.Root>
 			</div>
 
-			<span class="text-muted-foreground">{x.description}</span>
+			<HoverCard.Root>
+				<HoverCard.Trigger class="text-muted-foreground line-clamp-5"
+					>{x.description}</HoverCard.Trigger
+				>
+				<HoverCard.Content
+					class="text-sm text-muted-foreground xl:w-[800px]"
+				>
+					{x.description}
+				</HoverCard.Content>
+			</HoverCard.Root>
 
 			<img src={x.media.url} alt={x.media.altText} class="my-2" />
 		</div>

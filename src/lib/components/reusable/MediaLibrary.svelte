@@ -7,6 +7,7 @@
 	import { Input } from "$lib/components/ui/input/index.js";
 	import { Label } from "$lib/components/ui/label/index.js";
 	import ScrollArea from "$lib/components/ui/scroll-area/scroll-area.svelte";
+	import { Spinner } from "$lib/components/ui/spinner/index.js";
 
 	import { Upload } from "@lucide/svelte";
 	import { onMount } from "svelte";
@@ -17,7 +18,11 @@
 	let medias: any[] = $state([]);
 	let isLoading = $state(false);
 
-	const { onSelected } = $props();
+	const {
+		onSelected = undefined,
+		enableSelect = false,
+		enableDelete = false,
+	} = $props();
 
 	// upload form
 	let imageFiles = $state<FileList | null>(null);
@@ -64,6 +69,7 @@
 	}
 
 	async function fetchNavigation(folder = "") {
+		isLoading = true;
 		const res = await fetch(
 			`/api/media/navigation?folder=${encodeURIComponent(folder)}`,
 		);
@@ -71,6 +77,8 @@
 		folders = data.folders;
 		medias = data.mediaFiles;
 		activeFolder = folder;
+
+		isLoading = false;
 	}
 
 	function handleFolderClick(folder: string) {
@@ -198,12 +206,23 @@
 						// Option 2: Re-fetch the current folder/page
 						fetchNavigation(activeFolder); // or any page-based fetch function
 					}}
-					enableDelete={false}
-					enableSelect
+					{enableDelete}
+					{enableSelect}
 					onSelect={(url) => onSelected?.(url)}
-					singleSelect
+					singleSelect={true}
 				/>
 			</ScrollArea>
+		{/if}
+
+		{#if isLoading}
+			<div class="flex flex-col items-center space-y-2 mt-10">
+				<Spinner />
+				<div class="text-center text-muted-foreground">Loading...</div>
+			</div>
+		{:else if folders.length === 0 && medias.length === 0}
+			<div class="text-center text-muted-foreground">
+				No folders or media found.
+			</div>
 		{/if}
 	</div>
 </div>
