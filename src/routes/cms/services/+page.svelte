@@ -19,6 +19,7 @@
 	let serviceCategoriesResponse: any[any] = $state(data.fetchOneData);
 
 	let newUrl = $state("");
+	let isDialogOpen = $state(false);
 	let drawerOpen = $state(false);
 	let isProcessing = $state(false);
 
@@ -87,8 +88,8 @@
 				);
 			}
 			toast.success("successfully update service");
-			const data = await res.json();
-			// dialogOpen = false;
+			// const data = await res.json();
+			isDialogOpen = false;
 			drawerOpen = false;
 			newUrl = "";
 			// return data;
@@ -109,12 +110,13 @@
 
 <h1 class="font-bold text-center text-2xl m-6">Services Management</h1>
 
-<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 m-2">
 	{#each serviceCategoriesResponse.serviceCategories as x (x.id)}
 		<div class="shadow-sm border rounded-2xl p-2">
 			<div class="grid grid-cols-3 items-center">
+				<h3 class="text-left font-bold">{x.name}</h3>
+
 				<div></div>
-				<h3 class=" text-center font-bold">{x.name}</h3>
 
 				<Dialog.Root>
 					<Dialog.Trigger
@@ -234,8 +236,7 @@
 											description: x.description,
 											mediaUrl: newUrl,
 										});
-
-										close();
+										isDialogOpen = false;
 									} catch (e) {
 										console.error(e);
 									} finally {

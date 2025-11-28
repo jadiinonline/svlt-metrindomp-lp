@@ -90,7 +90,7 @@
 	</aside>
 
 	<!-- Content -->
-	<main class="flex-1 p-4">
+	<main class="flex-1 py-10">
 		{@render children?.()}
 	</main>
 

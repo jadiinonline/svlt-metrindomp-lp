@@ -59,7 +59,7 @@
 		Tidak ada layanan yang tersedia saat ini. Database masih kosong
 	</p>
 {:else}
-	<div class="pt-10">
+	<div class="py-10">
 		{#each services as service}
 			<div class="flex justify-between mb-10">
 				<Button
