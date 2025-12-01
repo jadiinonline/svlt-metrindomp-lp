@@ -18,11 +18,11 @@
 
 	let serviceCategoriesResponse: any[any] = $state(data.fetchOneData);
 
-	let newUrl = $state("");
 	let isDialogOpen = $state(false);
 	let drawerOpen = $state(false);
 	let isProcessing = $state(false);
 
+	let newUrl = $state("");
 	function captureNewImageUrl(url: string) {
 		newUrl = url;
 		// console.log({ newUrl });
@@ -269,7 +269,12 @@
 				</HoverCard.Content>
 			</HoverCard.Root>
 
-			<img src={x.media.url} alt={x.media.altText} class="my-2" />
+			<img
+				src={x.media?.url ??
+					"https://placehold.co/400x400?text=No+Image+/cms/services-category"}
+				alt={x.media.altText ?? "No image"}
+				class="my-2"
+			/>
 		</div>
 	{/each}
 </div>

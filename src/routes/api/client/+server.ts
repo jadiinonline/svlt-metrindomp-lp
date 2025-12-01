@@ -63,6 +63,21 @@ export const POST: RequestHandler = async ({ request }) => {
 		const data = camelToSnakeSafe(dataRaw);
 
 
+		let mediaId: bigint | undefined;
+
+		// If media_id is provided, use it
+		if (data.media_id) {
+			mediaId = BigInt(data.media_id);
+		} else if (data.media_url) { 		// Otherwise, if media_url is provided, look it up
+			const media = await prisma.media.findUnique({
+				where: { url: data.media_url }
+			});
+			if (!media) {
+				return json({ error: `Media with URL ${data.media_url} not found` }, { status: 404 });
+			}
+			mediaId = media.id;
+		}
+
 		if (!data.name) return json({ error: 'name is required' }, { status: 400 });
 
 		const namePreprocessed = toTitleCase((data.name || '').trim());
@@ -70,7 +85,8 @@ export const POST: RequestHandler = async ({ request }) => {
 		const newClient = await prisma.clients.create({
 			data: {
 				name: namePreprocessed,
-				media_id: data.media_id ?? null
+				classification: data.classification,
+				media_id: mediaId ?? null
 			}
 		});
 
