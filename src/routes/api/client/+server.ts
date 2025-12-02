@@ -109,18 +109,47 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 		const dataRaw = await request.json();
 		const data = camelToSnakeSafe(dataRaw);
 
+		let updateData: any = {}; // 👈 Only push keys that exist
+
+		// name
+		if (typeof data.name !== 'undefined') {
+			updateData.name = data.name;
+		}
+
+		// classification
+		if (typeof data.classification !== 'undefined') {
+			updateData.classification = data.classification;
+		}
+
+		// media_id handling
+		if (typeof data.media_id !== 'undefined') {
+			updateData.media_id = BigInt(data.media_id);
+		} else if (typeof data.media_url !== 'undefined') {
+			const media = await prisma.media.findUnique({
+				where: { url: data.media_url }
+			});
+
+			if (!media) {
+				return json({ error: `Media with URL ${data.media_url} not found` }, { status: 404 });
+			}
+
+			updateData.media_id = media.id;
+		}
+
+		// If user sends empty body
+		if (Object.keys(updateData).length === 0) {
+			return json({ error: 'No valid fields to update' }, { status: 400 });
+		}
+
 		const updatedClient = await prisma.clients.update({
 			where: { id: BigInt(idParam) },
-			data: {
-				name: data.name,
-				media_id: data.media_id ?? null
-			},
+			data: updateData,
 			include: { projects: true }
 		});
 
 		const responseData = snakeToCamel(serializeBigInt(updatedClient));
-
 		return json(responseData, { status: 200 });
+
 	} catch (error: any) {
 		console.error(`Error updating client ${idParam}:`, error);
 		return json({

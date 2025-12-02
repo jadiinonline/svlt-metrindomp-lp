@@ -70,7 +70,7 @@
 	async function fetchClient() {
 		try {
 			isProcessing = true;
-			const res = await fetch(`/api/client?limit=100`, {
+			const res = await fetch(`/api/client?limit=500`, {
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
@@ -137,6 +137,48 @@
 		}
 	}
 
+	async function putUpdateClient(
+		id: number | string,
+		payload: {
+			name?: string;
+			classification?: string;
+			mediaId?: number | string;
+			mediaUrl?: string;
+		},
+	) {
+		try {
+			isProcessing = true;
+			const res = await fetch(`/api/client?id=${id}`, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(payload),
+			});
+
+			if (!res.ok) {
+				const err = await res.json();
+				throw new Error(err.error || "Failed to update client");
+			}
+			toast.success("successfully update client");
+			// const data = await res.json();
+			drawerOpen = false;
+			// return data;
+
+			fetchClient(); //refetch client list after creating new client
+
+			resetAllInput(); //clearing all input
+		} catch (error) {
+			console.error("error:", error);
+			toast.error("error on update client");
+
+			// throw error;
+		} finally {
+			isProcessing = false;
+			// drawerOpen = false;
+		}
+	}
+
 	async function deleteClient(id: number | string) {
 		console.log("deleting client id:", id);
 		try {
@@ -183,7 +225,7 @@
 		>
 			<Plus /> add client
 		</Dialog.Trigger>
-		<Dialog.Content class="min-w-[90vw] lg:min-w-[70vw]">
+		<Dialog.Content class="min-w-[90vw] lg:min-w-[70vw] h-[80vh]">
 			<Dialog.Header>
 				<Dialog.Title>Add new client</Dialog.Title>
 				<Dialog.Description>
@@ -314,7 +356,156 @@
 					{x.id}
 					<div>{x.classification} | {x.name}</div>
 					<div class="flex gap-1">
-						<Pencil />
+						<Dialog.Root>
+							<Dialog.Trigger
+								class={buttonVariants({
+									variant: "outline",
+									class: "justify-self-end",
+								})}
+							>
+								<Pencil />
+							</Dialog.Trigger>
+							<Dialog.Content
+								class="min-w-[90vw] lg:min-w-[70vw] h-[90vh]"
+							>
+								<Dialog.Header>
+									<Dialog.Title>Edit</Dialog.Title>
+									<Dialog.Description>
+										Make changes to your clients. Click save
+										when you're done.
+									</Dialog.Description>
+								</Dialog.Header>
+								<!-- dialog body -->
+								<div class="grid gap-4 py-4">
+									<div
+										class="grid grid-cols-4 items-center gap-4"
+									>
+										<Label for="name" class="text-end"
+											>Name</Label
+										>
+										<Input
+											id="name"
+											bind:value={x.name}
+											class="col-span-3"
+										/>
+									</div>
+									<div
+										class="grid grid-cols-4 items-center gap-4"
+									>
+										<Label
+											for="classification"
+											class="text-end"
+											>Classification</Label
+										>
+										<Textarea
+											id="classification"
+											bind:value={x.classification}
+											class="col-span-3"
+										/>
+									</div>
+									<div class=" grid grid-cols-4">
+										<Label for="image" class="text-end"
+											>image</Label
+										>
+										<Drawer.Root bind:open={drawerOpen}>
+											<Drawer.Trigger
+												class={buttonVariants({
+													variant: "outline",
+													class: "justify-self-start",
+												})}
+											>
+												change image
+											</Drawer.Trigger>
+											<Drawer.Content>
+												<Drawer.Header>
+													<Drawer.Title
+														>Choose the image</Drawer.Title
+													>
+													<Drawer.Description>
+														<MediaLibrary
+															onSelected={(
+																url: string,
+															) =>
+																captureNewImageUrl(
+																	url,
+																)}
+															enableSelect={true}
+														/>
+													</Drawer.Description>
+												</Drawer.Header>
+												<!-- <Drawer.Footer>
+											<Button>Submit</Button>
+											<Drawer.Close>Cancel</Drawer.Close>
+										</Drawer.Footer> -->
+											</Drawer.Content>
+										</Drawer.Root>
+									</div>
+
+									<ScrollArea class="">
+										<div class="grid grid-cols-2 gap-1">
+											<div>
+												<h4 class="text-center">
+													previous image
+												</h4>
+												{#if newUrl == ""}
+													<img
+														src={x.media?.url ??
+															"https://placehold.co/300x300?text=No+Image+/cms/client"}
+														alt={x.media?.altText ??
+															"no data"}
+													/>
+												{:else}
+													<!-- transparant  -->
+													<img
+														src={x.media?.url ??
+															"https://placehold.co/300x300?text=No+Image+/cms/client"}
+														alt={x.media?.altText ??
+															"no data"}
+														class="mx-auto h-[200px] opacity-50"
+													/>
+												{/if}
+											</div>
+
+											<div>
+												{#if newUrl != ""}
+													<h4 class="text-center">
+														Selected image
+													</h4>
+													<img
+														src={newUrl}
+														alt={x.media?.altText}
+														class="mx-auto h-[200px]"
+													/>
+												{/if}
+											</div>
+										</div>
+									</ScrollArea>
+								</div>
+
+								<Dialog.Footer>
+									<Button
+										disabled={isProcessing}
+										onclick={() => {
+											putUpdateClient(x.id, {
+												name: x.name,
+												classification:
+													x.classification,
+												mediaUrl: newUrl,
+											});
+										}}
+									>
+										{#if isProcessing}
+											<span
+												class="animate-spin border-2 border-white border-t-transparent rounded-full h-4 w-4"
+											></span>
+											processing changes...
+										{:else}
+											Save Changes
+										{/if}
+									</Button>
+								</Dialog.Footer>
+							</Dialog.Content>
+						</Dialog.Root>
 
 						<AlertDialog.Root
 							open={deleteDialog.open && deleteDialog.id === x.id}
