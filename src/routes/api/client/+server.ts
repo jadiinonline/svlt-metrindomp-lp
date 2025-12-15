@@ -124,13 +124,20 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 		// media_id handling
 		if (typeof data.media_id !== 'undefined') {
 			updateData.media_id = BigInt(data.media_id);
-		} else if (typeof data.media_url !== 'undefined') {
+
+		} else if (
+			typeof data.media_url === 'string' &&
+			data.media_url.trim() !== ''
+		) {
 			const media = await prisma.media.findUnique({
 				where: { url: data.media_url }
 			});
 
 			if (!media) {
-				return json({ error: `Media with URL ${data.media_url} not found` }, { status: 404 });
+				return json(
+					{ error: `Media with URL ${data.media_url} not found` },
+					{ status: 404 }
+				);
 			}
 
 			updateData.media_id = media.id;

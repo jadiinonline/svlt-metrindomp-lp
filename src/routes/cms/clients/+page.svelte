@@ -353,7 +353,7 @@
 		{#each clientResponse.clients as x}
 			<div class="p-4 border grid grid-flow-row gap-2 rounded-lg text-sm">
 				<div class="flex justify-between items-center">
-					{x.id}
+					<!-- {x.id} -->
 					<div>{x.classification} | {x.name}</div>
 					<div class="flex gap-1">
 						<Dialog.Root>
@@ -366,7 +366,7 @@
 								<Pencil />
 							</Dialog.Trigger>
 							<Dialog.Content
-								class="min-w-[90vw] lg:min-w-[70vw] h-[90vh]"
+								class="min-w-[90vw] lg:min-w-[70vw] xl:h-[90vh]"
 							>
 								<Dialog.Header>
 									<Dialog.Title>Edit</Dialog.Title>
@@ -397,11 +397,36 @@
 											class="text-end"
 											>Classification</Label
 										>
-										<Textarea
-											id="classification"
+										<Select.Root
+											type="single"
+											name="classification"
 											bind:value={x.classification}
-											class="col-span-3"
-										/>
+											required
+										>
+											<Select.Trigger class="w-[200px]">
+												{classificationSelect.find(
+													(f) =>
+														f.value ===
+														x.classification,
+												)?.label ??
+													"Select Classification"}
+											</Select.Trigger>
+											<Select.Content>
+												<Select.Group>
+													<Select.Label
+														>Classification</Select.Label
+													>
+													{#each classificationSelect as ys (ys.value)}
+														<Select.Item
+															value={ys.value}
+															label={ys.label}
+														>
+															{ys.label}
+														</Select.Item>
+													{/each}
+												</Select.Group>
+											</Select.Content>
+										</Select.Root>
 									</div>
 									<div class=" grid grid-cols-4">
 										<Label for="image" class="text-end"
