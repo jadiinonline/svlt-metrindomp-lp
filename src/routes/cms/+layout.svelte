@@ -23,7 +23,7 @@
 		md:hidden
 		fixed right-20
 		top-[3px]
-		z-[51]
+		z-51
 		bg-background
 		shadow-xl
 		rounded-xl
