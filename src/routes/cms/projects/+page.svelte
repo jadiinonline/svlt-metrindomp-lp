@@ -12,13 +12,16 @@
 	import * as Select from "$lib/components/ui/select/index.js";
 	import * as AlertDialog from "$lib/components/ui/alert-dialog/index.js";
 	import { Checkbox } from "$lib/components/ui/checkbox/index.js";
+	import * as Empty from "$lib/components/ui/empty/index.js";
+	// import FolderCodeIcon from "@tabler/icons-svelte/icons/folder-code";
 
 	// reusable components
 	import MediaLibrary from "$lib/components/reusable/MediaLibrary.svelte";
 
 	// icons
-	import { Pencil, Plus, Trash, X } from "@lucide/svelte";
+	import { Folder, FolderCode, Pencil, Plus, Trash, X } from "@lucide/svelte";
 	import Spinner from "$lib/components/ui/spinner/spinner.svelte";
+	import ScrollAreaScrollbar from "$lib/components/ui/scroll-area/scroll-area-scrollbar.svelte";
 
 	let { data } = $props();
 
@@ -387,238 +390,268 @@
 									</Dialog.Description>
 								</Dialog.Header>
 								<!-- dialog body -->
-								<div class="grid gap-4 py-4">
-									<div
-										class="grid grid-cols-4 items-center gap-4"
-									>
-										<Label for="name" class="text-end"
-											>Name</Label
-										>
-										<Textarea
-											id="name"
-											bind:value={x.name}
-											class="col-span-3"
-										/>
-									</div>
 
-									<div
-										class="grid grid-cols-4 items-center gap-4"
-									>
-										<Label for="slug" class="text-end"
-											>Slug</Label
+								<section class="overflow-y-scroll p-2">
+									<div class="grid gap-4 py-4">
+										<div
+											class="grid grid-cols-4 items-center gap-4"
 										>
-										<Input
-											disabled
-											id="slug"
-											bind:value={x.slug}
-											class="col-span-3"
-										/>
-									</div>
+											<Label for="name" class="text-end"
+												>Name</Label
+											>
+											<Textarea
+												id="name"
+												bind:value={x.name}
+												class="col-span-3"
+											/>
+										</div>
 
-									<div
-										class="grid grid-cols-4 items-center gap-4"
-									>
-										<Label for="client" class="text-end"
-											>Client</Label
+										<div
+											class="grid grid-cols-4 items-center gap-4"
 										>
-										<Select.Root
-											type="single"
-											name="client"
-											bind:value={x.client.name}
-											required
+											<Label for="slug" class="text-end"
+												>Slug</Label
+											>
+											<Input
+												disabled
+												id="slug"
+												bind:value={x.slug}
+												class="col-span-3"
+											/>
+										</div>
+
+										<div
+											class="grid grid-cols-4 items-center gap-4"
 										>
-											<Select.Trigger class="w-[200px]">
-												{clientSelect.find(
-													(f) =>
-														f.value === x.clientId,
-												)?.label ?? "Select Client"}
-											</Select.Trigger>
-											<Select.Content>
-												<Select.Group>
-													<Select.Label
-														>ClientName</Select.Label
-													>
-													{#each clientSelect as ys (ys.value)}
-														<Select.Item
-															value={ys.value}
-															label={ys.label}
+											<Label for="client" class="text-end"
+												>Client</Label
+											>
+											<Select.Root
+												type="single"
+												name="client"
+												bind:value={x.client.name}
+												required
+											>
+												<Select.Trigger
+													class="w-[200px]"
+												>
+													{clientSelect.find(
+														(f) =>
+															f.value ===
+															x.clientId,
+													)?.label ?? "Select Client"}
+												</Select.Trigger>
+												<Select.Content>
+													<Select.Group>
+														<Select.Label
+															>ClientName</Select.Label
 														>
-															{ys.label}
-														</Select.Item>
-													{/each}
-												</Select.Group>
-											</Select.Content>
-										</Select.Root>
-									</div>
+														{#each clientSelect as ys (ys.value)}
+															<Select.Item
+																value={ys.value}
+																label={ys.label}
+															>
+																{ys.label}
+															</Select.Item>
+														{/each}
+													</Select.Group>
+												</Select.Content>
+											</Select.Root>
+										</div>
 
-									<div
-										class="grid grid-cols-4 items-center gap-4"
-									>
-										<Label
-											for="description"
-											class="text-end">Description</Label
-										>
-										<Textarea
-											id="description"
-											bind:value={x.description}
-											class="col-span-3"
-										/>
-									</div>
-
-									<div
-										class="grid grid-cols-4 items-center gap-4"
-									>
-										<Label for="year" class="text-end"
-											>year</Label
-										>
-										<Input
-											type="number"
-											id="year"
-											bind:value={x.year}
-											class="col-span-3"
-										/>
-									</div>
-
-									<div
-										class="grid grid-cols-4 items-center gap-4"
-									>
-										<Label for="poPrice" class="text-end"
-											>Harga PO</Label
-										>
-										<Input
-											type="number"
-											id="poPrice"
-											bind:value={x.poPrice}
-											class="col-span-3"
-										/>
-									</div>
-
-									<div
-										class="grid grid-cols-4 items-center gap-4"
-									>
-										<Label for="poPrice" class="text-end"
-											>Status</Label
-										>
-										<Select.Root
-											type="single"
-											name="status"
-											bind:value={x.status}
-											required
-										>
-											<Select.Trigger class="w-[200px]">
-												{x.status ?? "Select Status"}
-											</Select.Trigger>
-											<Select.Content>
-												<Select.Group>
-													<Select.Label
-														>Status</Select.Label
-													>
-													<Select.Item
-														value="draft"
-														label="draft"
-													>
-														draft
-													</Select.Item>
-													<Select.Item
-														value="planning"
-														label="planning"
-													>
-														planning
-													</Select.Item>
-													<Select.Item
-														value="in progress"
-														label="in progress"
-													>
-														in progress
-													</Select.Item>
-													<Select.Item
-														value="completed"
-														label="completed"
-													>
-														completed
-													</Select.Item>
-												</Select.Group>
-											</Select.Content>
-										</Select.Root>
-									</div>
-
-									<div
-										class="grid grid-cols-4 items-center gap-4"
-									>
-										<Label for="startDate" class="text-end"
-											>Start Date</Label
-										>
-										<Input
-											type="date"
-											id="startDate"
-											bind:value={x.startDate}
-											class="col-span-3"
-										/>
-									</div>
-
-									<div
-										class="grid grid-cols-4 items-center gap-4"
-									>
-										<Label for="isOngoing" class="text-end"
-											>Ongoing project?</Label
-										>
-										<Checkbox
-											id="isOngoingProject"
-											bind:checked={isOngoingProject}
-										/>
-									</div>
-
-									{#if !isOngoingProject}
 										<div
 											class="grid grid-cols-4 items-center gap-4"
 										>
 											<Label
-												for="endDate"
-												class="text-end">End Date</Label
+												for="description"
+												class="text-end"
+												>Description</Label
 											>
-											<Input
-												type="date"
-												id="endDate"
-												bind:value={x.endDate}
+											<Textarea
+												id="description"
+												bind:value={x.description}
 												class="col-span-3"
 											/>
 										</div>
-									{/if}
 
-									<ScrollArea class="">
-										<div>
-											<h2
-												class="text-center font-bold mx-auto p-2"
+										<div
+											class="grid grid-cols-4 items-center gap-4"
+										>
+											<Label for="year" class="text-end"
+												>year</Label
 											>
-												Project Medias
-											</h2>
-											<Button>add more image</Button>
+											<Input
+												type="number"
+												id="year"
+												bind:value={x.year}
+												class="col-span-3"
+											/>
 										</div>
-										{#if x.projectMedias.length > 0}
+
+										<div
+											class="grid grid-cols-4 items-center gap-4"
+										>
+											<Label
+												for="poPrice"
+												class="text-end">Harga PO</Label
+											>
+											<Input
+												type="number"
+												id="poPrice"
+												bind:value={x.poPrice}
+												class="col-span-3"
+											/>
+										</div>
+
+										<div
+											class="grid grid-cols-4 items-center gap-4"
+										>
+											<Label
+												for="poPrice"
+												class="text-end">Status</Label
+											>
+											<Select.Root
+												type="single"
+												name="status"
+												bind:value={x.status}
+												required
+											>
+												<Select.Trigger
+													class="w-[200px]"
+												>
+													{x.status ??
+														"Select Status"}
+												</Select.Trigger>
+												<Select.Content>
+													<Select.Group>
+														<Select.Label
+															>Status</Select.Label
+														>
+														<Select.Item
+															value="draft"
+															label="draft"
+														>
+															draft
+														</Select.Item>
+														<Select.Item
+															value="planning"
+															label="planning"
+														>
+															planning
+														</Select.Item>
+														<Select.Item
+															value="in progress"
+															label="in progress"
+														>
+															in progress
+														</Select.Item>
+														<Select.Item
+															value="completed"
+															label="completed"
+														>
+															completed
+														</Select.Item>
+													</Select.Group>
+												</Select.Content>
+											</Select.Root>
+										</div>
+
+										<div
+											class="grid grid-cols-4 items-center gap-4"
+										>
+											<Label
+												for="startDate"
+												class="text-end"
+												>Start Date</Label
+											>
+											<Input
+												type="date"
+												id="startDate"
+												bind:value={x.startDate}
+												class="col-span-3"
+											/>
+										</div>
+
+										<div
+											class="grid grid-cols-4 items-center gap-4"
+										>
+											<Label
+												for="isOngoing"
+												class="text-end"
+												>Ongoing project?</Label
+											>
+											<Checkbox
+												id="isOngoingProject"
+												bind:checked={isOngoingProject}
+											/>
+										</div>
+
+										{#if !isOngoingProject}
 											<div
-												class="grid grid-cols-4 gap-1 p-2"
+												class="grid grid-cols-4 items-center gap-4"
 											>
-												{#each x.projectMedias as xyz}
-													<!-- transparant  -->
-													<img
-														src={xyz.media?.url ??
-															"https://placehold.co/300x300?text=No+Image+/cms/project"}
-														alt={xyz.media
-															?.altText ??
-															"no data"}
-														class="mx-auto h-[100px] opacity-50"
-													/>
-												{/each}
+												<Label
+													for="endDate"
+													class="text-end"
+													>End Date</Label
+												>
+												<Input
+													type="date"
+													id="endDate"
+													bind:value={x.endDate}
+													class="col-span-3"
+												/>
 											</div>
-										{:else}
-											<h3
-												class="text-center text-muted-foreground italic p-4 m-4 border rounded-2xl"
-											>
-												no image yet
-											</h3>
 										{/if}
-									</ScrollArea>
-								</div>
+
+										<ScrollArea class="">
+											<div>
+												<h2
+													class="text-center font-bold mx-auto p-2"
+												>
+													Project Medias
+												</h2>
+												<Button>add more image</Button>
+											</div>
+											{#if x.projectMedias.length > 0}
+												<div
+													class="grid grid-cols-4 gap-1 p-2"
+												>
+													{#each x.projectMedias as xyz}
+														<!-- transparant  -->
+														<img
+															src={xyz.media
+																?.url ??
+																"https://placehold.co/300x300?text=No+Image+/cms/project"}
+															alt={xyz.media
+																?.altText ??
+																"no data"}
+															class="mx-auto h-[100px] opacity-50"
+														/>
+													{/each}
+												</div>
+											{:else}
+												<Empty.Root class="opacity-35">
+													<Empty.Header>
+														<Empty.Media
+															variant="icon"
+														>
+															<FolderCode />
+														</Empty.Media>
+														<!-- <Empty.Title>Project Media</Empty.Title> -->
+														<Empty.Description
+															>No image found</Empty.Description
+														>
+													</Empty.Header>
+													<Empty.Content>
+														Add more image using add
+														button
+													</Empty.Content>
+												</Empty.Root>
+											{/if}
+										</ScrollArea>
+									</div>
+								</section>
 
 								<Dialog.Footer>
 									<Button
@@ -689,8 +722,8 @@
 				</div>
 
 				<h2>{x.name}</h2>
-				<div class="grid grid-cols-2 gap-2 overflow-x-auto">
-					{#if x.projectMedias.length > 0}
+				{#if x.projectMedias.length > 0}
+					<div class="grid grid-cols-2 gap-2 overflow-x-auto">
 						{#each x.projectMedias as gambar}
 							<img
 								src={gambar?.media?.url ??
@@ -699,15 +732,22 @@
 								class="w-[350px] object-cover"
 							/>
 						{/each}
-					{:else}
-						<h3
-							class="col-span-2 text-center italic text-sm text-muted-foreground border p-4 rounded-2xl"
-						>
-							no project media available. insert some using edit
-							button
-						</h3>
-					{/if}
-				</div>
+					</div>
+				{:else}
+					<Empty.Root class="opacity-35">
+						<Empty.Header>
+							<Empty.Media variant="icon">
+								<FolderCode />
+							</Empty.Media>
+							<!-- <Empty.Title>Project Media</Empty.Title> -->
+							<Empty.Description>No image found</Empty.Description
+							>
+						</Empty.Header>
+						<Empty.Content>
+							Add more image using edit button
+						</Empty.Content>
+					</Empty.Root>
+				{/if}
 			</div>
 		{/each}
 	</div>
