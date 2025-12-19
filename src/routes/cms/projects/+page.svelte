@@ -19,7 +19,15 @@
 	import MediaLibrary from "$lib/components/reusable/MediaLibrary.svelte";
 
 	// icons
-	import { Folder, FolderCode, Pencil, Plus, Trash, X } from "@lucide/svelte";
+	import {
+		Folder,
+		FolderCode,
+		ImageIcon,
+		Pencil,
+		Plus,
+		Trash,
+		X,
+	} from "@lucide/svelte";
 	import Spinner from "$lib/components/ui/spinner/spinner.svelte";
 	import ScrollAreaScrollbar from "$lib/components/ui/scroll-area/scroll-area-scrollbar.svelte";
 
@@ -63,6 +71,7 @@
 	function resetAllInput() {
 		addData = [];
 		// newUrl = "";
+		formProjectTasks = [];
 
 		deleteDialog.open = false;
 		deleteDialog.id = null;
@@ -214,6 +223,93 @@
 		}
 	}
 
+	let formProjectTasks: any = $state([]);
+
+	async function postCreateProjectTask(
+		payload: {
+			name?: string;
+			description?: string;
+			order?: number | string;
+			// mediaUrl?: string;
+		},
+		projectId: number,
+	) {
+		console.log({ payload });
+		try {
+			isProcessing = true;
+			const res = await fetch(`/api/project/${projectId}/task`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(payload),
+			});
+
+			if (!res.ok) {
+				const err = await res.json();
+				throw new Error(err.error || "Failed to create Task");
+			}
+			toast.success("successfully create Task ");
+			// const data = await res.json();
+			drawerOpen = false;
+			// return data;
+
+			fetchProject(); //refetch Project list after creating new Project
+
+			resetAllInput(); //clearing all input
+		} catch (error) {
+			console.error("error:", error);
+			toast.error("error on create tasks");
+
+			// throw error;
+		} finally {
+			isProcessing = false;
+			// drawerOpen = false;
+		}
+	}
+
+	async function putEditProjectTask(
+		payload: {
+			name?: string;
+			description?: string;
+			order?: number | string;
+			// mediaUrl?: string;
+		},
+		projectTaskId: number,
+	) {
+		console.log({ payload });
+		try {
+			isProcessing = true;
+			const res = await fetch(`/api/project/task/${projectTaskId}`, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(payload),
+			});
+
+			if (!res.ok) {
+				const err = await res.json();
+				throw new Error(err.error || "Failed to create Task");
+			}
+			toast.success("Successfully edit Task ");
+			// const data = await res.json();
+			drawerOpen = false;
+			// return data;
+
+			fetchProject(); //refetch Project list after creating new Project
+
+			resetAllInput(); //clearing all input
+		} catch (error) {
+			console.error("error:", error);
+			toast.error("error on create tasks");
+
+			// throw error;
+		} finally {
+			isProcessing = false;
+			// drawerOpen = false;
+		}
+	}
 	// // // // // // API CALLS END // // // // // // //
 </script>
 
@@ -357,16 +453,16 @@
 	</Dialog.Root>
 
 	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-4">
-		{#each projectResponse.projects as x}
+		{#each projectResponse.projects as yolo}
 			<div class="p-4 border grid grid-flow-row gap-2 rounded-lg text-sm">
 				<div class="flex justify-between items-center">
 					<!-- {x.id} -->
 					<div>
 						<span class="font-bold"
-							>{x.client.classification}
-							{x.client.name}</span
+							>{yolo.client.classification}
+							{yolo.client.name}</span
 						>
-						| {x.year}
+						| {yolo.year}
 					</div>
 
 					<div class="flex gap-1">
@@ -401,7 +497,7 @@
 											>
 											<Textarea
 												id="name"
-												bind:value={x.name}
+												bind:value={yolo.name}
 												class="col-span-3"
 											/>
 										</div>
@@ -415,7 +511,7 @@
 											<Input
 												disabled
 												id="slug"
-												bind:value={x.slug}
+												bind:value={yolo.slug}
 												class="col-span-3"
 											/>
 										</div>
@@ -429,7 +525,7 @@
 											<Select.Root
 												type="single"
 												name="client"
-												bind:value={x.client.name}
+												bind:value={yolo.client.name}
 												required
 											>
 												<Select.Trigger
@@ -438,7 +534,7 @@
 													{clientSelect.find(
 														(f) =>
 															f.value ===
-															x.clientId,
+															yolo.clientId,
 													)?.label ?? "Select Client"}
 												</Select.Trigger>
 												<Select.Content>
@@ -469,7 +565,7 @@
 											>
 											<Textarea
 												id="description"
-												bind:value={x.description}
+												bind:value={yolo.description}
 												class="col-span-3"
 											/>
 										</div>
@@ -483,7 +579,7 @@
 											<Input
 												type="number"
 												id="year"
-												bind:value={x.year}
+												bind:value={yolo.year}
 												class="col-span-3"
 											/>
 										</div>
@@ -498,7 +594,7 @@
 											<Input
 												type="number"
 												id="poPrice"
-												bind:value={x.poPrice}
+												bind:value={yolo.poPrice}
 												class="col-span-3"
 											/>
 										</div>
@@ -513,13 +609,13 @@
 											<Select.Root
 												type="single"
 												name="status"
-												bind:value={x.status}
+												bind:value={yolo.status}
 												required
 											>
 												<Select.Trigger
 													class="w-[200px]"
 												>
-													{x.status ??
+													{yolo.status ??
 														"Select Status"}
 												</Select.Trigger>
 												<Select.Content>
@@ -567,7 +663,7 @@
 											<Input
 												type="date"
 												id="startDate"
-												bind:value={x.startDate}
+												bind:value={yolo.startDate}
 												class="col-span-3"
 											/>
 										</div>
@@ -598,26 +694,291 @@
 												<Input
 													type="date"
 													id="endDate"
-													bind:value={x.endDate}
+													bind:value={yolo.endDate}
 													class="col-span-3"
 												/>
 											</div>
 										{/if}
+
+										<section>
+											<h3 class="text-center font-bold">
+												Project Tasks Display Segment
+											</h3>
+											<Drawer.Root>
+												<Drawer.Trigger
+													class={buttonVariants({
+														variant: "outline",
+													})}
+													>Add Tasks</Drawer.Trigger
+												>
+												<Drawer.Content>
+													<Drawer.Header
+														class="text-start"
+													>
+														<Drawer.Title
+															>Add tasks</Drawer.Title
+														>
+														<Drawer.Description>
+															add more task to
+															display the project
+															pictures
+														</Drawer.Description>
+													</Drawer.Header>
+													<form
+														class="grid items-start gap-4 px-4"
+													>
+														<div class="grid gap-2">
+															<Label
+																for="task-name"
+																>Name</Label
+															>
+															<Input
+																type="text"
+																id="task-name"
+																bind:value={
+																	formProjectTasks.name
+																}
+																placeholder="project task title to shows... example : pekerjaan pemasangan bedeng awal"
+															/>
+														</div>
+														<div class="grid gap-2">
+															<Label
+																for="task-description"
+																>Description</Label
+															>
+															<Textarea
+																id="task-description"
+																bind:value={
+																	formProjectTasks.description
+																}
+																placeholder="complete description to tell a story about the images you will show"
+															/>
+														</div>
+
+														<div class="grid gap-2">
+															<Label
+																for="task-order"
+																>Order Number</Label
+															>
+															<Input
+																type="number"
+																id="task-order"
+																bind:value={
+																	formProjectTasks.order
+																}
+																placeholder="project task order number"
+															/>
+														</div>
+														<Button
+															onclick={() =>
+																postCreateProjectTask(
+																	{
+																		name: formProjectTasks.name,
+																		description:
+																			formProjectTasks.description,
+																		order: formProjectTasks.order,
+																	},
+																	yolo.id,
+																)}
+														>
+															Save changes
+														</Button>
+													</form>
+													<Drawer.Footer class="pt-2">
+														<Drawer.Close
+															class={buttonVariants(
+																{
+																	variant:
+																		"outline",
+																},
+															)}
+															>Cancel</Drawer.Close
+														>
+													</Drawer.Footer>
+												</Drawer.Content>
+											</Drawer.Root>
+
+											{#if yolo.tasks.length > 0}
+												<div class="grid grid-cols-1">
+													{#each yolo.tasks as tsk}
+														<div
+															class="border-2 m-2 p-2 rounded-2xl"
+														>
+															<div
+																class="flex gap-1 mr-auto w-full mx-2 -my-3 justify-end p-2"
+															>
+																<Drawer.Root>
+																	<Drawer.Trigger
+																		class={buttonVariants(
+																			{
+																				variant:
+																					"outline",
+																			},
+																		)}
+																		>Edit
+																		Tasks</Drawer.Trigger
+																	>
+																	<Drawer.Content
+																	>
+																		<Drawer.Header
+																			class="text-start"
+																		>
+																			<Drawer.Title
+																				>Edit
+																				tasks</Drawer.Title
+																			>
+																			<Drawer.Description
+																			>
+																				edit
+																				the
+																				task
+																				to
+																				display
+																				the
+																				project
+																				tasks
+																				detail
+																			</Drawer.Description>
+																		</Drawer.Header>
+																		<form
+																			class="grid items-start gap-4 px-4"
+																		>
+																			<div
+																				class="grid gap-2"
+																			>
+																				<Label
+																					for="task-name"
+																					>Name</Label
+																				>
+																				<Input
+																					type="text"
+																					id="task-name"
+																					bind:value={
+																						tsk.name
+																					}
+																					placeholder="project task title to shows... example : pekerjaan pemasangan bedeng awal"
+																				/>
+																			</div>
+																			<div
+																				class="grid gap-2"
+																			>
+																				<Label
+																					for="task-description"
+																					>Description</Label
+																				>
+																				<Textarea
+																					id="task-description"
+																					bind:value={
+																						tsk.description
+																					}
+																					placeholder="complete description to tell a story about the images you will show"
+																				/>
+																			</div>
+
+																			<div
+																				class="grid gap-2"
+																			>
+																				<Label
+																					for="task-order"
+																					>Order
+																					Number</Label
+																				>
+																				<Input
+																					type="number"
+																					id="task-order"
+																					bind:value={
+																						tsk.order
+																					}
+																					placeholder="project task order number"
+																				/>
+																			</div>
+																			<Button
+																				onclick={() =>
+																					putEditProjectTask(
+																						{
+																							name: tsk.name,
+																							description:
+																								tsk.description,
+																							order: tsk.order,
+																						},
+																						tsk.id,
+																					)}
+																			>
+																				Save
+																				changes
+																			</Button>
+																		</form>
+																		<Drawer.Footer
+																			class="pt-2"
+																		>
+																			<Drawer.Close
+																				class={buttonVariants(
+																					{
+																						variant:
+																							"outline",
+																					},
+																				)}
+																				>Cancel</Drawer.Close
+																			>
+																		</Drawer.Footer>
+																	</Drawer.Content>
+																</Drawer.Root>
+
+																<Button
+																	variant="destructive"
+																>
+																	<Trash /> delete</Button
+																>
+															</div>
+															<div class="">
+																Task Name :<span
+																	class="font-bold"
+																	>{tsk.name}</span
+																>
+																<br />
+																Description: {tsk.description}
+																<br />
+																Order: {tsk.order}
+															</div>
+														</div>
+													{/each}
+												</div>
+											{:else}
+												<Empty.Root class="opacity-35">
+													<Empty.Header>
+														<Empty.Media
+															variant="icon"
+														>
+															<FolderCode />
+														</Empty.Media>
+														<!-- <Empty.Title>Project Media</Empty.Title> -->
+														<Empty.Description
+															>No task found</Empty.Description
+														>
+													</Empty.Header>
+													<Empty.Content>
+														Add more task using add
+														button
+													</Empty.Content>
+												</Empty.Root>
+											{/if}
+										</section>
 
 										<ScrollArea class="">
 											<div>
 												<h2
 													class="text-center font-bold mx-auto p-2"
 												>
-													Project Medias
+													Main Display for Project
+													Medias
 												</h2>
 												<Button>add more image</Button>
 											</div>
-											{#if x.projectMedias.length > 0}
+											{#if yolo.projectMedias.length > 0}
 												<div
 													class="grid grid-cols-4 gap-1 p-2"
 												>
-													{#each x.projectMedias as xyz}
+													{#each yolo.projectMedias as xyz}
 														<!-- transparant  -->
 														<img
 															src={xyz.media
@@ -636,7 +997,7 @@
 														<Empty.Media
 															variant="icon"
 														>
-															<FolderCode />
+															<ImageIcon />
 														</Empty.Media>
 														<!-- <Empty.Title>Project Media</Empty.Title> -->
 														<Empty.Description
@@ -657,9 +1018,9 @@
 									<Button
 										disabled={isProcessing}
 										onclick={() => {
-											putUpdateProject(x.id, {
-												name: x.name,
-												// clientId: x.clientId,
+											putUpdateProject(yolo.id, {
+												name: yolo.name,
+												// clientId: yolo.clientId,
 												mediaUrl: newUrl,
 											});
 										}}
@@ -678,12 +1039,13 @@
 						</Dialog.Root>
 
 						<AlertDialog.Root
-							open={deleteDialog.open && deleteDialog.id === x.id}
+							open={deleteDialog.open &&
+								deleteDialog.id === yolo.id}
 						>
 							<AlertDialog.Trigger
 								onclick={() => {
 									deleteDialog.open = true;
-									deleteDialog.id = x.id;
+									deleteDialog.id = yolo.id;
 								}}
 							>
 								<Trash class="text-destructive" />
@@ -709,7 +1071,7 @@
 											variant: "destructive",
 										})}
 										onclick={async () =>
-											deleteProject(x.id)}
+											deleteProject(yolo.id)}
 										disabled={isProcessing}
 										>{isProcessing
 											? "on process..."
@@ -721,10 +1083,10 @@
 					</div>
 				</div>
 
-				<h2>{x.name}</h2>
-				{#if x.projectMedias.length > 0}
+				<h2>{yolo.name}</h2>
+				{#if yolo.projectMedias.length > 0}
 					<div class="grid grid-cols-2 gap-2 overflow-x-auto">
-						{#each x.projectMedias as gambar}
+						{#each yolo.projectMedias as gambar}
 							<img
 								src={gambar?.media?.url ??
 									"https://placehold.co/400x400?text=No+Image+/cms/client"}
@@ -737,7 +1099,7 @@
 					<Empty.Root class="opacity-35">
 						<Empty.Header>
 							<Empty.Media variant="icon">
-								<FolderCode />
+								<ImageIcon />
 							</Empty.Media>
 							<!-- <Empty.Title>Project Media</Empty.Title> -->
 							<Empty.Description>No image found</Empty.Description

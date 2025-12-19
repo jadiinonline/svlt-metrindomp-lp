@@ -6,9 +6,18 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 
 	// Initialize data to empty arrays in case of errors
 	let fetchOneData = [];
+	let fetchTwoData = [];
+
 
 	try {
-		const [fetchOneRes] = await Promise.all([
+		const [fetchOneRes, fetchTwoRes] = await Promise.all([
+			fetch(`/api/project?limit=10000`, {
+				headers: {
+					authorization: `Bearer ${token}`,
+					accept: "application/json",
+				}
+			}),
+
 			fetch(`/api/project?limit=10000`, {
 				headers: {
 					authorization: `Bearer ${token}`,
@@ -23,14 +32,19 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 		} else {
 			fetchOneData = await fetchOneRes.json();
 		}
-		// console.log({ fetchOneData })
 
+		if (!fetchTwoRes.ok) {
+			console.error('a user failed / unauthorized to fetch permissions');
+		} else {
+			fetchTwoData = await fetchTwoRes.json();
+		}
+		// console.log({ fetchOneData })
 
 	} catch (error) {
 		console.error(`Error loading data in file ${import.meta.url} :`, error)
 	}
 
-	return { fetchOneData };
+	return { fetchOneData, fetchTwoData };
 
 }
 
