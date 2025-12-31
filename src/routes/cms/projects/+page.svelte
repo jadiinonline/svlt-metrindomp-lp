@@ -30,6 +30,7 @@
 	} from "@lucide/svelte";
 	import Spinner from "$lib/components/ui/spinner/spinner.svelte";
 	import ScrollAreaScrollbar from "$lib/components/ui/scroll-area/scroll-area-scrollbar.svelte";
+	import Separator from "$lib/components/ui/separator/separator.svelte";
 
 	let { data } = $props();
 
@@ -62,10 +63,34 @@
 	);
 
 	let newUrl = $state("");
-	function captureNewImageUrl(url: string) {
+
+	function captureNewProjectImageUrl(url: string) {
 		newUrl = url;
 		// console.log({ newUrl });
 		drawerOpen = false;
+	}
+
+	function captureNewTaskImageUrl(url: string, taskId: number) {
+		newUrl = url;
+		// console.log({ newUrl });
+		drawerOpen = false;
+
+		try {
+			postCreateProjectTaskImage(
+				// {
+				// 	// name?: string;
+				// 	// description?: string;
+				// 	// order?: number | string;
+				// 	mediaUrl: newUrl,
+				// },
+				newUrl,
+				taskId,
+			);
+		} catch (e) {
+			console.error(e);
+		} finally {
+			isProcessing = false;
+		}
 	}
 
 	function resetAllInput() {
@@ -193,7 +218,7 @@
 	}
 
 	async function deleteProject(id: number | string) {
-		console.log("deleting Project id:", id);
+		// console.log("deleting Project id:", id);
 		try {
 			isProcessing = true;
 			const res = await fetch(`/api/Project?id=${id}`, {
@@ -234,7 +259,7 @@
 		},
 		projectId: number,
 	) {
-		console.log({ payload });
+		// console.log({ payload });
 		try {
 			isProcessing = true;
 			const res = await fetch(`/api/project/${projectId}/task`, {
@@ -277,7 +302,7 @@
 		},
 		projectTaskId: number,
 	) {
-		console.log({ payload });
+		// console.log({ payload });
 		try {
 			isProcessing = true;
 			const res = await fetch(`/api/project/task/${projectTaskId}`, {
@@ -303,6 +328,43 @@
 		} catch (error) {
 			console.error("error:", error);
 			toast.error("error on create tasks");
+
+			// throw error;
+		} finally {
+			isProcessing = false;
+			// drawerOpen = false;
+		}
+	}
+
+	async function postCreateProjectTaskImage(url: string, taskId: number) {
+		try {
+			isProcessing = true;
+			const res = await fetch(`/api/project/task-image`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					imageLink: url,
+					projectsTasksId: taskId,
+				}),
+			});
+
+			if (!res.ok) {
+				const err = await res.json();
+				throw new Error(err.error || "Failed to create Task Image");
+			}
+			toast.success("Successfully add Task Image");
+			// const data = await res.json();
+			drawerOpen = false;
+			// return data;
+
+			fetchProject(); //refetch Project list after creating new Project
+
+			resetAllInput(); //clearing all input
+		} catch (error) {
+			console.error("error:", error);
+			toast.error("error on create task image");
 
 			// throw error;
 		} finally {
@@ -392,7 +454,7 @@
 								<Drawer.Description>
 									<MediaLibrary
 										onSelected={(url: string) =>
-											captureNewImageUrl(url)}
+											captureNewProjectImageUrl(url)}
 										enableSelect={true}
 									/>
 								</Drawer.Description>
@@ -939,6 +1001,131 @@
 																Description: {tsk.description}
 																<br />
 																Order: {tsk.order}
+															</div>
+															<Separator />
+															<div>
+																<h3
+																	class="font-bold text-center p-2"
+																>
+																	Task Images
+																</h3>
+
+																<Drawer.Root
+																	bind:open={
+																		drawerOpen
+																	}
+																>
+																	<Drawer.Trigger
+																		class={buttonVariants(
+																			{
+																				variant:
+																					"outline",
+																			},
+																		)}
+																	>
+																		Add Task
+																		Images
+																	</Drawer.Trigger>
+
+																	<Drawer.Content
+																	>
+																		<Drawer.Header
+																			class="text-start"
+																		>
+																			<Drawer.Title
+																				>Add
+																				Task
+																				images</Drawer.Title
+																			>
+																			<Drawer.Description
+																			>
+																				add
+																				more
+																				task
+																				images
+																				to
+																				display
+																			</Drawer.Description>
+																		</Drawer.Header>
+
+																		<MediaLibrary
+																			onSelected={(
+																				url: string,
+																			) =>
+																				captureNewTaskImageUrl(
+																					url,
+																					tsk.id,
+																				)}
+																			enableSelect={true}
+																		/>
+
+																		<Drawer.Footer
+																			class="pt-2"
+																		>
+																			<Drawer.Close
+																				class={buttonVariants(
+																					{
+																						variant:
+																							"outline",
+																					},
+																				)}
+																				>Cancel</Drawer.Close
+																			>
+																		</Drawer.Footer>
+																	</Drawer.Content>
+																</Drawer.Root>
+
+																{#if tsk.images.length > 0}
+																	<div
+																		class="grid grid-cols-4 gap-2"
+																	>
+																		{#each tsk.images as mediaTask}
+																			<!-- transparant  -->
+																			<img
+																				src={mediaTask
+																					.media
+																					?.url ??
+																					"https://placehold.co/300x300?text=No+Image+/cms/project-task-images"}
+																				alt={mediaTask
+																					.media
+																					?.altText ??
+																					"no data"}
+																				class="mx-auto h-[100px] opacity-50"
+																			/>
+																		{/each}
+																	</div>
+																{:else}
+																	<div>
+																		<Empty.Root
+																			class="opacity-35"
+																		>
+																			<Empty.Header
+																			>
+																				<Empty.Media
+																					variant="icon"
+																				>
+																					<FolderCode
+																					/>
+																				</Empty.Media>
+																				<!-- <Empty.Title>Project Media</Empty.Title> -->
+																				<Empty.Description
+																					>No
+																					Images
+																					found</Empty.Description
+																				>
+																			</Empty.Header>
+																			<Empty.Content
+																			>
+																				Add
+																				more
+																				image
+																				using
+																				add
+																				button
+																			</Empty.Content>
+																		</Empty.Root>
+																	</div>
+																{/if}
 															</div>
 														</div>
 													{/each}
