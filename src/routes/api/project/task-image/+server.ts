@@ -68,19 +68,38 @@ export const POST: RequestHandler = async ({ request }) => {
 			return json({ error: 'projectsTasksId is required' }, { status: 400 });
 		}
 
-		if (!data.image_link) {
-			return json({ error: 'imageLink is required' }, { status: 400 });
+
+		let mediaId: bigint | undefined;
+
+		// If media_id is provided, use it
+		if (data.media_id) {
+
+			mediaId = BigInt(data.media_id);
+		} else if (data.media_url) {
+			// console.log("sampe media_url");
+
+			// Otherwise, if media_url is provided, look it up
+			const media = await prisma.media.findUnique({
+				where: { url: data.media_url }
+			});
+			if (!media) {
+				return json({ error: `Media with URL ${data.media_url} not found` }, { status: 404 });
+			}
+			mediaId = media.id;
+		} else {
+			// console.log("sampe ke else");
+
+			return json({ error: 'Either mediaId or mediaUrl is required' }, { status: 400 });
 		}
+
+		// console.log("media_id", mediaId);
 
 		const created = await prisma.project_task_images.create({
 			data: {
 				task_id: BigInt(data.projects_tasks_id),
-				media: data.image_link,
+				media_id: mediaId,
 				is_cover: data.is_cover ?? false,
 				caption: data.caption ?? null
-			},
-			include: {
-				task: true
 			}
 		});
 
@@ -116,7 +135,7 @@ export const PUT: RequestHandler = async ({ request, url }) => {
 				task_id: data.projects_tasks_id
 					? BigInt(data.projects_tasks_id)
 					: undefined,
-				media: data.image_link ?? undefined,
+				media_id: data.media_id ? BigInt(data.media_id) : undefined,
 				is_cover: data.is_cover ?? undefined,
 				caption: data.caption ?? undefined,
 				updated_at: new Date()

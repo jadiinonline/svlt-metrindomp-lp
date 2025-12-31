@@ -39,6 +39,7 @@
 	let isProcessing = $state(false);
 	let isOngoingProject = $state(false);
 	let drawerOpen = $state(false);
+	let currentTaskId = $state<number | null>(null); // Track which task we're adding images to
 	let deleteDialog = $state({
 		open: false,
 		id: null,
@@ -70,26 +71,25 @@
 		drawerOpen = false;
 	}
 
-	function captureNewTaskImageUrl(url: string, taskId: number) {
+	function captureNewTaskImageUrl(url: string) {
 		newUrl = url;
-		// console.log({ newUrl });
 		drawerOpen = false;
 
+		// Use the stored currentTaskId instead of parameter
+		if (!currentTaskId) {
+			toast.error("No task selected");
+			return;
+		}
+
+		toast.info(`Adding image to task ID: ${currentTaskId}`);
+
 		try {
-			postCreateProjectTaskImage(
-				// {
-				// 	// name?: string;
-				// 	// description?: string;
-				// 	// order?: number | string;
-				// 	mediaUrl: newUrl,
-				// },
-				newUrl,
-				taskId,
-			);
+			postCreateProjectTaskImage(url, currentTaskId);
 		} catch (e) {
 			console.error(e);
 		} finally {
 			isProcessing = false;
+			currentTaskId = null; // Reset after use
 		}
 	}
 
@@ -345,8 +345,8 @@
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					imageLink: url,
 					projectsTasksId: taskId,
+					mediaUrl: url,
 				}),
 			});
 
@@ -370,6 +370,34 @@
 		} finally {
 			isProcessing = false;
 			// drawerOpen = false;
+		}
+	}
+
+	async function deleteProjectTaskImage(taskImageId: number) {
+		try {
+			isProcessing = true;
+			const res = await fetch(
+				`/api/project/task-image?id=${taskImageId}`,
+				{
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+			);
+
+			if (!res.ok) {
+				const err = await res.json();
+				throw new Error(err.error || "Failed to delete Task Image");
+			}
+			toast.success("Successfully deleted Task Image");
+
+			fetchProject(); //refetch Project list after deleting
+		} catch (error) {
+			console.error("error:", error);
+			toast.error("error on delete task image");
+		} finally {
+			isProcessing = false;
 		}
 	}
 	// // // // // // API CALLS END // // // // // // //
@@ -538,7 +566,7 @@
 								<Pencil />
 							</Dialog.Trigger>
 							<Dialog.Content
-								class="min-w-[90vw] lg:min-w-[70vw] xl:h-[90vh]"
+								class="min-w-[90vw] lg:min-w-[70vw] h-[90vh]"
 							>
 								<Dialog.Header>
 									<Dialog.Title>Edit</Dialog.Title>
@@ -1022,6 +1050,10 @@
 																					"outline",
 																			},
 																		)}
+																		onclick={() => {
+																			currentTaskId =
+																				tsk.id;
+																		}}
 																	>
 																		Add Task
 																		Images
@@ -1054,7 +1086,6 @@
 																			) =>
 																				captureNewTaskImageUrl(
 																					url,
-																					tsk.id,
 																				)}
 																			enableSelect={true}
 																		/>
@@ -1075,57 +1106,131 @@
 																	</Drawer.Content>
 																</Drawer.Root>
 
-																{#if tsk.images.length > 0}
-																	<div
-																		class="grid grid-cols-4 gap-2"
-																	>
-																		{#each tsk.images as mediaTask}
-																			<!-- transparant  -->
-																			<img
-																				src={mediaTask
-																					.media
-																					?.url ??
-																					"https://placehold.co/300x300?text=No+Image+/cms/project-task-images"}
-																				alt={mediaTask
-																					.media
-																					?.altText ??
-																					"no data"}
-																				class="mx-auto h-[100px] opacity-50"
-																			/>
-																		{/each}
-																	</div>
-																{:else}
-																	<div>
-																		<Empty.Root
-																			class="opacity-35"
+																<div
+																	class="p4 m-4"
+																>
+																	{#if tsk.images.length > 0}
+																		<div
+																			class="grid grid-cols-4 xl:grid-cols-6 gap-2"
 																		>
-																			<Empty.Header
-																			>
-																				<Empty.Media
-																					variant="icon"
+																			{#each tsk.images as mediaTask}
+																				<div
+																					class="relative border rounded-lg p-2"
 																				>
-																					<FolderCode
+																					<img
+																						src={mediaTask
+																							.media
+																							?.url ??
+																							"https://placehold.co/300x300?text=No+Image+/cms/project-task-images"}
+																						alt={mediaTask
+																							.media
+																							?.altText ??
+																							"no data"}
+																						class="mx-auto h-[100px]"
 																					/>
-																				</Empty.Media>
-																				<!-- <Empty.Title>Project Media</Empty.Title> -->
-																				<Empty.Description
-																					>No
-																					Images
-																					found</Empty.Description
-																				>
-																			</Empty.Header>
-																			<Empty.Content
+
+																					<AlertDialog.Root
+																					>
+																						<AlertDialog.Trigger
+																							class={buttonVariants(
+																								{
+																									variant:
+																										"destructive",
+																									size: "icon",
+																									class: "absolute -top-1 -right-1 h-6 w-6",
+																								},
+																							)}
+																						>
+																							<Trash
+																								class="h-4 w-4"
+																							/>
+																						</AlertDialog.Trigger>
+																						<AlertDialog.Content
+																						>
+																							<AlertDialog.Header
+																							>
+																								<AlertDialog.Title
+																								>
+																									Delete
+																									Task
+																									Image?
+																								</AlertDialog.Title>
+																								<AlertDialog.Description
+																								>
+																									This
+																									will
+																									permanently
+																									remove
+																									this
+																									image
+																									from
+																									the
+																									task.
+																									This
+																									action
+																									cannot
+																									be
+																									undone.
+																								</AlertDialog.Description>
+																							</AlertDialog.Header>
+																							<AlertDialog.Footer
+																							>
+																								<AlertDialog.Cancel
+																									>Cancel</AlertDialog.Cancel
+																								>
+																								<AlertDialog.Action
+																									class={buttonVariants(
+																										{
+																											variant:
+																												"destructive",
+																										},
+																									)}
+																									onclick={() =>
+																										deleteProjectTaskImage(
+																											mediaTask.id,
+																										)}
+																								>
+																									Delete
+																								</AlertDialog.Action>
+																							</AlertDialog.Footer>
+																						</AlertDialog.Content>
+																					</AlertDialog.Root>
+																				</div>
+																			{/each}
+																		</div>
+																	{:else}
+																		<div>
+																			<Empty.Root
+																				class="opacity-35"
 																			>
-																				Add
-																				more
-																				image
-																				using
-																				add
-																				button
-																			</Empty.Content>
-																		</Empty.Root>
-																	</div>
-																{/if}
+																				<Empty.Header
+																				>
+																					<Empty.Media
+																						variant="icon"
+																					>
+																						<FolderCode
+																						/>
+																					</Empty.Media>
+																					<!-- <Empty.Title>Project Media</Empty.Title> -->
+																					<Empty.Description
+																						>No
+																						Images
+																						found</Empty.Description
+																					>
+																				</Empty.Header>
+																				<Empty.Content
+																				>
+																					Add
+																					more
+																					image
+																					using
+																					add
+																					button
+																				</Empty.Content>
+																			</Empty.Root>
+																		</div>
+																	{/if}
+																</div>
 															</div>
 														</div>
 													{/each}
