@@ -142,7 +142,7 @@ msgstr ""
 #: src/routes/+layout.svelte
 #: src/routes/home-content.svelte
 msgid "Mekanikal"
-msgstr "Mechanical"
+msgstr "Mechanical Engineering"
 
 #: src/routes/+layout.svelte
 msgid "Layanan mekanikal profesional untuk proyek konstruksi dan subkon jasa konstruksi."
@@ -151,7 +151,7 @@ msgstr ""
 #: src/routes/+layout.svelte
 #: src/routes/home-content.svelte
 msgid "Elektrikal"
-msgstr ""
+msgstr "Electrical Engineering"
 
 #: src/routes/+layout.svelte
 msgid "Jasa elektrikal untuk konstruksi dan subkon jasa konstruksi."
@@ -177,7 +177,7 @@ msgstr ""
 #: src/routes/+layout.svelte
 #: src/routes/home-content.svelte
 msgid "Sipil"
-msgstr ""
+msgstr "Civil Engineering"
 
 #: src/routes/+layout.svelte
 msgid "Jasa konstruksi sipil untuk proyek gedung, jalan, jembatan, dan infrastruktur."
@@ -208,7 +208,7 @@ msgstr ""
 
 #: src/routes/+layout.svelte
 msgid "Hubungi Kami"
-msgstr ""
+msgstr "Contact Us"
 
 #~ msgid "Apple"
 #~ msgstr ""
