@@ -1,0 +1,726 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-07T04:29:38.419Z\n"
+"PO-Revision-Date: 2026-01-07T04:29:38.419Z\n"
+"Last-Translator: \n"
+"Language: id\n"
+"Language-Team: \n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+"Address: <0>Perkantoran Bintaro 8 Jl. Bintaro Permai Raya No.7 Jakarta\n"
+"Selatan 12320 DKI Jakarta</0>sgstr "Address: <0>Perkantoran Bintaro 8 Jl. Bintaro Permai Raya No.7 Jakarta\n"
+"Selatan 12320 DKI Jakarta</0>": \n"
+"Source-Language: id\n"
+"MIME-Version: 1.0\n"
+
+#: src/routes/footer.svelte
+msgid "Phone: <0/>"
+msgstr "Phone: <0/>"
+
+#: src/routes/footer.svelte
+msgid "Email: <0>metrindomp@yahoo.co.id</0>"
+msgstr "Email: <0>metrindomp@yahoo.co.id</0>"
+
+#: src/routes/footer.svelte
+msgid "newsletter :"
+msgstr "newsletter :"
+
+#: src/routes/footer.svelte
+msgid "Your Email Here"
+msgstr "Your Email Here"
+
+#: src/routes/footer.svelte
+msgid "Subscribe"
+msgstr "Subscribe"
+
+#: src/routes/footer.svelte
+msgid "Social :"
+msgstr "Social :"
+
+#: src/routes/footer.svelte
+msgid "Metrindo Maju Persada 2025. All rights reserved."
+msgstr "Metrindo Maju Persada 2025. All rights reserved."
+
+#: src/routes/home-content.svelte
+msgid "PT. Wijaya Karya"
+msgstr "PT. Wijaya Karya"
+
+#: src/routes/home-content.svelte
+msgid "PT. Waskita Karya"
+msgstr "PT. Waskita Karya"
+
+#: src/routes/home-content.svelte
+msgid "PT. Jaya Konstruksi"
+msgstr "PT. Jaya Konstruksi"
+
+#: src/routes/home-content.svelte
+msgid "PT. Patra Badak Arun Solusi"
+msgstr "PT. Patra Badak Arun Solusi"
+
+#: src/routes/home-content.svelte
+msgid "PT. Hutama Karya"
+msgstr "PT. Hutama Karya"
+
+#: src/routes/home-content.svelte
+msgid "PT. Inti Bangun Persada"
+msgstr "PT. Inti Bangun Persada"
+
+#: src/routes/home-content.svelte
+msgid "Proyek Transmisi 500 kV New Aur Duri - Peranap Paket -1 Jambi PONDASI PAD & CHIMNEY KELAS 6 ( Borepile)"
+msgstr "Proyek Transmisi 500 kV New Aur Duri - Peranap Paket -1 Jambi PONDASI PAD & CHIMNEY KELAS 6 ( Borepile)"
+
+#: src/routes/home-content.svelte
+msgid "Proyek ini merupakan pekerjaan pondasi PAD dan chimney kelas 6 (borepile) untuk Transmisi 500 kV New Aur Duri – Peranap Paket 1 yang berlokasi di Provinsi Jambi. Pekerjaan meliputi pembangunan pondasi struktur transmisi tegangan ekstra tinggi dengan sistem borepile, yang berfungsi sebagai penopang utama menara transmisi. Pelaksanaan proyek dilakukan dengan standar mutu tinggi untuk menjamin kestabilan struktur, ketepatan dimensi, dan ketahanan jangka panjang, serta mengikuti jadwal kerja yang ketat agar seluruh target dapat diselesaikan tepat waktu."
+msgstr "Proyek ini merupakan pekerjaan pondasi PAD dan chimney kelas 6 (borepile) untuk Transmisi 500 kV New Aur Duri – Peranap Paket 1 yang berlokasi di Provinsi Jambi. Pekerjaan meliputi pembangunan pondasi struktur transmisi tegangan ekstra tinggi dengan sistem borepile, yang berfungsi sebagai penopang utama menara transmisi. Pelaksanaan proyek dilakukan dengan standar mutu tinggi untuk menjamin kestabilan struktur, ketepatan dimensi, dan ketahanan jangka panjang, serta mengikuti jadwal kerja yang ketat agar seluruh target dapat diselesaikan tepat waktu."
+
+#: src/routes/home-content.svelte
+msgid "Jambi, Indonesia"
+msgstr "Jambi, Indonesia"
+
+#: src/routes/home-content.svelte
+msgid "Pekerjaan Pembangunan 9 unit rumah Type 36 (Blok C. 3 No. 4, 6, 8, 10 dan 12 ( 5 unit ) Blok C. 5 No. 10, 12, 14 dan 16 ( 4 unit) Proyek Taman Dhika Batu Tulis - Bogor"
+msgstr "Pekerjaan Pembangunan 9 unit rumah Type 36 (Blok C. 3 No. 4, 6, 8, 10 dan 12 ( 5 unit ) Blok C. 5 No. 10, 12, 14 dan 16 ( 4 unit) Proyek Taman Dhika Batu Tulis - Bogor"
+
+#: src/routes/home-content.svelte
+msgid "Proyek ini merupakan pekerjaan pembangunan kompleks rumah hunian tipe 36 yang berlokasi di Batu Tulis, Bogor. Pekerjaan meliputi pembangunan struktur utama serta instalasi pendukung untuk menciptakan lingkungan hunian yang nyaman, fungsional, dan sesuai dengan standar kualitas konstruksi modern."
+msgstr "Proyek ini merupakan pekerjaan pembangunan kompleks rumah hunian tipe 36 yang berlokasi di Batu Tulis, Bogor. Pekerjaan meliputi pembangunan struktur utama serta instalasi pendukung untuk menciptakan lingkungan hunian yang nyaman, fungsional, dan sesuai dengan standar kualitas konstruksi modern."
+
+#: src/routes/home-content.svelte
+#: src/routes/home-content.svelte
+msgid "Bogor, Indonesia"
+msgstr "Bogor, Indonesia"
+
+#: src/routes/home-content.svelte
+msgid "Pekerjaan pengadaan dan pemasangan Instalasi Listrik pada proyek pembangunan tol Soroja Bandung"
+msgstr "Pekerjaan pengadaan dan pemasangan Instalasi Listrik pada proyek pembangunan tol Soroja Bandung"
+
+#: src/routes/home-content.svelte
+msgid "Proyek ini meliputi pekerjaan pengadaan dan pemasangan instalasi listrik pada pembangunan Jalan Tol Soreang – Pasir Koja (Soroja), Bandung. Ruang lingkup pekerjaan mencakup penyediaan material, pemasangan sistem kelistrikan utama dan penerangan, serta penyaluran daya untuk fasilitas tol, gerbang, dan area pendukung operasional. Pelaksanaan dilakukan dengan standar keselamatan dan mutu tinggi, memastikan sistem listrik berfungsi secara andal, efisien, dan aman untuk mendukung operasional jalan tol secara berkelanjutan dan tepat waktu."
+msgstr "Proyek ini meliputi pekerjaan pengadaan dan pemasangan instalasi listrik pada pembangunan Jalan Tol Soreang – Pasir Koja (Soroja), Bandung. Ruang lingkup pekerjaan mencakup penyediaan material, pemasangan sistem kelistrikan utama dan penerangan, serta penyaluran daya untuk fasilitas tol, gerbang, dan area pendukung operasional. Pelaksanaan dilakukan dengan standar keselamatan dan mutu tinggi, memastikan sistem listrik berfungsi secara andal, efisien, dan aman untuk mendukung operasional jalan tol secara berkelanjutan dan tepat waktu."
+
+#: src/routes/home-content.svelte
+msgid "Jakarta, Indonesia"
+msgstr "Jakarta, Indonesia"
+
+#: src/routes/home-content.svelte
+msgid "Penyambungan daya Listrik PLN di tower BTS BSD Serpong"
+msgstr "Penyambungan daya Listrik PLN di tower BTS BSD Serpong"
+
+#: src/routes/home-content.svelte
+msgid "Proyek ini mencakup pekerjaan penyambungan daya listrik PLN pada menara BTS (Base Transceiver Station) yang berlokasi di BSD, Serpong. Lingkup pekerjaan meliputi koordinasi dengan pihak PLN, pemasangan instalasi kelistrikan dari sumber utama ke panel distribusi BTS, serta pengujian sistem untuk memastikan pasokan daya yang stabil, aman, dan sesuai standar teknis. Pekerjaan dilaksanakan dengan memperhatikan ketepatan waktu, keselamatan kerja, dan keandalan sistem guna mendukung operasional jaringan telekomunikasi secara optimal."
+msgstr "Proyek ini mencakup pekerjaan penyambungan daya listrik PLN pada menara BTS (Base Transceiver Station) yang berlokasi di BSD, Serpong. Lingkup pekerjaan meliputi koordinasi dengan pihak PLN, pemasangan instalasi kelistrikan dari sumber utama ke panel distribusi BTS, serta pengujian sistem untuk memastikan pasokan daya yang stabil, aman, dan sesuai standar teknis. Pekerjaan dilaksanakan dengan memperhatikan ketepatan waktu, keselamatan kerja, dan keandalan sistem guna mendukung operasional jaringan telekomunikasi secara optimal."
+
+#: src/routes/home-content.svelte
+msgid "Tangerang Selatan, Indonesia"
+msgstr "Tangerang Selatan, Indonesia"
+
+#: src/routes/home-content.svelte
+msgid "Pekerjaan Mekanikal , Elektrikal dan Plumbing Pembangunan Gerbang Tol Bogor 2 Pada jalan Tol Jagorawi Baranangsiang"
+msgstr "Pekerjaan Mekanikal , Elektrikal dan Plumbing Pembangunan Gerbang Tol Bogor 2 Pada jalan Tol Jagorawi Baranangsiang"
+
+#: src/routes/home-content.svelte
+msgid "Pekerjaan Jasa dan Material Elektikal Pemindahan Genset Universitas Pertamina"
+msgstr "Pekerjaan Jasa dan Material Elektikal Pemindahan Genset Universitas Pertamina"
+
+#: src/routes/home-content.svelte
+msgid "Jakarta Selatan, Indonesia"
+msgstr "Jakarta Selatan, Indonesia"
+
+#: src/routes/home-content.svelte
+msgid "Mechanical"
+msgstr "Mechanical"
+
+#: src/routes/+layout.svelte
+#: src/routes/home-content.svelte
+msgid "Mekanikal"
+msgstr "Mekanikal"
+
+#: src/routes/home-content.svelte
+msgid "Layanan mekanikal kami mencakup instalasi, pemeliharaan, dan perbaikan sistem mekanikal untuk berbagai jenis bangunan dan industri."
+msgstr "Layanan mekanikal kami mencakup instalasi, pemeliharaan, dan perbaikan sistem mekanikal untuk berbagai jenis bangunan dan industri."
+
+#: src/routes/home-content.svelte
+msgid "Electrical"
+msgstr "Electrical"
+
+#: src/routes/+layout.svelte
+#: src/routes/home-content.svelte
+msgid "Elektrikal"
+msgstr "Elektrikal"
+
+#: src/routes/home-content.svelte
+msgid "Kami menyediakan solusi elektrikal lengkap, mulai dari perencanaan, instalasi jaringan listrik, hingga sistem kontrol dan otomatisasi."
+msgstr "Kami menyediakan solusi elektrikal lengkap, mulai dari perencanaan, instalasi jaringan listrik, hingga sistem kontrol dan otomatisasi."
+
+#: src/routes/home-content.svelte
+msgid "Civil"
+msgstr "Civil"
+
+#: src/routes/+layout.svelte
+#: src/routes/home-content.svelte
+msgid "Sipil"
+msgstr "Sipil"
+
+#: src/routes/home-content.svelte
+msgid "Layanan sipil kami meliputi pembangunan infrastruktur, struktur bangunan, dan pekerjaan tanah dengan standar kualitas tertinggi."
+msgstr "Layanan sipil kami meliputi pembangunan infrastruktur, struktur bangunan, dan pekerjaan tanah dengan standar kualitas tertinggi."
+
+#: src/routes/home-content.svelte
+msgid "Telecommunication"
+msgstr "Telecommunication"
+
+#: src/routes/+layout.svelte
+#: src/routes/home-content.svelte
+msgid "Telekomunikasi"
+msgstr "Telekomunikasi"
+
+#: src/routes/home-content.svelte
+msgid "Layanan telekomunikasi kami meliputi pemasangan tower, pemasangan kabel FO"
+msgstr "Layanan telekomunikasi kami meliputi pemasangan tower, pemasangan kabel FO"
+
+#: src/routes/home-content.svelte
+msgid "\"Quality & Schedule\""
+msgstr "\"Quality & Schedule\""
+
+#: src/routes/home-content.svelte
+msgid "general contractor & <0/>engineering services"
+msgstr "general contractor & <0/>engineering services"
+
+#: src/routes/home-content.svelte
+msgid ""
+"PT. Metrindo Majupersada menyediakan layanan <0>konstruksi</0> untuk\n"
+"proyek menengah hingga besar. Perusahaan ini dikenal dengan kemampuan\n"
+"menjaga kualitas, kepuasan pelanggan, dan hubungan baik dengan para\n"
+"mitra kerja. Keberhasilan ini didukung oleh tenaga ahli yang kompeten\n"
+"di bidangnya"
+msgstr ""
+"PT. Metrindo Majupersada menyediakan layanan <0>konstruksi</0> untuk\n"
+"proyek menengah hingga besar. Perusahaan ini dikenal dengan kemampuan\n"
+"menjaga kualitas, kepuasan pelanggan, dan hubungan baik dengan para\n"
+"mitra kerja. Keberhasilan ini didukung oleh tenaga ahli yang kompeten\n"
+"di bidangnya"
+
+#: src/routes/home-content.svelte
+msgid "Konsultasi Gratis <0/>"
+msgstr "Konsultasi Gratis <0/>"
+
+#. placeholder {0}: companyAge
+#: src/routes/home-content.svelte
+msgid "{0} years of"
+msgstr "{0} years of"
+
+#: src/routes/home-content.svelte
+msgid "success in experience"
+msgstr "success in experience"
+
+#: src/routes/home-content.svelte
+msgid ""
+"<0>PT. Metrindo Majupersada</0> adalah perusahaan yang\n"
+"bergerak di bidang konstruksi dan layanan engineering.\n"
+"Berdiri pada tahun 1997, perusahaan kami didirikan dengan\n"
+"tujuan untuk mengembangkan bisnis yang telah ada sebelumnya.\n"
+"Pendirian perusahaan disahkan melalui akta pendirian\n"
+"perubahaan no. 64 pada 17 November 2008. <1/>Seiring\n"
+"berjalannya waktu, PT. Metrindo Majupersada semakin\n"
+"dipercaya oleh berbagai perusahaan besar di sektor\n"
+"mekanikal, elektrikal dan sipil. Beberapa di antaranya PT.\n"
+"Waskita Karya, PT. Jaya Konstruksi, PT. Wijaya Karya.\n"
+"Perusahaan ini telah berhasil mengerjakan proyek proyek\n"
+"penting di seluruh Indonesia, termasuk Bandara Gorontalo,\n"
+"Bandara Soekarno-Hatta, dan kantor DPRD Riau. Dengan moto <2>\"Quality & Schedule\"</2>, perusahaan ini terus berupaya\n"
+"memberikan hasil terbaik"
+msgstr ""
+"<0>PT. Metrindo Majupersada</0> adalah perusahaan yang\n"
+"bergerak di bidang konstruksi dan layanan engineering.\n"
+"Berdiri pada tahun 1997, perusahaan kami didirikan dengan\n"
+"tujuan untuk mengembangkan bisnis yang telah ada sebelumnya.\n"
+"Pendirian perusahaan disahkan melalui akta pendirian\n"
+"perubahaan no. 64 pada 17 November 2008. <1/>Seiring\n"
+"berjalannya waktu, PT. Metrindo Majupersada semakin\n"
+"dipercaya oleh berbagai perusahaan besar di sektor\n"
+"mekanikal, elektrikal dan sipil. Beberapa di antaranya PT.\n"
+"Waskita Karya, PT. Jaya Konstruksi, PT. Wijaya Karya.\n"
+"Perusahaan ini telah berhasil mengerjakan proyek proyek\n"
+"penting di seluruh Indonesia, termasuk Bandara Gorontalo,\n"
+"Bandara Soekarno-Hatta, dan kantor DPRD Riau. Dengan moto <2>\"Quality & Schedule\"</2>, perusahaan ini terus berupaya\n"
+"memberikan hasil terbaik"
+
+#: src/routes/home-content.svelte
+msgid "Our Reputation"
+msgstr "Our Reputation"
+
+#: src/routes/home-content.svelte
+msgid "Kualitas Terjamin"
+msgstr "Kualitas Terjamin"
+
+#: src/routes/home-content.svelte
+msgid ""
+"Kami selalu mengedepankan kualitas terbaik dalam setiap\n"
+"proyek yang kami kerjakan, memastikan hasil yang memuaskan\n"
+"dan tahan lama."
+msgstr ""
+"Kami selalu mengedepankan kualitas terbaik dalam setiap\n"
+"proyek yang kami kerjakan, memastikan hasil yang memuaskan\n"
+"dan tahan lama."
+
+#: src/routes/home-content.svelte
+msgid "Ketepatan Waktu"
+msgstr "Ketepatan Waktu"
+
+#: src/routes/home-content.svelte
+msgid ""
+"Komitmen kami terhadap jadwal proyek adalah prioritas. Kami\n"
+"memastikan setiap pekerjaan selesai tepat waktu sesuai\n"
+"kesepakatan."
+msgstr ""
+"Komitmen kami terhadap jadwal proyek adalah prioritas. Kami\n"
+"memastikan setiap pekerjaan selesai tepat waktu sesuai\n"
+"kesepakatan."
+
+#: src/routes/home-content.svelte
+msgid "Kepuasan Pelanggan"
+msgstr "Kepuasan Pelanggan"
+
+#: src/routes/home-content.svelte
+msgid ""
+"Hubungan baik dengan klien adalah kunci. Kami selalu\n"
+"berusaha memahami dan memenuhi kebutuhan pelanggan untuk\n"
+"mencapai kepuasan maksimal."
+msgstr ""
+"Hubungan baik dengan klien adalah kunci. Kami selalu\n"
+"berusaha memahami dan memenuhi kebutuhan pelanggan untuk\n"
+"mencapai kepuasan maksimal."
+
+#: src/routes/home-content.svelte
+msgid "Quality & Schedule"
+msgstr "Quality & Schedule"
+
+#: src/routes/home-content.svelte
+msgid "Visi"
+msgstr "Visi"
+
+#: src/routes/home-content.svelte
+msgid ""
+"Menjadi perusahaan konstruksi mekanikal dan\n"
+"elektrikal yang unggul dalam kualitas dan ketepatan\n"
+"waktu."
+msgstr ""
+"Menjadi perusahaan konstruksi mekanikal dan\n"
+"elektrikal yang unggul dalam kualitas dan ketepatan\n"
+"waktu."
+
+#: src/routes/home-content.svelte
+msgid ""
+"Memberikan hasil kerja terbaik melalui standar mutu\n"
+"yang tinggi di setiap proyek."
+msgstr ""
+"Memberikan hasil kerja terbaik melalui standar mutu\n"
+"yang tinggi di setiap proyek."
+
+#: src/routes/home-content.svelte
+msgid ""
+"Membangun hubungan jangka panjang dengan klien\n"
+"berdasarkan kepercayaan dan integritas."
+msgstr ""
+"Membangun hubungan jangka panjang dengan klien\n"
+"berdasarkan kepercayaan dan integritas."
+
+#: src/routes/home-content.svelte
+msgid ""
+"Menjadi mitra terpercaya dalam pembangunan\n"
+"infrastruktur dengan komitmen terhadap efisiensi dan\n"
+"profesionalisme."
+msgstr ""
+"Menjadi mitra terpercaya dalam pembangunan\n"
+"infrastruktur dengan komitmen terhadap efisiensi dan\n"
+"profesionalisme."
+
+#: src/routes/home-content.svelte
+msgid ""
+"Mewujudkan kepercayaan pelanggan melalui\n"
+"penyelesaian proyek yang tepat waktu dan sesuai\n"
+"spesifikasi."
+msgstr ""
+"Mewujudkan kepercayaan pelanggan melalui\n"
+"penyelesaian proyek yang tepat waktu dan sesuai\n"
+"spesifikasi."
+
+#: src/routes/home-content.svelte
+msgid "Misi"
+msgstr "Misi"
+
+#: src/routes/home-content.svelte
+msgid ""
+"Memberikan hasil kerja berkualitas tinggi melalui\n"
+"penerapan standar teknis dan prosedur kerja terbaik."
+msgstr ""
+"Memberikan hasil kerja berkualitas tinggi melalui\n"
+"penerapan standar teknis dan prosedur kerja terbaik."
+
+#: src/routes/home-content.svelte
+msgid ""
+"Menyelesaikan setiap proyek tepat waktu dengan\n"
+"perencanaan yang efisien dan koordinasi yang\n"
+"efektif."
+msgstr ""
+"Menyelesaikan setiap proyek tepat waktu dengan\n"
+"perencanaan yang efisien dan koordinasi yang\n"
+"efektif."
+
+#: src/routes/home-content.svelte
+msgid ""
+"Meningkatkan kompetensi sumber daya manusia melalui\n"
+"pelatihan berkelanjutan dan budaya kerja\n"
+"profesional."
+msgstr ""
+"Meningkatkan kompetensi sumber daya manusia melalui\n"
+"pelatihan berkelanjutan dan budaya kerja\n"
+"profesional."
+
+#: src/routes/home-content.svelte
+msgid ""
+"Menjaga keselamatan kerja serta memastikan\n"
+"lingkungan kerja yang aman dan produktif."
+msgstr ""
+"Menjaga keselamatan kerja serta memastikan\n"
+"lingkungan kerja yang aman dan produktif."
+
+#: src/routes/home-content.svelte
+msgid ""
+"Mengutamakan kepuasan dan kepercayaan pelanggan\n"
+"melalui komunikasi yang transparan dan pelayanan\n"
+"yang responsif."
+msgstr ""
+"Mengutamakan kepuasan dan kepercayaan pelanggan\n"
+"melalui komunikasi yang transparan dan pelayanan\n"
+"yang responsif."
+
+#: src/routes/home-content.svelte
+msgid ""
+"Mengimplementasikan teknologi dan inovasi untuk\n"
+"meningkatkan efisiensi serta kualitas hasil\n"
+"pekerjaan."
+msgstr ""
+"Mengimplementasikan teknologi dan inovasi untuk\n"
+"meningkatkan efisiensi serta kualitas hasil\n"
+"pekerjaan."
+
+#: src/routes/home-content.svelte
+msgid "Layanan Kami"
+msgstr "Layanan Kami"
+
+#: src/routes/home-content.svelte
+msgid "lihat semua"
+msgstr "lihat semua"
+
+#: src/routes/+layout.svelte
+#: src/routes/home-content.svelte
+msgid "Projects"
+msgstr "Projects"
+
+#: src/routes/home-content.svelte
+msgid "Clients"
+msgstr "Clients"
+
+#: src/routes/projects/+page.svelte
+msgid "this is projects page"
+msgstr "this is projects page"
+
+#: src/routes/services/+page.svelte
+msgid "General Construction"
+msgstr "General Construction"
+
+#: src/routes/services/+page.svelte
+msgid "We provide top-tier general construction services for both residential and commercial projects, ensuring quality from foundation to finish."
+msgstr "We provide top-tier general construction services for both residential and commercial projects, ensuring quality from foundation to finish."
+
+#: src/routes/services/+page.svelte
+msgid "Renovation & Remodeling"
+msgstr "Renovation & Remodeling"
+
+#: src/routes/services/+page.svelte
+msgid "Transform your space with our expert renovation and remodeling services. We bring your vision to life with precision and care."
+msgstr "Transform your space with our expert renovation and remodeling services. We bring your vision to life with precision and care."
+
+#: src/routes/services/+page.svelte
+msgid "Engineering Design"
+msgstr "Engineering Design"
+
+#: src/routes/services/+page.svelte
+msgid "Our experienced engineers provide innovative and practical design solutions for structural, civil, and mechanical systems."
+msgstr "Our experienced engineers provide innovative and practical design solutions for structural, civil, and mechanical systems."
+
+#: src/routes/services/+page.svelte
+msgid "Project Management"
+msgstr "Project Management"
+
+#: src/routes/services/+page.svelte
+msgid "From initial planning to final delivery, our project management team ensures your project is completed on time and within budget."
+msgstr "From initial planning to final delivery, our project management team ensures your project is completed on time and within budget."
+
+#: src/routes/services/+page.svelte
+msgid "Downtown High-Rise"
+msgstr "Downtown High-Rise"
+
+#: src/routes/services/+page.svelte
+msgid "A 40-story commercial office building constructed with cutting-edge materials and techniques."
+msgstr "A 40-story commercial office building constructed with cutting-edge materials and techniques."
+
+#: src/routes/services/+page.svelte
+msgid "Suburban Villa Remodel"
+msgstr "Suburban Villa Remodel"
+
+#: src/routes/services/+page.svelte
+msgid "Complete interior and exterior renovation of a luxury residential villa, including landscaping."
+msgstr "Complete interior and exterior renovation of a luxury residential villa, including landscaping."
+
+#: src/routes/services/+page.svelte
+msgid "Industrial Park Design"
+msgstr "Industrial Park Design"
+
+#: src/routes/services/+page.svelte
+msgid "Structural and civil engineering design for a 200-acre industrial park development."
+msgstr "Structural and civil engineering design for a 200-acre industrial park development."
+
+#: src/routes/services/+page.svelte
+msgid "Bridge Construction Management"
+msgstr "Bridge Construction Management"
+
+#: src/routes/services/+page.svelte
+msgid "Oversaw the entire lifecycle of a major city bridge project, ensuring on-time, on-budget delivery."
+msgstr "Oversaw the entire lifecycle of a major city bridge project, ensuring on-time, on-budget delivery."
+
+#: src/routes/services/+page.svelte
+msgid "Historic Building Restoration"
+msgstr "Historic Building Restoration"
+
+#: src/routes/services/+page.svelte
+msgid "Painstaking restoration of a century-old landmark, preserving its historical integrity."
+msgstr "Painstaking restoration of a century-old landmark, preserving its historical integrity."
+
+#: src/routes/services/+page.svelte
+msgid "Shopping Mall Construction"
+msgstr "Shopping Mall Construction"
+
+#: src/routes/services/+page.svelte
+msgid "Lead contractor for a new 500,000 sq. ft. regional shopping center."
+msgstr "Lead contractor for a new 500,000 sq. ft. regional shopping center."
+
+#: src/routes/services/+page.svelte
+msgid "Our Services & Projects - MetrindoMP"
+msgstr "Our Services & Projects - MetrindoMP"
+
+#: src/routes/services/+page.svelte
+msgid "Explore the range of construction and engineering services offered by PT. Metrindo Majupersada."
+msgstr "Explore the range of construction and engineering services offered by PT. Metrindo Majupersada."
+
+#: src/routes/services/+page.svelte
+msgid "Our Services & Work"
+msgstr "Our Services & Work"
+
+#: src/routes/services/+page.svelte
+msgid ""
+"We offer a comprehensive range of services, each backed by a portfolio\n"
+"of successfully completed projects. Explore our expertise below."
+msgstr ""
+"We offer a comprehensive range of services, each backed by a portfolio\n"
+"of successfully completed projects. Explore our expertise below."
+
+#: src/routes/services/+page.svelte
+msgid "Related Projects:"
+msgstr "Related Projects:"
+
+#: src/routes/services/+page.svelte
+msgid "No projects to display for this service yet."
+msgstr "No projects to display for this service yet."
+
+#: src/routes/+layout.svelte
+msgid "Tentang Kami"
+msgstr "Tentang Kami"
+
+#: src/routes/+layout.svelte
+msgid "Visi Misi"
+msgstr "Visi Misi"
+
+#: src/routes/+layout.svelte
+msgid "Services"
+msgstr "Services"
+
+#: src/routes/+layout.svelte
+msgid "Layanan mekanikal profesional untuk proyek konstruksi dan subkon jasa konstruksi."
+msgstr "Layanan mekanikal profesional untuk proyek konstruksi dan subkon jasa konstruksi."
+
+#: src/routes/+layout.svelte
+msgid "Jasa elektrikal untuk konstruksi dan subkon jasa konstruksi."
+msgstr "Jasa elektrikal untuk konstruksi dan subkon jasa konstruksi."
+
+#: src/routes/+layout.svelte
+msgid "Plumbing"
+msgstr "Plumbing"
+
+#: src/routes/+layout.svelte
+msgid "Layanan plumbing untuk konstruksi dan subkon jasa konstruksi."
+msgstr "Layanan plumbing untuk konstruksi dan subkon jasa konstruksi."
+
+#: src/routes/+layout.svelte
+msgid "Solusi telekomunikasi untuk konstruksi dan subkon jasa konstruksi."
+msgstr "Solusi telekomunikasi untuk konstruksi dan subkon jasa konstruksi."
+
+#: src/routes/+layout.svelte
+msgid "Jasa konstruksi sipil untuk proyek gedung, jalan, jembatan, dan infrastruktur."
+msgstr "Jasa konstruksi sipil untuk proyek gedung, jalan, jembatan, dan infrastruktur."
+
+#: src/routes/+layout.svelte
+msgid "PT. Metrindo Maju Persada | General Contractor"
+msgstr "PT. Metrindo Maju Persada | General Contractor"
+
+#: src/routes/+layout.svelte
+msgid "Jasa konstruksi mekanikal elektrikal plumbing sipil telekomunikasi"
+msgstr "Jasa konstruksi mekanikal elektrikal plumbing sipil telekomunikasi"
+
+#: src/routes/+layout.svelte
+msgid "PT. Metrindo Maju Persada"
+msgstr "PT. Metrindo Maju Persada"
+
+#: src/routes/+layout.svelte
+msgid "Sejak 1997, PT. Metrindo Maju Persada telah menjadi mitra terpercaya dalam menghadirkan solusi konstruksi terpadu untuk proyek komersial,  infrastruktur dan residensial. Dengan komitmen terhadap kualitas, inovasi, dan ketepatan waktu, kami siap mewujudkan setiap visi anda."
+msgstr "Sejak 1997, PT. Metrindo Maju Persada telah menjadi mitra terpercaya dalam menghadirkan solusi konstruksi terpadu untuk proyek komersial,  infrastruktur dan residensial. Dengan komitmen terhadap kualitas, inovasi, dan ketepatan waktu, kami siap mewujudkan setiap visi anda."
+
+#: src/routes/+layout.svelte
+msgid "Metrindo Maju Persada"
+msgstr "Metrindo Maju Persada"
+
+#: src/routes/+layout.svelte
+msgid "Hubungi Kami"
+msgstr "Hubungi Kami"
+
+#: src/lib/components/ui/breadcrumb/breadcrumb-ellipsis.svelte
+msgid "More"
+msgstr "More"
+
+#: src/lib/components/ui/carousel/carousel-next.svelte
+msgid "Next slide"
+msgstr "Next slide"
+
+#: src/lib/components/ui/carousel/carousel-previous.svelte
+msgid "Previous slide"
+msgstr "Previous slide"
+
+#: src/lib/components/ui/carousel/carousel.svelte
+msgid "ArrowLeft"
+msgstr "ArrowLeft"
+
+#: src/lib/components/ui/carousel/carousel.svelte
+msgid "ArrowRight"
+msgstr "ArrowRight"
+
+#: src/lib/components/ui/command/command-dialog.svelte
+msgid "Command Palette"
+msgstr "Command Palette"
+
+#: src/lib/components/ui/command/command-dialog.svelte
+msgid "Search for a command to run"
+msgstr "Search for a command to run"
+
+#: src/lib/components/ui/dialog/dialog-content.svelte
+#: src/lib/components/ui/sheet/sheet-content.svelte
+msgid "Close"
+msgstr "Close"
+
+#: src/lib/components/ui/pagination/pagination-ellipsis.svelte
+msgid "More pages"
+msgstr "More pages"
+
+#: src/lib/components/ui/pagination/pagination-prev-button.svelte
+msgid "Previous"
+msgstr "Previous"
+
+#: src/lib/components/ui/pagination/pagination-prev-button.svelte
+msgid "Go to previous page"
+msgstr "Go to previous page"
+
+#: src/lib/components/ui/pagination/pagination-next-button.svelte
+msgid "Next"
+msgstr "Next"
+
+#: src/lib/components/ui/pagination/pagination-next-button.svelte
+msgid "Go to next page"
+msgstr "Go to next page"
+
+#: src/lib/components/ui/sidebar/sidebar-rail.svelte
+#: src/lib/components/ui/sidebar/sidebar-rail.svelte
+#: src/lib/components/ui/sidebar/sidebar-trigger.svelte
+msgid "Toggle Sidebar"
+msgstr "Toggle Sidebar"
+
+#: src/lib/components/ui/spinner/spinner.svelte
+msgid "Loading"
+msgstr "Loading"
+
+#: src/lib/components/ui/sidebar/sidebar.svelte
+msgid "Sidebar"
+msgstr "Sidebar"
+
+#: src/lib/components/ui/sidebar/sidebar.svelte
+msgid "Displays the mobile sidebar."
+msgstr "Displays the mobile sidebar."
+
+#: src/routes/footer.svelte
+msgid ""
+"Address: <0>Perkantoran Bintaro 8 Jl. Bintaro Permai Raya No.7 Jakarta\n"
+"Selatan 12320 DKI Jakarta</0>"
+msgstr ""
+"Address: <0>Perkantoran Bintaro 8 Jl. Bintaro Permai Raya No.7 Jakarta\n"
+"Selatan 12320 DKI Jakarta</0>"
+
+#~ msgid "Fruits"
+#~ msgstr "Fruits"
+
+#~ msgid "Apple"
+#~ msgstr "Apple"
+
+#~ msgid "Banana"
+#~ msgstr "Banana"
+
+#~ msgid "Blueberry"
+#~ msgstr "Blueberry"
+
+#~ msgid "Grapes"
+#~ msgstr "Grapes"
+
+#~ msgid "Pineapple"
+#~ msgstr "Pineapple"
+
+#~ msgid "Select a fruit"
+#~ msgstr "Select a fruit"
+
+#~ msgid "Bahasa"
+#~ msgstr "Bahasa"
+
+#: src/routes/+layout.svelte
+msgid "English"
+msgstr "English"
+
+#: src/routes/+layout.svelte
+msgid "Select a language"
+msgstr "Select a language"
+
+#: src/routes/+layout.svelte
+msgid "Language"
+msgstr "Language"
+
+#: src/routes/+layout.svelte
+msgid "Bahasa Indonesia"
+msgstr "Bahasa Indonesia"
+
+#~ msgid "Choose Language"
+#~ msgstr "Choose Language"
+
+#~ msgid "{0} asd"
+#~ msgstr "{0} asd"
+
+#~ msgid "Logo"
+#~ msgstr "Logo"
