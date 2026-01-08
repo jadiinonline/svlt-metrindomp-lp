@@ -1,13 +1,49 @@
 <script lang="ts">
 	import "../app.css";
 	import favicon from "$lib/assets/favicon.ico";
-	import { Menu, X } from "@lucide/svelte";
-	import Button from "$lib/components/ui/button/button.svelte";
+	import { onMount } from "svelte";
+
 	import Footer from "./footer.svelte";
 	import { MetaTags } from "svelte-meta-tags";
 	import { page } from "$app/state";
 	import { slide } from "svelte/transition";
+
+	///////// components start /////
 	import Separator from "$lib/components/ui/separator/separator.svelte";
+	import * as Select from "$lib/components/ui/select/index.js";
+	import Button from "$lib/components/ui/button/button.svelte";
+
+	import { Menu, X } from "@lucide/svelte";
+	///////// components end /////
+
+	// select data start ///
+	import { language } from "$lib/localstorage";
+
+	const languageSelect = [
+		{ value: "id", label: "Bahasa Indonesia" },
+		{ value: "en", label: "English" },
+	];
+
+	let languageSelectValue = $state($language);
+
+	const triggerContent = $derived(
+		languageSelect.find((f) => f.value === languageSelectValue)?.label ??
+			"Select a language",
+	);
+
+	// store → select
+	$effect(() => {
+		// console.log({ languageSelectValue });
+		if ($language !== languageSelectValue) {
+			// console.log({ languageSelectValue, $language });
+
+			language.set(languageSelectValue);
+			location.reload(); // force page reload after changing language
+		}
+	});
+
+	// select → store
+	// select data end ///
 
 	let isOpen = $state(false);
 
@@ -154,27 +190,53 @@
 							{item.name}
 						</a>
 					{/each}
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-2">
+					<Select.Root
+						type="single"
+						name="language"
+						bind:value={languageSelectValue}
+					>
+						<Select.Trigger class="w-[120px] ">
+							<span class="truncate">{triggerContent}</span>
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Group>
+								<Select.Label>Language</Select.Label>
+								{#each languageSelect as slct (slct.value)}
+									<Select.Item
+										value={slct.value}
+										label={slct.label}
+									>
+										{slct.label}
+									</Select.Item>
+								{/each}
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
 
 					<Button
-						class="font-bold"
+						class="font-bold hidden md:flex"
 						href="https://wa.me/62816878368?text=Halo,%20saya%20dapat%20informasi%20dari%20website%20metrindomp.com"
 						target="_blank"
 					>
 						Hubungi Kami
 					</Button>
 				</div>
-
 				<!-- Mobile button -->
-				<button
-					class="md:hidden inline-flex items-center justify-center rounded-md p-2 text-foreground hover:bg-gray-100 dark:text-muted-foreground dark:hover:bg-gray-800"
-					onclick={() => (isOpen = !isOpen)}
-				>
-					{#if isOpen}
-						<X class="w-6 h-6" />
-					{:else}
-						<Menu class="w-6 h-6" />
-					{/if}
-				</button>
+				<div class="md:hidden">
+					<button
+						class=" inline-flex items-center justify-center rounded-md p-2 text-foreground hover:bg-gray-100 dark:text-muted-foreground dark:hover:bg-gray-800"
+						onclick={() => (isOpen = !isOpen)}
+					>
+						{#if isOpen}
+							<X class="w-6 h-6" />
+						{:else}
+							<Menu class="w-6 h-6" />
+						{/if}
+					</button>
+				</div>
 			</div>
 		</div>
 

@@ -185,7 +185,7 @@
 			</p>
 
 			<Button
-				class="right-0 w-[200px] text-lg "
+				class="right-0 w-[200px] text-lg p-4"
 				size="lg"
 				href="https://wa.me/62816878368?text=Halo,%20saya%20dapat%20informasi%20dari%20website%20metrindomp.com"
 				target="_blank"
